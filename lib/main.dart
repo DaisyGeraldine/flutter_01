@@ -1,13 +1,19 @@
+import 'package:drawer_views_project/pages/companies.dart';
+import 'package:drawer_views_project/pages/contacts.dart';
+import 'package:drawer_views_project/pages/proyects.dart';
+import 'package:drawer_views_project/pages/users.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
+    return const MaterialApp(
       title: 'ScaffoldApp',
       debugShowCheckedModeBanner: false,
       home: MyHomePage(title: 'ScaffoldApp Home'),
@@ -16,13 +22,17 @@ class MyApp extends StatelessWidget{
 }
 
 class MyHomePage extends StatefulWidget{
-  MyHomePage({Key? key, this.title}):super(key:key);
+  const MyHomePage({Key? key, this.title}):super(key:key);
   final String? title;
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
+  // ignore: library_private_types_in_public_api
+  //_CupertinoHomePage createState() => _CupertinoHomePage();
 
 }
+
 class _MyHomePageState extends State<MyHomePage>{
 
   @override
@@ -31,9 +41,9 @@ class _MyHomePageState extends State<MyHomePage>{
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'LISTAS',
+          'PRINCIPAL',
         ),
-        backgroundColor: const Color(0xFFFFFF),
+        backgroundColor: const Color(0x00ffffff),
       ),
       drawer: Drawer(
         child: ListView(
@@ -74,63 +84,55 @@ class _MyHomePageState extends State<MyHomePage>{
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.home,
+              leading: const Icon(
+                Icons.contacts,
               ),
-              title: const Text('Dashboard'),
+              title: const Text('Contactos'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const ContactsPage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.monetization_on_rounded,
+              leading: const Icon(
+                Icons.business,
               ),
-              title: const Text('Leads'),
+              title: const Text('Empresas'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const CompaniesPage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.list,
+              leading: const Icon(
+                Icons.work,
               ),
-              title: const Text('Listas'),
+              title: const Text('Proyectos'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const ProyectsPage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.task,
-              ),
-              title: const Text('Tareas'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.monetization_on_outlined,
-              ),
-              title: const Text('Cotizador'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.person,
               ),
-              title: const Text('Perfil'),
+              title: const Text('Usuarios'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const UsersPage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.closed_caption,
-              ),
+              leading: const Icon(Icons.closed_caption),
               title: const Text('Cerrar Sesion'),
               onTap: () {
                 Navigator.pop(context);
@@ -139,12 +141,11 @@ class _MyHomePageState extends State<MyHomePage>{
           ],
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 50,
-            ),
+            Text('PAGINA PRINCIPAL', style: TextStyle(fontSize: 30),)
           ],
         ),
       ),
