@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import '../widgets/template1.dart';
+
 class CompaniesPage extends StatefulWidget {
   const CompaniesPage({Key? key}) : super(key: key);
 
@@ -12,7 +14,7 @@ class _CompaniesPage extends State < CompaniesPage >{
   
   @override
   Widget build(BuildContext context){
-     return const CupertinoPageScaffold(
+     /*return const CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Empresas'),
         backgroundColor:Color(0x00ffffff),
@@ -20,6 +22,7 @@ class _CompaniesPage extends State < CompaniesPage >{
       child: Center(
         child: Text('Contenido Empresas'),
       ),
-    );
+    );*/
+    return template1('Empresas');
   }
 }

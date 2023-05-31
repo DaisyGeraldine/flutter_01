@@ -1,26 +1,29 @@
-import 'package:flutter/cupertino.dart';
-//import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 
-class ContactsPage extends StatefulWidget {
-  const ContactsPage({Key? key}) : super(key: key);
+class Template1 extends StatelessWidget {
+  const Template1({super.key});
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _ContactsPage createState() => _ContactsPage();
-}
-
-class _ContactsPage extends State < ContactsPage >{
-  
   @override
   Widget build(BuildContext context) {
-    
+    return Container(
+      child: const Text('template1'),
+    );
+  }
+}*/
+
+
+import 'package:flutter/cupertino.dart';
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key, required this.moduleNombre});
+  final String moduleNombre;
+  @override
+  Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Contactos', style: TextStyle(color: CupertinoColors.white, fontSize: 20, fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(174, 7, 18, 230),
-        trailing: Icon(CupertinoIcons.person, color: CupertinoColors.white, size: 30),
-        //trailing: CircleAvatar(backgroundImage: AssetImage('assets/images/icono_usuario.png'), radius: 20, backgroundColor: CupertinoColors.white,),
-        //trailing: ImageIcon(AssetImage('../assets/images/icono_usuario.png'), color: CupertinoColors.white, size: 30)
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(moduleNombre, style: const TextStyle(color: CupertinoColors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+        backgroundColor: const Color.fromARGB(174, 7, 18, 230),
+        trailing: const Icon(CupertinoIcons.person, color: CupertinoColors.white, size: 30),
       ),
       child: SafeArea(
         child: Padding(
@@ -116,13 +119,36 @@ class _ContactsPage extends State < ContactsPage >{
                     )
                   ],
                 ),
-              )
+              ),
+              const SizedBox(height: 50,),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  width: 150,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(251, 11, 78, 248),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.fromBorderSide(BorderSide(color: Color.fromARGB(251, 11, 78, 248), width: 2, style: BorderStyle.solid))
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(CupertinoIcons.add, color: CupertinoColors.white, size: 30),
+                      Text(moduleNombre, style: const TextStyle(fontSize: 15, color: CupertinoColors.white, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                    ],  
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+template1(String moduleNombre) {
+    
 }
 
 class ContactsColumns {

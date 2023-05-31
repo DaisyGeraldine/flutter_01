@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../widgets/template1.dart';
 
 class ProyectsPage extends StatefulWidget {
   const ProyectsPage({Key? key}) : super(key: key);
@@ -12,14 +13,6 @@ class _ProyectsPage extends State < ProyectsPage >{
   
   @override
   Widget build(BuildContext context){
-     return const CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Proyectos'),
-        backgroundColor:Color(0x00ffffff),
-      ), 
-      child: Center(
-        child: Text('Contenido Proyectos'),
-      ),
-    );
+     return template1('Proyectos');
   }
 }

@@ -1,7 +1,8 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dbtables.dart';
 
-class Dbase{
+class DBase{
   String name="dbase";
   int version=1;
 
@@ -14,14 +15,18 @@ class Dbase{
         await db.execute('PRAGMA foreign_keys = ON');
       },
       onCreate: (db, version) async{
-        await db.execute('''
+        // ignore: avoid_function_literals_in_foreach_calls
+        DbTable.tables.forEach((table) async{
+          await db.execute(table);
+        });
+        /*await db.execute('''
           CREATE TABLE IF NOT EXISTS users(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             email TEXT,
             password TEXT
           )
-        ''');
+        ''');*/
       }
     );
   }

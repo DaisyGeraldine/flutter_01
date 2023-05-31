@@ -1,3 +1,4 @@
+import 'package:drawer_views_project/pages/adduser.dart';
 import 'package:flutter/cupertino.dart';
 
 class UsersPage extends StatefulWidget {
@@ -12,14 +13,6 @@ class _UsersPage extends State < UsersPage >{
   
   @override
   Widget build(BuildContext context){
-     return const CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Usuarios'),
-        backgroundColor:Color(0x00ffffff),
-      ), 
-      child: Center(
-        child: Text('Contenido Usuarios'),
-      ),
-    );
+     return const AddUser();
   }
 }
