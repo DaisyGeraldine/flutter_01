@@ -4,15 +4,16 @@ class DbTable{
   static const String dbTableProyects = 'proyect';
   static const tables = [ 
     '''CREATE TABLE IF NOT EXISTS $dbTableUsers(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      dni TEXT,
-      email TEXT,
-      password TEXT,
-      role TEXT,
-      phone TEXT,
-      address TEXT,
-    )''',
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        dni TEXT,
+        tipo TEXT,
+        email TEXT,
+        password TEXT,
+        role TEXT,
+        phone TEXT,
+        address TEXT
+    )'''
     
   ];
 }

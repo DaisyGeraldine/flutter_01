@@ -1,7 +1,10 @@
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:drawer_views_project/pages/myhome.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget{

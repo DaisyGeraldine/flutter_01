@@ -25,9 +25,14 @@ abstract class Crud{
   Future<int> deleteAll();*/
 
 
-insert(Map<String, dynamic>data)async {
-  final db=await database;
-  return await db.insert(table, data);
-}
+  /*insert(Map<String, dynamic> data)async {
+    final db=await database;
+    return await db.insert(table, data);
+  }*/
+
+  insert(Map<String, dynamic> data)async {
+    final db=await database;
+    return await db.insert(table, data);
+  }
 
 }

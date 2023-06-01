@@ -82,7 +82,7 @@ class _MyHomePage extends State < MyHomePage >{
               onTap: () {
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (context) => const CompaniesPage()),
+                  MaterialPageRoute(builder: (context) => CompaniesPage()),
                 );
               },
             ),

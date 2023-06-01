@@ -12,11 +12,24 @@ class Template1 extends StatelessWidget {
 }*/
 
 
+//import 'package:drawer_views_project/DataBase/db.dart';
+import 'package:drawer_views_project/pages/adduser.dart';
 import 'package:flutter/cupertino.dart';
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key, required this.moduleNombre});
+class Template1 extends StatelessWidget {
+  const Template1({super.key, required this.moduleNombre});
   final String moduleNombre;
+  //DBase dbase = DBase();
+
+  /*loadUsers() async {
+    List<DBase> auxUsers = await dbase.query();
+
+    setState(() {
+      animales = auxUsers;
+    });
+
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -46,84 +59,98 @@ class MyWidget extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 25,),
-              Container(
-                //margin: const EdgeInsets.only(top: 10),
-                padding: const EdgeInsets.all(10),
-                //color: CupertinoColors.systemGrey4,
-                decoration: const BoxDecoration(
-                  color: CupertinoColors.systemGrey4,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  border: Border.fromBorderSide(BorderSide(color: CupertinoColors.systemGrey4, width: 1, style: BorderStyle.solid))
-                ),
-                child: const Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Nro', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
-                      Text('Nombre', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
-                      Text('Cargo', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
-                      Text('Empresa', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
-                      Text('Telefono', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
-                      Text('Detalle', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
-                    ],
+              Column(
+                children: [
+                  Container(
+                    //margin: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.all(10),
+                    //color: CupertinoColors.systemGrey4,
+                    decoration: const BoxDecoration(
+                      color: CupertinoColors.systemGrey4,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      border: Border.fromBorderSide(BorderSide(color: CupertinoColors.systemGrey4, width: 1, style: BorderStyle.solid))
+                    ),
+                    child: const Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Nro', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                          Text('Nombre', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                          Text('Cargo', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                          Text('Empresa', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                          Text('Telefono', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                          Text('Detalle', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 25,),
-              Container(
-                padding: const EdgeInsets.all(10),
-                //color: CupertinoColors.systemGrey4,
-                decoration: const BoxDecoration(
-                  //color: CupertinoColors.systemGrey4,
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                  border: Border.fromBorderSide(BorderSide(color: CupertinoColors.systemGrey4, width: 1, style: BorderStyle.solid))
-                ),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (var i = 0; i < _contactsList.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,                      
-                          children: [
-                                Text(_contactsList[i].nro.toString(), style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),),
-                                Text(_contactsList[i].nombre, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
-                                Text(_contactsList[i].cargo, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
-                                Text(_contactsList[i].empresa, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
-                                Text(_contactsList[i].telefono, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
-                                Text(_contactsList[i].detalle, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
-                          ],
-                        ),
-                      ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        padding: const EdgeInsets.all(0),
-                        width: 150,
-                        //color: CupertinoColors.systemPurple,
-                        child: const Row(
-                          children: <Widget>[
-                            CupertinoButton(
-                              onPressed: null,
-                              child: Icon(CupertinoIcons.left_chevron, color: CupertinoColors.black, size: 30),
+                  const SizedBox(height: 25,),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    //color: CupertinoColors.systemGrey4,
+                    decoration: const BoxDecoration(
+                      //color: CupertinoColors.systemGrey4,
+                      borderRadius: BorderRadius.all(Radius.circular(2)),
+                      border: Border.fromBorderSide(BorderSide(color: CupertinoColors.systemGrey4, width: 1, style: BorderStyle.solid))
+                    ),
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        for (var i = 0; i < _contactsList.length; i++)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,                      
+                              children: [
+                                    Text(_contactsList[i].nro.toString(), style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),),
+                                    Text(_contactsList[i].nombre, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
+                                    Text(_contactsList[i].cargo, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
+                                    Text(_contactsList[i].empresa, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
+                                    Text(_contactsList[i].telefono, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
+                                    Text(_contactsList[i].detalle, style: const TextStyle(fontSize: 15, color: CupertinoColors.black, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)),
+                              ],
                             ),
-                            Text('01', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontWeight: FontWeight.normal, backgroundColor: CupertinoColors.systemBlue,)),
-                            CupertinoButton(
-                              onPressed: null,
-                              child: Icon(CupertinoIcons.right_chevron, color: CupertinoColors.black, size: 30),
-                            ),
-                          ],
+                          ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            padding: const EdgeInsets.all(0),
+                            width: 150,
+                            //color: CupertinoColors.systemPurple,
+                            child: const Row(
+                              children: <Widget>[
+                                CupertinoButton(
+                                  onPressed: null,
+                                  child: Icon(CupertinoIcons.left_chevron, color: CupertinoColors.black, size: 30),
+                                ),
+                                Text('01', style: TextStyle(fontSize: 15, color: CupertinoColors.black, fontWeight: FontWeight.normal, backgroundColor: CupertinoColors.systemBlue,)),
+                                CupertinoButton(
+                                  onPressed: null,
+                                  child: Icon(CupertinoIcons.right_chevron, color: CupertinoColors.black, size: 30),
+                                ),
+                              ],
+                            )
+                          ),
                         )
-                      ),
-                    )
-                  ],
-                ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 50,),
               Align(
                 alignment: Alignment.topRight,
-                child: Container(
+                child: CupertinoButton.filled(
+                  
+                  child: Text(moduleNombre), 
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (context) => const AddUser()),
+                    );
+                  },    
+                ), 
+                /*Container(
                   padding: const EdgeInsets.all(15),
                   width: 150,
                   decoration: const BoxDecoration(
@@ -137,7 +164,7 @@ class MyWidget extends StatelessWidget {
                       Text(moduleNombre, style: const TextStyle(fontSize: 15, color: CupertinoColors.white, fontFamily: 'Arial', fontWeight: FontWeight.bold)),
                     ],  
                   ),
-                ),
+                ),*/
               ),
             ],
           ),
@@ -145,10 +172,6 @@ class MyWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-template1(String moduleNombre) {
-    
 }
 
 class ContactsColumns {

@@ -1,7 +1,7 @@
+import 'package:drawer_views_project/widgets/widgetbuttonAdd.dart';
+import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
+import 'package:drawer_views_project/widgets/widgettable.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../widgets/template1.dart';
-
 class CompaniesPage extends StatefulWidget {
   const CompaniesPage({Key? key}) : super(key: key);
 
@@ -14,15 +14,30 @@ class _CompaniesPage extends State < CompaniesPage >{
   
   @override
   Widget build(BuildContext context){
-     /*return const CupertinoPageScaffold(
+    return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('Empresas'),
-        backgroundColor:Color(0x00ffffff),
-      ), 
-      child: Center(
-        child: Text('Contenido Empresas'),
+        middle: const Text('Empresas', style: TextStyle(color: CupertinoColors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+        backgroundColor: const Color.fromARGB(174, 7, 18, 230),
+        trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: (){},
+          child: const Icon(CupertinoIcons.person),
+        ),
       ),
-    );*/
-    return template1('Empresas');
+      child: const SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              CSearchTextField(moduleNombre: 'Empresas'),
+              SizedBox(height: 25,),
+              //CTable(moduleNombre: 'Empresas'),
+              SizedBox(height: 25,),
+              CButtonSearch(moduleNombre: 'Empresas')
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
