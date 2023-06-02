@@ -1,8 +1,9 @@
+import 'package:drawer_views_project/pages/addcompany.dart';
 import 'package:drawer_views_project/pages/companies.dart';
 import 'package:drawer_views_project/pages/contacts.dart';
 import 'package:drawer_views_project/pages/proyects.dart';
 import 'package:drawer_views_project/pages/users.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -16,7 +17,55 @@ class _MyHomePage extends State < MyHomePage >{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    return CupertinoPageScaffold(
+      child: CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.home),
+              label: 'Principal',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.person_2_alt),
+              label: 'Usuarios',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.group),
+              label: 'Contactos',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.building_2_fill),
+              label: 'Empresas',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.square_list_fill),
+              label: 'Proyectos',
+            ),
+          ],
+        ),
+        tabBuilder: (BuildContext context, int index) {
+          switch (index) {
+            case 0:
+              return const UsersPage();
+            case 1:
+              return const UsersPage();
+            case 2:
+              return const ContactsPage();
+            case 3:
+              return const CompaniesPage();
+            case 4:
+              return const ProyectsPage();
+            default:
+              return const AddCompany();
+          }
+        },
+      ),
+    );
+  } 
+}
+/*
+    return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -131,3 +180,4 @@ class _MyHomePage extends State < MyHomePage >{
     );
   }  
 }
+*/

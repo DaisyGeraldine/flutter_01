@@ -26,11 +26,11 @@ class _AddProject extends State < AddProject >{
     
      return const CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('Agregar Projecto'),
+        middle: Text('Agregar Proyecto'),
         backgroundColor:Color(0x00ffffff),
       ), 
       child: Center(
-        child: Text('Agregar Projecto'),
+        child: Text('Agregar Proyecto'),
       ),
     );
   }
