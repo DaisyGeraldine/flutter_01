@@ -8,14 +8,23 @@ void main() {
   databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
-class MyApp extends StatelessWidget{
+
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context){
-    return MaterialApp(
+  Widget build(BuildContext context) {
+    return const CupertinoApp(
       title: 'Demo',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        DefaultMaterialLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      theme: CupertinoThemeData(
+        brightness: Brightness.light,
+      ),
       home: MyHomePage(),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:drawer_views_project/pages/addcompany.dart';
 import 'package:drawer_views_project/pages/addproject.dart';
-import 'package:drawer_views_project/pages/adduser.dart';
+import 'package:drawer_views_project/pages/users/adduser.dart';
 import 'package:flutter/cupertino.dart';
 
 class CButtonSearch extends StatelessWidget {
@@ -10,7 +10,6 @@ class CButtonSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      
       alignment: Alignment.topRight,
       child: CupertinoButton.filled(
         child: Row(
@@ -18,29 +17,26 @@ class CButtonSearch extends StatelessWidget {
           children: [
             const Icon(CupertinoIcons.add, color: CupertinoColors.white),
             const SizedBox(width: 8),
-            Text(moduleNombre, style: const TextStyle(fontWeight: FontWeight.bold, color: CupertinoColors.white)),
+            Text(moduleNombre,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: CupertinoColors.white)),
           ],
         ),
-        onPressed: (){
+        onPressed: () {
           Navigator.push(
-            context,
-            moduleNombre == 'Usuario' ?
-              CupertinoPageRoute(
-                builder: (context) => const AddUser()
-              )
-            : moduleNombre == 'Proyecto' ?
-              CupertinoPageRoute(
-                builder: (context) => const AddProject()
-              )
-            :
-             CupertinoDialogRoute(
-                context: context,
-                //builder: (context) => const AddCompany(
-                  builder: (context) => const AddCompany(),
-             )
-          );
-        },    
-      ), 
+              context,
+              moduleNombre == 'Usuario'
+                  ? CupertinoPageRoute(builder: (context) => const AddUser())
+                  : moduleNombre == 'Proyecto'
+                      ? CupertinoPageRoute(
+                          builder: (context) => const AddProject())
+                      : CupertinoDialogRoute(
+                          context: context,
+                          //builder: (context) => const AddCompany(
+                          builder: (context) => const AddCompany(),
+                        ));
+        },
+      ),
     );
   }
 }
