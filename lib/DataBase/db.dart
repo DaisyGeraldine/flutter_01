@@ -5,30 +5,24 @@ import 'package:sqflite/sqflite.dart';
 
 class DBase {
   //String name="dbase";
-  int version=1;
+  int version = 1;
 
-  
-  Future<Database>openDB() async{
-    
+  Future<Database> openDB() async {
     String path = join(await getDatabasesPath(), 'dbase.db');
+    print(path);
     //await deleteDatabase(path);
 
-    return openDatabase(
-      path,
-      version: version,
-      onConfigure: (db) async{
-        return await db.execute('PRAGMA foreign_keys = ON');
-      },
-      onCreate: (db, version) async{
-        // ignore: avoid_function_literals_in_foreach_calls
-        DbTable.tables.forEach((table) async{
+    return openDatabase(path, version: version, onConfigure: (db) async {
+      return await db.execute('PRAGMA foreign_keys = ON');
+    }, onCreate: (db, version) async {
+      // ignore: avoid_function_literals_in_foreach_calls
+      DbTable.tables.forEach((table) async {
         await db.execute(table);
-
       });
 
       print('Your database X v:$version created successfully');
 
-        /*await db.execute('''
+      /*await db.execute('''
           CREATE TABLE IF NOT EXISTS users(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
@@ -36,152 +30,195 @@ class DBase {
             password TEXT
           )
         ''');*/
-      }
-    );
+    });
   }
-  
+
   /*query(String sql, List<dynamic> arguments)async{
     final Database db=await openDB();
     //final List<Map<String, dynamic>> userMap = await db.query("user");
     //return await db.query(table);
     return await db.rawQuery(sql, arguments);
-  }*/ 
+  }*/
 
   queryUsers() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> userMap = await db.query("user");
 
-    return List.generate(userMap.length,
-      (i) => Users(
-        id: userMap[i]['id'],
-        name: userMap[i]['name'],
-        dni: userMap[i]['dni'],
-        tipo: userMap[i]['tipo'],
-        email: userMap[i]['email'],
-        password: userMap[i]['password'],
-        role: userMap[i]['role'],
-        phone: userMap[i]['phone'],
-        address: userMap[i]['address']
-      )
-    );
+    return List.generate(
+        userMap.length,
+        (i) => Users(
+            id: userMap[i]['id'],
+            name: userMap[i]['name'],
+            dni: userMap[i]['dni'],
+            tipo: userMap[i]['tipo'],
+            email: userMap[i]['email'],
+            password: userMap[i]['password'],
+            role: userMap[i]['role'],
+            phone: userMap[i]['phone'],
+            address: userMap[i]['address']));
   }
 
   queryContacts() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> contactMap = await db.query("contact");
 
-    return List.generate(contactMap.length,
-      (i) => Contacts(
-        id: contactMap[i]['id'],
-        name: contactMap[i]['name'],
-        role: contactMap[i]['role'],
-        company: contactMap[i]['company'],
-        phone: contactMap[i]['phone'],
-        detail: contactMap[i]['detail'],
-      )
-    );
+    return List.generate(
+        contactMap.length,
+        (i) => Contacts(
+              id: contactMap[i]['id'],
+              name: contactMap[i]['name'],
+              role: contactMap[i]['role'],
+              company: contactMap[i]['company'],
+              phone: contactMap[i]['phone'],
+              detail: contactMap[i]['detail'],
+            ));
   }
 
   queryCompanies() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> companyMap = await db.query("company");
 
-    return List.generate(companyMap.length,
-      (i) => Companies(
-        id: companyMap[i]['id'],
-        companyName: companyMap[i]['company_name'],
-        ruc: companyMap[i]['ruc'],
-        location: companyMap[i]['location'],
-        legalAddress: companyMap[i]['legal_address'],
-        email: companyMap[i]['email'],
-      )
-    );
+    return List.generate(
+        companyMap.length,
+        (i) => Companies(
+              id: companyMap[i]['id'],
+              companyName: companyMap[i]['company_name'],
+              ruc: companyMap[i]['ruc'],
+              location: companyMap[i]['location'],
+              legalAddress: companyMap[i]['legal_address'],
+              email: companyMap[i]['email'],
+            ));
   }
 
   queryProjects() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> projectMap = await db.query("project");
 
-    return List.generate(projectMap.length,
-      (i) => Projects(
-        id: projectMap[i]['id'],
-        nameProject: projectMap[i]['nameProject'],
-        companyName: projectMap[i]['companyName'],
-        contactName: projectMap[i]['contactName'],
-        startDate: projectMap[i]['startDate'],
-        endDate: projectMap[i]['endDate'],
-        projectManager: projectMap[i]['projectManager'],
-        projectBudget: projectMap[i]['projectBudget'],
-        projectValue: projectMap[i]['projectValue'],
-      )
-    );
+    return List.generate(
+        projectMap.length,
+        (i) => Projects(
+              id: projectMap[i]['id'],
+              nameProject: projectMap[i]['nameProject'],
+              companyName: projectMap[i]['companyName'],
+              contactName: projectMap[i]['contactName'],
+              startDate: projectMap[i]['startDate'],
+              endDate: projectMap[i]['endDate'],
+              projectManager: projectMap[i]['projectManager'],
+              projectBudget: projectMap[i]['projectBudget'],
+              projectValue: projectMap[i]['projectValue'],
+            ));
   }
 
-  insert(Map<String, dynamic> data)async {
-    final Database db=await openDB();
-    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
+  insert(Map<String, dynamic> data) async {
+    final Database db = await openDB();
+    print(
+        'Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
     return await db.insert('user', data);
   }
-
-
-
 }
 
 class Users {
-  final int ?id;
-  final String ?name;
-  final String ?dni;
-  final String ?tipo;
-  final String ?email;
-  final String ?password;
-  final String ?role;
-  final String ?phone;
-  final String ?address;
+  final int? id;
+  final String? name;
+  final String? dni;
+  final String? tipo;
+  final String? email;
+  final String? password;
+  final String? role;
+  final String? phone;
+  final String? address;
 
-  Users({this.id, this.name, this.dni, this.tipo, this.email, this.password, this.role, this.phone, this.address});
+  Users(
+      {this.id,
+      this.name,
+      this.dni,
+      this.tipo,
+      this.email,
+      this.password,
+      this.role,
+      this.phone,
+      this.address});
 
-  Map<String, dynamic> toJson(){
-    return {'Nro': id, 'Nombre': name, 'Dni': dni, 'Tipo': tipo, 'Correo': email, 'Contraseña': password, 'Cargo': role, 'Telefono': phone, 'Direccion': address};
+  Map<String, dynamic> toJson() {
+    return {
+      'Nro': id,
+      'Nombre': name,
+      'Dni': dni,
+      'Tipo': tipo,
+      'Correo': email,
+      'Contraseña': password,
+      'Cargo': role,
+      'Telefono': phone,
+      'Direccion': address
+    };
   }
-
 }
 
 class Contacts {
-  final int ?id;
-  final String ?name;
-  final String ?role;
-  final String ?company;
-  final String ?phone;
-  final String ?detail;
+  final int? id;
+  final String? name;
+  final String? role;
+  final String? company;
+  final String? phone;
+  final String? detail;
 
-  Contacts({this.id, this.name, this.role, this.company, this.phone, this.detail});
+  Contacts(
+      {this.id, this.name, this.role, this.company, this.phone, this.detail});
 
-  Map<String, dynamic> toJson(){
-    return {'Nro': id, 'Nombre': name, 'Cargo': role, 'Empresa': company, 'Telefono': phone, 'Detalle': detail};
+  Map<String, dynamic> toJson() {
+    return {
+      'Nro': id,
+      'Nombre': name,
+      'Cargo': role,
+      'Empresa': company,
+      'Telefono': phone,
+      'Detalle': detail
+    };
   }
-
 }
 
 class Companies {
-  final int ?id;
-  final String ?companyName;
-  final String ?ruc;
-  final String ?location;
-  final String ?legalAddress;
-  final String ?email;
-  final String ?webSite;
-  final DateTime ?businessActivity;
-  final DateTime ?detail;
-  final String ?phone;
+  final int? id;
+  final String? companyName;
+  final String? ruc;
+  final String? location;
+  final String? legalAddress;
+  final String? email;
+  final String? webSite;
+  final DateTime? businessActivity;
+  final DateTime? detail;
+  final String? phone;
 
-  Companies({this.id, this.companyName, this.ruc, this.location, this.legalAddress, this.email, this.webSite, this.businessActivity, this.detail, this.phone});
+  Companies(
+      {this.id,
+      this.companyName,
+      this.ruc,
+      this.location,
+      this.legalAddress,
+      this.email,
+      this.webSite,
+      this.businessActivity,
+      this.detail,
+      this.phone});
 
-  Map<String, dynamic> toJson(){
-    return {'Nro': id, 'Nombre': companyName, 'Ruc': ruc, 'Ubicacion': location, 'Direccion Legal': legalAddress, 'Correo': email, 'Pagina Web': webSite, 'Actividad Comercial': businessActivity, 'Detalle': detail, 'Telefono': phone};
+  Map<String, dynamic> toJson() {
+    return {
+      'Nro': id,
+      'Nombre': companyName,
+      'Ruc': ruc,
+      'Ubicacion': location,
+      'Direccion Legal': legalAddress,
+      'Correo': email,
+      'Pagina Web': webSite,
+      'Actividad Comercial': businessActivity,
+      'Detalle': detail,
+      'Telefono': phone
+    };
   }
 }
+
 class Projects {
-  final String ?id;
+  final String? id;
   final String nameProject;
   final String companyName;
   final String contactName;
@@ -191,10 +228,28 @@ class Projects {
   final double projectBudget;
   final double projectValue;
 
-  Projects({this.id, required this.nameProject, required this.companyName, required this.contactName, required this.startDate, required this.endDate, required this.projectManager, required this.projectBudget, required this.projectValue});
+  Projects(
+      {this.id,
+      required this.nameProject,
+      required this.companyName,
+      required this.contactName,
+      required this.startDate,
+      required this.endDate,
+      required this.projectManager,
+      required this.projectBudget,
+      required this.projectValue});
 
-  Map<String, dynamic> toJson(){
-    return {'Nro': id, 'Nombre del Proyecto': nameProject, 'Nombre de la Empresa': companyName, 'Nombre del Contacto': contactName, 'Fecha de Inicio': startDate, 'Fecha de Finalizacion': endDate, 'Gerente de Proyecto': projectManager, 'Presupuesto del Proyecto': projectBudget, 'Valor del Proyecto': projectValue};
+  Map<String, dynamic> toJson() {
+    return {
+      'Nro': id,
+      'Nombre del Proyecto': nameProject,
+      'Nombre de la Empresa': companyName,
+      'Nombre del Contacto': contactName,
+      'Fecha de Inicio': startDate,
+      'Fecha de Finalizacion': endDate,
+      'Gerente de Proyecto': projectManager,
+      'Presupuesto del Proyecto': projectBudget,
+      'Valor del Proyecto': projectValue
+    };
   }
-
 }
