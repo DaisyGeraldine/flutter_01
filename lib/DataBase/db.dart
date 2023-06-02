@@ -47,7 +47,7 @@ class DBase {
     return await db.rawQuery(sql, arguments);
   }*/ 
 
-  query() async {
+  queryUsers() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> userMap = await db.query("user");
 
@@ -62,6 +62,22 @@ class DBase {
         role: userMap[i]['role'],
         phone: userMap[i]['phone'],
         address: userMap[i]['address']
+      )
+    );
+  }
+
+  queryContacts() async {
+    final Database db = await openDB();
+    final List<Map<String, dynamic>> contactMap = await db.query("contact");
+
+    return List.generate(contactMap.length,
+      (i) => Contacts(
+        id: contactMap[i]['id'],
+        name: contactMap[i]['name'],
+        role: contactMap[i]['role'],
+        company: contactMap[i]['company'],
+        phone: contactMap[i]['phone'],
+        detail: contactMap[i]['detail'],
       )
     );
   }
@@ -90,7 +106,23 @@ class Users {
   Users({this.id, this.name, this.dni, this.tipo, this.email, this.password, this.role, this.phone, this.address});
 
   Map<String, dynamic> toJson(){
-    return {'id': id, 'name': name, 'dni': dni, 'tipo': tipo, 'email': email, 'password': password, 'role': role, 'phone': phone, 'address': address};
+    return {'Nro': id, 'Nombre': name, 'Dni': dni, 'Tipo': tipo, 'Correo': email, 'Contraseña': password, 'Cargo': role, 'Telefono': phone, 'Direccion': address};
+  }
+
+}
+
+class Contacts {
+  final int ?id;
+  final String ?name;
+  final String ?role;
+  final String ?company;
+  final String ?phone;
+  final String ?detail;
+
+  Contacts({this.id, this.name, this.role, this.company, this.phone, this.detail});
+
+  Map<String, dynamic> toJson(){
+    return {'Nro': id, 'Nombre': name, 'Cargo': role, 'Empresa': company, 'Telefono': phone, 'Detalle': detail};
   }
 
 }

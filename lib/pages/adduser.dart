@@ -1,6 +1,7 @@
 //import 'package:drawer_views_project/DataBase/crud.dart';
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({Key? key}) : super(key: key);
@@ -57,10 +58,10 @@ class _AddUser extends State < AddUser >{
                     width: 500,
                     child: Column(
                       children: [
-                        CupertinoTextFormFieldRow(placeholder: 'Nombre del Asesor', controller: nameAsesor,), 
-                        CupertinoTextFormFieldRow(placeholder: 'DNI', controller: dniAsesor,),
-                        CupertinoTextFormFieldRow(placeholder: 'Tipo de Usuario', controller: tipoAsesor,),
-                        CupertinoTextFormFieldRow(placeholder: 'Correo', controller: emailAsesor,),
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Nombre', controller: nameAsesor,),                     
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'DNI', controller: dniAsesor,),
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Tipo de Usuario', controller: tipoAsesor,),
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Correo', controller: emailAsesor,),
                         
                       ],),
                   ),
@@ -69,10 +70,10 @@ class _AddUser extends State < AddUser >{
                   //alignment: Alignment.centerRight,
                   child: Column(
                     children: [
-                      CupertinoTextFormFieldRow(placeholder: 'Cargo del Asesor', controller: roleAsesor,),
-                      CupertinoTextFormFieldRow(placeholder: 'Contraseña', controller: passwordAsesor,),
-                      CupertinoTextFormFieldRow(placeholder: 'Telefono', controller: phoneAsesor,),
-                      CupertinoTextFormFieldRow(placeholder: 'Direccion', controller: addressAsesor,)
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Cargo del Asesor', controller: roleAsesor,),
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Contraseña', controller: passwordAsesor,),
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Telefono', controller: phoneAsesor,),
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Direccion', controller: addressAsesor,)
                     ],),
                   ),
                 ],
@@ -85,17 +86,17 @@ class _AddUser extends State < AddUser >{
                     children: [
                       Row(
                         children: [
-                          CupertinoButton.filled(
-                            onPressed: (){},
-                            child: const Text('Cancelar'), 
-                          ),
                           CupertinoButton(
-                            color: CupertinoColors.systemRed,
+                            onPressed: (){},
+                            child: const Text('Cancelar', style: TextStyle(fontWeight: FontWeight.bold)),
+                          ),
+                          const SizedBox(width: 8),
+                          CupertinoButton.filled(
                             onPressed: (){
                               
                               dbase.insert({'name': nameAsesor.text, 'dni': dniAsesor.text, 'tipo':tipoAsesor.text, 'email': emailAsesor.text, 'password': passwordAsesor.text, 'role': roleAsesor.text, 'phone': phoneAsesor.text, 'address': addressAsesor.text});
                             },
-                            child: const Text('Crear'),
+                            child: const Text('Crear', style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),

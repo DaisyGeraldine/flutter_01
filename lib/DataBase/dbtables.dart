@@ -14,6 +14,15 @@ class DbTable{
         phone TEXT,
         address TEXT
     )'''
+    ,
+    '''CREATE TABLE IF NOT EXISTS $dbTableContacts(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        role TEXT,
+        company TEXT,
+        phone TEXT,
+        detail TEXT
+    )'''
     
   ];
 }

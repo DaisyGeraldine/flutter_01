@@ -8,10 +8,19 @@ class CButtonSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
+      
       alignment: Alignment.topRight,
       child: CupertinoButton.filled(
-        
-        child: Text(moduleNombre), 
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(CupertinoIcons.add, color: CupertinoColors.white),
+            SizedBox(width: 8),
+            Text(moduleNombre, style: TextStyle(fontWeight: FontWeight.bold, color: CupertinoColors.white)),
+
+          ],
+        ),
+   
         onPressed: (){
           Navigator.push(
             context,

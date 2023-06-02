@@ -23,10 +23,9 @@ class _UsersPage extends State < UsersPage >{
   }
 
   _loadUsers() async {
-    List<Users> auxUsers = await dbase.query();
+    List<Users> auxUsers = await dbase.queryUsers();
 
     setState(() {
-      //usersL = auxUsers;
       usersL = auxUsers;
       }
     );
@@ -51,7 +50,7 @@ class _UsersPage extends State < UsersPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Usuarios'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Usuarios', recordsList: usersL),
+              CTable(moduleNombre: 'Contactos', recordsList: usersL),
               const SizedBox(height: 25,),
               const CButtonSearch(moduleNombre: 'Usuarios')
             ],
