@@ -52,7 +52,7 @@ class _CompaniesPage extends State < CompaniesPage >{
               const SizedBox(height: 25,),
               CTable(moduleNombre: 'Empresas', recordsList: companiesL),
               const SizedBox(height: 25,),
-              const CButtonSearch(moduleNombre: 'Empresas')
+              const CButtonSearch(moduleNombre: 'Empresa')
             ],
           ),
         ),

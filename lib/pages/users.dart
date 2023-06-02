@@ -50,9 +50,9 @@ class _UsersPage extends State < UsersPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Usuarios'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Contactos', recordsList: usersL),
+              CTable(moduleNombre: 'Usuarios', recordsList: usersL),
               const SizedBox(height: 25,),
-              const CButtonSearch(moduleNombre: 'Usuarios')
+              const CButtonSearch(moduleNombre: 'Usuario')
             ],
           ),
         ),

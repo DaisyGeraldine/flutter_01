@@ -1,3 +1,4 @@
+import 'package:drawer_views_project/pages/addcompany.dart';
 import 'package:drawer_views_project/pages/addproject.dart';
 import 'package:drawer_views_project/pages/adduser.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,20 @@ class CButtonSearch extends StatelessWidget {
         onPressed: (){
           Navigator.push(
             context,
-            CupertinoPageRoute(builder: (context) => moduleNombre == 'Usuarios'? const AddUser(): const AddProject()),
+            moduleNombre == 'Usuario' ?
+              CupertinoPageRoute(
+                builder: (context) => const AddUser()
+              )
+            : moduleNombre == 'Proyecto' ?
+              CupertinoPageRoute(
+                builder: (context) => const AddProject()
+              )
+            :
+             CupertinoDialogRoute(
+                context: context,
+                //builder: (context) => const AddCompany(
+                  builder: (context) => const AddCompany(),
+             )
           );
         },    
       ), 

@@ -60,8 +60,7 @@ class _AddUser extends State < AddUser >{
                         CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Nombre', controller: nameAsesor,),                     
                         CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'DNI', controller: dniAsesor,),
                         CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Tipo de Usuario', controller: tipoAsesor,),
-                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Correo', controller: emailAsesor,),
-                        
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Correo', controller: emailAsesor,),                     
                       ],),
                   ),
                   Container(
@@ -86,7 +85,7 @@ class _AddUser extends State < AddUser >{
                       Row(
                         children: [
                           CupertinoButton(
-                            onPressed: (){},
+                            onPressed: (){Navigator.pop(context);},
                             child: const Text('Cancelar', style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                           const SizedBox(width: 8),
