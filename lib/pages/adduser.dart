@@ -1,7 +1,6 @@
 //import 'package:drawer_views_project/DataBase/crud.dart';
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({Key? key}) : super(key: key);
@@ -58,10 +57,10 @@ class _AddUser extends State < AddUser >{
                     width: 500,
                     child: Column(
                       children: [
-                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Nombre', controller: nameAsesor,),                     
-                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'DNI', controller: dniAsesor,),
-                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Tipo de Usuario', controller: tipoAsesor,),
-                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Correo', controller: emailAsesor,),
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Nombre', controller: nameAsesor,),                     
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'DNI', controller: dniAsesor,),
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Tipo de Usuario', controller: tipoAsesor,),
+                        CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Correo', controller: emailAsesor,),
                         
                       ],),
                   ),
@@ -70,10 +69,10 @@ class _AddUser extends State < AddUser >{
                   //alignment: Alignment.centerRight,
                   child: Column(
                     children: [
-                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Cargo del Asesor', controller: roleAsesor,),
-                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Contraseña', controller: passwordAsesor,),
-                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Telefono', controller: phoneAsesor,),
-                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3),),), placeholder: 'Direccion', controller: addressAsesor,)
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Cargo del Asesor', controller: roleAsesor,),
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Contraseña', controller: passwordAsesor,),
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Telefono', controller: phoneAsesor,),
+                      CupertinoTextFormFieldRow(decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: CupertinoColors.systemGrey, width: 0.3),),), placeholder: 'Direccion', controller: addressAsesor,)
                     ],),
                   ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:drawer_views_project/widgets/widgetbuttonAdd.dart';
 import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
 import 'package:drawer_views_project/widgets/widgettable.dart';
@@ -11,6 +12,24 @@ class CompaniesPage extends StatefulWidget {
 }
 
 class _CompaniesPage extends State < CompaniesPage >{
+
+  DBase dbase = DBase();
+  List<Companies> companiesL = [];
+
+  @override
+  void initState() {
+    _loadCompanies();
+    super.initState();
+  }
+
+  _loadCompanies() async {
+    List<Companies> auxCompanies = await dbase.queryCompanies();
+
+    setState(() {
+      companiesL = auxCompanies;
+      }
+    );
+  }
   
   @override
   Widget build(BuildContext context){
@@ -24,16 +43,16 @@ class _CompaniesPage extends State < CompaniesPage >{
           child: const Icon(CupertinoIcons.person),
         ),
       ),
-      child: const SafeArea(
+      child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
-              CSearchTextField(moduleNombre: 'Empresas'),
-              SizedBox(height: 25,),
-              //CTable(moduleNombre: 'Empresas'),
-              SizedBox(height: 25,),
-              CButtonSearch(moduleNombre: 'Empresas')
+              const CSearchTextField(moduleNombre: 'Empresas'),
+              const SizedBox(height: 25,),
+              CTable(moduleNombre: 'Empresas', recordsList: companiesL),
+              const SizedBox(height: 25,),
+              const CButtonSearch(moduleNombre: 'Empresas')
             ],
           ),
         ),

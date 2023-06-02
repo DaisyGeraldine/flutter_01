@@ -1,3 +1,4 @@
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:drawer_views_project/widgets/widgetbuttonadd.dart';
 import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
 import 'package:drawer_views_project/widgets/widgettable.dart';
@@ -12,6 +13,24 @@ class ProyectsPage extends StatefulWidget {
 }
 
 class _ProyectsPage extends State < ProyectsPage >{
+
+  DBase dbase = DBase();
+  List<Projects> projectsL = [];
+
+  @override
+  void initState() {
+    _loadProjects();
+    super.initState();
+  }
+
+  _loadProjects() async {
+    List<Projects> auxProjects = await dbase.queryProjects();
+
+    setState(() {
+      projectsL = auxProjects;
+      }
+    );
+  }
   
   @override
   Widget build(BuildContext context){
@@ -25,16 +44,16 @@ class _ProyectsPage extends State < ProyectsPage >{
           child: const Icon(CupertinoIcons.person),
         ),
       ),
-      child: const SafeArea(
+      child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
-              CSearchTextField(moduleNombre: 'Proyecto'),
-              SizedBox(height: 25,),
-              //CTable(moduleNombre: 'Proyecto'),
-              SizedBox(height: 25,),
-              CButtonSearch(moduleNombre: 'Proyecto')
+              const CSearchTextField(moduleNombre: 'Proyecto'),
+              const SizedBox(height: 25,),
+              CTable(moduleNombre: 'Proyecto', recordsList: projectsL,),
+              const SizedBox(height: 25,),
+              const CButtonSearch(moduleNombre: 'Proyecto')
             ],
           ),
         ),
