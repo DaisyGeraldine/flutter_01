@@ -2,7 +2,7 @@ import 'package:drawer_views_project/pages/addcompany.dart';
 import 'package:drawer_views_project/pages/companies.dart';
 import 'package:drawer_views_project/pages/contacts.dart';
 import 'package:drawer_views_project/pages/proyects.dart';
-import 'package:drawer_views_project/pages/users.dart';
+import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -13,11 +13,9 @@ class MyHomePage extends StatefulWidget {
   _MyHomePage createState() => _MyHomePage();
 }
 
-class _MyHomePage extends State < MyHomePage >{
-
+class _MyHomePage extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-
     return CupertinoPageScaffold(
       child: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
@@ -62,7 +60,7 @@ class _MyHomePage extends State < MyHomePage >{
         },
       ),
     );
-  } 
+  }
 }
 /*
     return  Scaffold(
