@@ -1,6 +1,7 @@
-import 'package:drawer_views_project/pages/addcompany.dart';
-import 'package:drawer_views_project/pages/companies.dart';
+import 'package:drawer_views_project/pages/companies/addcompany.dart';
+import 'package:drawer_views_project/pages/companies/companies.dart';
 import 'package:drawer_views_project/pages/contacts.dart';
+import 'package:drawer_views_project/pages/drawer.dart';
 import 'package:drawer_views_project/pages/proyects.dart';
 import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +46,7 @@ class _MyHomePage extends State<MyHomePage> {
         tabBuilder: (BuildContext context, int index) {
           switch (index) {
             case 0:
-              return const UsersPage();
+              return const CupertinoHomePage();
             case 1:
               return const UsersPage();
             case 2:

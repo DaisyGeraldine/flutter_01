@@ -1,4 +1,4 @@
-import 'package:drawer_views_project/pages/addcompany.dart';
+import 'package:drawer_views_project/pages/companies/addcompany.dart';
 import 'package:drawer_views_project/pages/addproject.dart';
 import 'package:drawer_views_project/pages/users/adduser.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,8 @@ class CButtonSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topRight,
-      child: CupertinoButton.filled(
+      child: CupertinoButton(
+        color: const Color.fromARGB(255,0,90,193),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

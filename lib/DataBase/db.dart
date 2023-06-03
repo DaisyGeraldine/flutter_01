@@ -111,8 +111,7 @@ class DBase {
 
   insert(Map<String, dynamic> data) async {
     final Database db = await openDB();
-    print(
-        'Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
+    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
     return await db.insert('user', data);
   }
 }

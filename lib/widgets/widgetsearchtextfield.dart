@@ -10,7 +10,7 @@ class CSearchTextField extends StatelessWidget {
       alignment: Alignment.topRight,
       child: Container(
         padding: const EdgeInsets.all(0),
-        width: 500,
+        width: 400,
         //color: CupertinoColors.systemPurple,
         child: Column(
           children: <Widget>[

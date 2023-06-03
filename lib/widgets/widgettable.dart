@@ -12,7 +12,7 @@ class CTable extends StatelessWidget {
     Key? key,
     required this.moduleNombre,
     required this.recordsList,
-    this.tableType = TableType.contacts,
+    this.tableType = TableType.users,
   }) : super(key: key) {
     lenHeader = recordsList.isNotEmpty ? recordsList[0].toJson().length : 0;
   }
@@ -30,12 +30,20 @@ class CTable extends StatelessWidget {
           //margin: const EdgeInsets.only(top: 10),
           padding: const EdgeInsets.all(10),
           //color: CupertinoColors.systemGrey4,
-          decoration: const BoxDecoration(
-            color: CupertinoColors.systemGrey4,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: const Offset(0, 1), // changes position of shadow
+              ),
+            ],
+            //color: const Color.fromARGB(255, 143,143,143).withOpacity(0.2),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
             border: Border.fromBorderSide(
               BorderSide(
-                color: CupertinoColors.systemGrey4,
+                color: const Color.fromARGB(255, 143,143,143).withOpacity(0.2),
                 width: 1,
                 style: BorderStyle.solid,
               ),
@@ -44,11 +52,30 @@ class CTable extends StatelessWidget {
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(lenHeader, (index) {
+              /*children: List.generate(lenHeader, (index) {
                 return Expanded(
                   flex: 2,
                   child: Text(
-                    nameKeys[index],
+                    //headers the tables
+                    //nameKeys[index],
+                    //here we are using the enum
+                    tableType.value[index],
+                    style: const TextStyle(
+                        fontSize: 15,
+                        color: CupertinoColors.black,
+                        fontFamily: 'Arial',
+                        fontWeight: FontWeight.bold),
+                  ),
+                );
+              }),*/
+              //here use the enum
+              children: List.generate(tableType.value.length, (index) {
+                return Expanded(
+                  flex: index == 0 ? 1 : index == 1 ? 3 : index == 2 ? 3 : index == 3 ? 1 : index == 4 ? 1 : 1,
+                  child: Text(
+                    //headers the tables
+                    //nameKeys[index],
+                    tableType.value[index],
                     style: const TextStyle(
                         fontSize: 15,
                         color: CupertinoColors.black,
@@ -67,14 +94,22 @@ class CTable extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(10),
             //color: CupertinoColors.systemGrey4,
-            decoration: const BoxDecoration(
-                //color: CupertinoColors.systemGrey4,
-                borderRadius: BorderRadius.all(Radius.circular(2)),
-                border: Border.fromBorderSide(BorderSide(
-                    color: CupertinoColors.systemGrey4,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: const Offset(0, 1), // changes position of shadow
+                ),
+              ],
+              color: const Color.fromARGB(255, 255, 255, 255),
+              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              border: const Border.fromBorderSide(BorderSide(
+                    color: Color.fromARGB(255, 199,195,202),
                     width: 1,
                     style: BorderStyle.solid))),
-            child: ListView(
+              child: ListView(
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 for (var row = 0; row < 50; row++)
@@ -154,6 +189,15 @@ enum TableType {
     'RUC',
     'Telefono',
     'Direccion',
+  ]),
+  users(value: [
+    'N°',
+    'Asesor',
+    'Cargo',
+    'Tareas pendientes',
+    'Leads  creados',
+    'Ventas Ganadas',
+    'Detalle'
   ]);
 
   const TableType({required this.value});

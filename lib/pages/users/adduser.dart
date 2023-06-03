@@ -1,7 +1,6 @@
 //import 'package:drawer_views_project/DataBase/crud.dart';
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddUser extends StatefulWidget {
@@ -36,9 +35,9 @@ class _AddUser extends State<AddUser> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 200,
@@ -51,149 +50,158 @@ class _AddUser extends State<AddUser> {
                       color: const Color.fromARGB(255, 179, 179, 187)),
                   //child: Image.asset('assets/images/icono_usuario.png', width: 200, height: 200,),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      //alignment: Alignment.centerLeft,
-
-                      child: Form(
-                        key: _formKey,
+                //const SizedBox(width: 40),
+                Padding(
+                  padding: const EdgeInsets.all(40),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        //alignment: Alignment.centerLeft,
+                
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
+                                ),
+                                placeholder: 'Nombre',
+                                controller: nameAsesor,
+                              ),
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
+                                ),
+                                placeholder: 'DNI',
+                                controller: dniAsesor,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(8),
+                                  // Only numbers can be entered
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Por favor ingrese su DNI';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
+                                ),
+                                placeholder: 'Tipo de Usuario',
+                                controller: tipoAsesor,
+                              ),
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
+                                ),
+                                placeholder: 'Correo',
+                                controller: emailAsesor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        //alignment: Alignment.centerRight,
                         child: Column(
                           children: [
                             CupertinoTextFormFieldRow(
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: CupertinoColors.systemGrey,
+                                      color: Color.fromARGB(102,102,102, 102),
                                       width: 0.3),
                                 ),
                               ),
-                              placeholder: 'Nombre',
-                              controller: nameAsesor,
+                              placeholder: 'Cargo del Asesor',
+                              controller: roleAsesor,
                             ),
                             CupertinoTextFormFieldRow(
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: CupertinoColors.systemGrey,
+                                      color: Color.fromARGB(102,102,102, 102),
                                       width: 0.3),
                                 ),
                               ),
-                              placeholder: 'DNI',
-                              controller: dniAsesor,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(8),
-                                // Only numbers can be entered
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Por favor ingrese su DNI';
-                                }
-                                return null;
-                              },
+                              placeholder: 'Contraseña',
+                              controller: passwordAsesor,
+                              obscureText: true,
                             ),
                             CupertinoTextFormFieldRow(
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: CupertinoColors.systemGrey,
+                                      color: Color.fromARGB(102,102,102, 102),
                                       width: 0.3),
                                 ),
                               ),
-                              placeholder: 'Tipo de Usuario',
-                              controller: tipoAsesor,
+                              placeholder: 'Telefono',
+                              controller: phoneAsesor,
                             ),
                             CupertinoTextFormFieldRow(
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: CupertinoColors.systemGrey,
+                                      color: Color.fromARGB(102,102,102, 102),
                                       width: 0.3),
                                 ),
                               ),
-                              placeholder: 'Correo',
-                              controller: emailAsesor,
-                            ),
+                              placeholder: 'Direccion',
+                              controller: addressAsesor,
+                            )
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      //alignment: Alignment.centerRight,
-                      child: Column(
-                        children: [
-                          CupertinoTextFormFieldRow(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: CupertinoColors.systemGrey,
-                                    width: 0.3),
-                              ),
-                            ),
-                            placeholder: 'Cargo del Asesor',
-                            controller: roleAsesor,
-                          ),
-                          CupertinoTextFormFieldRow(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: CupertinoColors.systemGrey,
-                                    width: 0.3),
-                              ),
-                            ),
-                            placeholder: 'Contraseña',
-                            controller: passwordAsesor,
-                            obscureText: true,
-                          ),
-                          CupertinoTextFormFieldRow(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: CupertinoColors.systemGrey,
-                                    width: 0.3),
-                              ),
-                            ),
-                            placeholder: 'Telefono',
-                            controller: phoneAsesor,
-                          ),
-                          CupertinoTextFormFieldRow(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: CupertinoColors.systemGrey,
-                                    width: 0.3),
-                              ),
-                            ),
-                            placeholder: 'Direccion',
-                            controller: addressAsesor,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CupertinoButton(
-                      onPressed: onTapCancel,
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CupertinoButton(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        onPressed: onTapCancel,
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255,0,90,193),),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    CupertinoButton.filled(
-                      onPressed: onTapCreate,
-                      child: const Text(
-                        'Crear',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      const SizedBox(width: 8),
+                      CupertinoButton(
+                        color: const Color.fromARGB(255,0,90,193),
+                        onPressed: onTapCreate,
+                        child: const Text(
+                          'Crear',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                  ],
+                      const SizedBox(width: 20),
+                    ],
+                  ),
                 ),
               ],
             ),

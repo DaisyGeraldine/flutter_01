@@ -38,8 +38,10 @@ class _UsersPage extends State<UsersPage> {
             style: TextStyle(
                 color: CupertinoColors.white,
                 fontSize: 20,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: const Color.fromARGB(174, 7, 18, 230),
+                fontWeight: FontWeight.bold
+            )
+        ),
+        backgroundColor: const Color.fromARGB(255, 0,90,193),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: () {},
@@ -48,7 +50,7 @@ class _UsersPage extends State<UsersPage> {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(50),
           child: Column(
             children: [
               const CSearchTextField(moduleNombre: 'Usuarios'),
