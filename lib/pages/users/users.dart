@@ -14,7 +14,7 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPage extends State<UsersPage> {
   DBase dbase = DBase();
-  List<Users> usersL = [];
+  List<Map<String, dynamic>> usersL = [];
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _UsersPage extends State<UsersPage> {
   }
 
   _loadUsers() async {
-    List<Users> auxUsers = await dbase.queryUsers();
+    List<Map<String, dynamic>> auxUsers = await dbase.queryUsersView();
 
     setState(() {
       usersL = auxUsers;
@@ -58,7 +58,7 @@ class _UsersPage extends State<UsersPage> {
                 height: 25,
               ),
               Expanded(
-                child: CTable(moduleNombre: 'Usuarios', recordsList: usersL),
+                child: CTable(moduleNombre: 'Usuarios', recordsList: usersL, tableType: TableType.users,),
               ),
               const SizedBox(
                 height: 25,

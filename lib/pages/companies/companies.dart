@@ -14,7 +14,7 @@ class CompaniesPage extends StatefulWidget {
 class _CompaniesPage extends State < CompaniesPage >{
 
   DBase dbase = DBase();
-  List<Companies> companiesL = [];
+  List<Map<String, dynamic>> companiesL = [];
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _CompaniesPage extends State < CompaniesPage >{
   }
 
   _loadCompanies() async {
-    List<Companies> auxCompanies = await dbase.queryCompanies();
+    List<Map<String, dynamic>> auxCompanies = await dbase.queryCompanies();
 
     setState(() {
       companiesL = auxCompanies;
@@ -50,7 +50,7 @@ class _CompaniesPage extends State < CompaniesPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Empresas'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Empresas', recordsList: companiesL),
+              CTable(moduleNombre: 'Empresas', recordsList: companiesL, tableType: TableType.companies,),
               const SizedBox(height: 25,),
               const CButtonSearch(moduleNombre: 'Empresa')
             ],

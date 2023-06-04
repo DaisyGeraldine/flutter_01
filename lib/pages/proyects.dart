@@ -15,7 +15,7 @@ class ProyectsPage extends StatefulWidget {
 class _ProyectsPage extends State < ProyectsPage >{
 
   DBase dbase = DBase();
-  List<Projects> projectsL = [];
+  List<Map<String, dynamic>> projectsL = [];
 
   @override
   void initState() {
@@ -24,7 +24,7 @@ class _ProyectsPage extends State < ProyectsPage >{
   }
 
   _loadProjects() async {
-    List<Projects> auxProjects = await dbase.queryProjects();
+    List<Map<String, dynamic>> auxProjects = await dbase.queryProjects();
 
     setState(() {
       projectsL = auxProjects;
@@ -51,7 +51,7 @@ class _ProyectsPage extends State < ProyectsPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Proyecto'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Proyecto', recordsList: projectsL,),
+              CTable(moduleNombre: 'Proyecto', recordsList: projectsL, tableType: TableType.projects,),
               const SizedBox(height: 25,),
               const CButtonSearch(moduleNombre: 'Proyecto')
             ],

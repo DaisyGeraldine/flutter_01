@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:drawer_views_project/DataBase/dbtables.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
@@ -40,7 +41,10 @@ class DBase {
     return await db.rawQuery(sql, arguments);
   }*/
 
-  queryUsers() async {
+
+/// Query the database for all users
+
+  Future<List<Users>> queryUsers() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> userMap = await db.query("user");
 
@@ -55,8 +59,75 @@ class DBase {
             password: userMap[i]['password'],
             role: userMap[i]['role'],
             phone: userMap[i]['phone'],
-            address: userMap[i]['address']));
+            address: userMap[i]['address']));        
   }
+
+/// Query the database for all users with any fields especifics
+
+Future<List<Map<String, dynamic>>> queryUsersView() async {
+  final Database db = await openDB();
+
+  String query = '''
+    SELECT u.id, u.name, u.role
+    FROM user u
+  ''';
+
+  final List<Map<String, dynamic>> result = await db.rawQuery(query);
+  final Random random = Random();
+
+  List<Map<String, dynamic>> updatedResult = result.map((item) {
+    //todo: add random values the list users
+    int tareasPendientes = random.nextInt(25) + 1;
+    int leadsCreados = random.nextInt(15) + 1;
+    String ventasganadas = "${random.nextInt(5) + 1} / ${random.nextInt(5000)} PEN";
+
+    return {
+      ...item,
+      "tareaspendientes": tareasPendientes,
+      "leadscreados": leadsCreados,
+      "ventasganadas": ventasganadas,
+    };
+  }).toList();
+
+  print('vista usuario: '+ query);
+  return updatedResult;
+}
+
+
+/// Query the database for all users with any fields especifics
+
+Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) async {
+  final Database db = await openDB();
+
+  String query = '''
+    SELECT u.id, u.name, u.role
+    FROM user u
+    WHERE u.name LIKE '%$searchValue%'
+  ''';
+
+  final List<Map<String, dynamic>> result = await db.rawQuery(query);
+  final Random random = Random();
+
+  List<Map<String, dynamic>> updatedResult = result.map((item) {
+    //todo: add random values the list users
+    int tareasPendientes = random.nextInt(25) + 1;
+    int leadsCreados = random.nextInt(15) + 1;
+    String ventasganadas = "${random.nextInt(5) + 1} / ${random.nextInt(5000)} PEN";
+
+    return {
+      ...item,
+      "tareaspendientes": tareasPendientes,
+      "leadscreados": leadsCreados,
+      "ventasganadas": ventasganadas,
+    };
+  }).toList();
+
+  print('vista usuario: '+ query);
+  return updatedResult;
+}
+
+
+
 
   queryContacts() async {
     final Database db = await openDB();

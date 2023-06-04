@@ -13,7 +13,7 @@ class ContactsPage extends StatefulWidget {
 class _ContactsPage extends State < ContactsPage >{
 
   DBase dbase = DBase();
-  List<Contacts> contactsL = [];
+  List<Map<String, dynamic>> contactsL = [];
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _ContactsPage extends State < ContactsPage >{
   }
 
   _loadContacts() async {
-    List<Contacts> auxContacts = await dbase.queryContacts();
+    List<Map<String, dynamic>> auxContacts = await dbase.queryContacts();
 
     setState(() {
       contactsL = auxContacts;
@@ -49,7 +49,7 @@ class _ContactsPage extends State < ContactsPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Contacto'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Contacto', recordsList: contactsL,)
+              CTable(moduleNombre: 'Contacto', recordsList: contactsL, tableType: TableType.contacts,)
             ],
           ),
         ),

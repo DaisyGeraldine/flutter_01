@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class CTable extends StatelessWidget {
   List<String> nameKeys = [];
   final String moduleNombre;
-  final List<dynamic> recordsList;
+  final List<Map<String, dynamic>> recordsList;
   final TableType tableType;
   late int lenHeader;
   //int lenHeader = recordsList[0].toJson().length;
@@ -12,9 +12,9 @@ class CTable extends StatelessWidget {
     Key? key,
     required this.moduleNombre,
     required this.recordsList,
-    this.tableType = TableType.users,
+    required this.tableType,
   }) : super(key: key) {
-    lenHeader = recordsList.isNotEmpty ? recordsList[0].toJson().length : 0;
+    lenHeader = recordsList.isNotEmpty ? recordsList[0].length : 0;
   }
 
   @override
@@ -22,7 +22,7 @@ class CTable extends StatelessWidget {
     //nameKeys = tableType.value;
     nameKeys.clear();
     if (recordsList.isNotEmpty) {
-      nameKeys.addAll(recordsList[0].toJson().keys);
+      nameKeys.addAll(recordsList[0].keys);
     }
     return Column(
       children: [
@@ -69,13 +69,14 @@ class CTable extends StatelessWidget {
                 );
               }),*/
               //here use the enum
-              children: List.generate(tableType.value.length, (index) {
+              children: List.generate(tableType.valueMap.length, (index) {
+                print(tableType.valueMap.length);
                 return Expanded(
-                  flex: index == 0 ? 1 : index == 1 ? 3 : index == 2 ? 3 : index == 3 ? 1 : index == 4 ? 1 : 1,
+                  flex: tableType.valueMap.values.toList()[index],
                   child: Text(
                     //headers the tables
                     //nameKeys[index],
-                    tableType.value[index],
+                    tableType.valueMap.keys.toList()[index].toString(),
                     style: const TextStyle(
                         fontSize: 15,
                         color: CupertinoColors.black,
@@ -119,21 +120,70 @@ class CTable extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        for (var column = 0; column < lenHeader; column++)
+                        for (var column = 0; column < (lenHeader + 1); column++)
                           Expanded(
-                            child: Text(
-                              recordsList[0]
-                                  .toJson()
-                                  .values
-                                  .toList()[column]
-                                  .toString(),
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: CupertinoColors.black,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.normal,
+                            flex: tableType.valueMap.values.toList()[column],
+                            child: column == lenHeader
+                            ?
+                            //want to add a button with border circular
+                            
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CupertinoButton(
+                                  padding: const EdgeInsets.all(0),
+                                  minSize: 0,
+                                  onPressed: () {},
+                                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+                                  color: Color.fromARGB(255, 215, 201, 201),
+                                  child: const Icon(CupertinoIcons.pencil,
+                                    color: Color.fromARGB(255,37,78,90), size: 20),
+                                ),
+                                CupertinoButton(
+                                  padding: const EdgeInsets.all(0),
+                                  minSize: 0,
+                                  onPressed: () {},
+                                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+                                  color: Color.fromARGB(255, 215, 201, 201),
+                                  child: const Icon(CupertinoIcons.delete,
+                                    color: Color.fromARGB(255, 126,16,8), size: 20),
+                                ),
+                                CupertinoButton(
+                                  padding: const EdgeInsets.all(0),
+                                  minSize: 0,
+                                  onPressed: () {},
+                                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+                                  color: Color.fromARGB(255, 215, 201, 201),
+                                  child: const Icon(CupertinoIcons.exclamationmark_circle,
+                                    color: Color.fromARGB(255,37,78,90), size: 20),
+                                ),
+                              ],
+                            )
+                                  /*child: CupertinoButton(
+                                    padding: const EdgeInsets.all(0),
+                                    minSize: 0,
+                                      onPressed: () {},
+                                      borderRadius: const BorderRadius.all(Radius.circular(100)),
+                                      color: Color.fromARGB(255, 215, 201, 201),
+                                      child: const Icon(CupertinoIcons.delete,
+                                        color: Color.fromARGB(255, 126,16,8), size: 20),
+                                    ),*/
+                              
+                            
+                            : 
+                              Text(
+                                recordsList[0]
+                                    .values
+                                    .toList()[column]
+                                    .toString(),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: CupertinoColors.black,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              
                               ),
-                            ),
                           ),
                       ],
                     ),
@@ -177,31 +227,39 @@ class CTable extends StatelessWidget {
 
 // Create enum for table types
 enum TableType {
-  contacts(value: [
-    'Nro',
-    'Nombre',
-    'DNI',
-    'Cargo',
-  ]),
-  companies(value: [
-    'Nro',
-    'Nombre',
-    'RUC',
-    'Telefono',
-    'Direccion',
-  ]),
-  users(value: [
-    'N°',
-    'Asesor',
-    'Cargo',
-    'Tareas pendientes',
-    'Leads  creados',
-    'Ventas Ganadas',
-    'Detalle'
-  ]);
+  contacts(valueMap: {
+    'Nro' : 1,
+    'Nombre': 2,
+    'DNI' : 2,
+    'Cargo' : 3,
+  }),
+  companies(valueMap: {  
+    'Nro' : 1,
+    'Nombre' : 2,
+    'RUC' : 3,
+    'Telefono' : 3,
+    'Direccion' : 3,
+  }),
+  users(valueMap: {  
+    'N°' : 1,
+    'Asesor': 3,
+    'Cargo' : 3,
+    'Tareas pendientes' : 1,
+    'Leads  creados' : 1,
+    'Ventas Ganadas' : 1,
+    'Detalle' : 2,
+  }),
+  projects(valueMap: {
+    'N°': 1,
+    'Proyecto' : 2,
+    '%Avanzado' : 2,
+    'Presupuesto' : 3,
+    'Fecha de Cierre' : 3,
+    'Detalle' : 3
+  });
 
-  const TableType({required this.value});
-  final List<String> value;
+  const TableType({required this.valueMap});
+  final Map<String, int> valueMap;
 }
 
 

@@ -22,34 +22,35 @@ class DbTable{
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         role TEXT,
-        company TEXT,
         phone TEXT,
-        detail TEXT
+        company_id INTEGER,
+        FOREIGN KEY (company_id) REFERENCES Companies(id)
     )'''
     ,
     '''CREATE TABLE IF NOT EXISTS $dbTableCompanies(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         company_name TEXT,
-        ruc TEXT,
+        ruc INTEGER,
         location TEXT,
         legal_address TEXT,
         email TEXT,
         web_site TEXT,
         business_activity TEXT,
-        phone TEXT,
-        detail TEXT
+        phone INTEGER
     )'''
     ,
     '''CREATE TABLE IF NOT EXISTS $dbTableProjects(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_project INTEGER PRIMARY KEY AUTOINCREMENT,
         name_project TEXT,
-        company_name TEXT,
-        contact_name TEXT,
+        company_id INTEGER,
+        contact_id INTEGER,
         start_date DATE,
         end_date DATE,
         project_manager TEXT, 
         project_budget DOUBLE,
-        project_value DOUBLE
+        project_value DOUBLE,
+        FOREIGN KEY (company_id) REFERENCES Companies(id),
+        FOREIGN KEY (contact_id) REFERENCES Contacts(id)
     )'''
 
     
