@@ -122,11 +122,21 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
     };
   }).toList();
 
-  print('vista usuario: '+ query);
+  print('vista usuario: '+ query + ' , filas: '+result.length.toString());
   return updatedResult;
 }
 
+  insert(Map<String, dynamic> data) async {
+    final Database db = await openDB();
+    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
+    return await db.insert('user', data);
+  }
 
+  //delete
+  delete(int id) async {
+    final Database db = await openDB();
+    return await db.delete('user', where: 'id = ?', whereArgs: [id]);
+  }
 
 
   queryContacts() async {
@@ -180,11 +190,7 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
             ));
   }
 
-  insert(Map<String, dynamic> data) async {
-    final Database db = await openDB();
-    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
-    return await db.insert('user', data);
-  }
+
 }
 
 class Users {

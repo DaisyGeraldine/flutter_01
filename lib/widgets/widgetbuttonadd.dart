@@ -12,6 +12,7 @@ class CButtonSearch extends StatelessWidget {
     return Align(
       alignment: Alignment.topRight,
       child: CupertinoButton(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         color: const Color.fromARGB(255,0,90,193),
         child: Row(
           mainAxisSize: MainAxisSize.min,

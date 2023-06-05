@@ -50,7 +50,7 @@ class _CompaniesPage extends State < CompaniesPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Empresas'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Empresas', recordsList: companiesL, tableType: TableType.companies,),
+              //CTable(moduleNombre: 'Empresas', recordsList: companiesL, tableType: TableType.companies,),
               const SizedBox(height: 25,),
               const CButtonSearch(moduleNombre: 'Empresa')
             ],

@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:drawer_views_project/DataBase/db.dart';
 class CSearchTextField extends StatelessWidget {
-  const CSearchTextField({super.key, required this.moduleNombre});
+  const CSearchTextField({super.key, required this.moduleNombre, this.onChanged});
   final String moduleNombre;
-  
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    DBase dbase = DBase();
     final textController = TextEditingController();
     return Align(
       alignment: Alignment.topRight,
@@ -20,12 +19,8 @@ class CSearchTextField extends StatelessWidget {
             CupertinoSearchTextField(
               //backgroundColor: CupertinoColors.white,
               placeholder: 'Buscar $moduleNombre',
-              controller: textController,
-              onChanged: (value) {
-                print(value);
-                print('controller' + textController.text);
-                dbase.queryUsersbyfilterName(textController.text);
-              },
+              //controller: textController,
+              onChanged: onChanged,
             )
           ],
         )

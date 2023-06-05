@@ -1,3 +1,4 @@
+import 'package:drawer_views_project/pages/users/viewuser.dart';
 import 'package:flutter/cupertino.dart';
 
 class CTable extends StatelessWidget {
@@ -6,6 +7,12 @@ class CTable extends StatelessWidget {
   final List<Map<String, dynamic>> recordsList;
   final TableType tableType;
   late int lenHeader;
+  final Function nextPageCallback;
+  final Function previousPageCallback;
+  final Function deleteCallback;
+  //int itemsPerPage;
+  //int currentPage = 1;
+  
   //int lenHeader = recordsList[0].toJson().length;
 
   CTable({
@@ -13,6 +20,10 @@ class CTable extends StatelessWidget {
     required this.moduleNombre,
     required this.recordsList,
     required this.tableType,
+    required this.nextPageCallback,
+    required this.previousPageCallback,
+    required this.deleteCallback,
+    //this.itemsPerPage = 6, 
   }) : super(key: key) {
     lenHeader = recordsList.isNotEmpty ? recordsList[0].length : 0;
   }
@@ -21,6 +32,8 @@ class CTable extends StatelessWidget {
   Widget build(BuildContext context) {
     //nameKeys = tableType.value;
     nameKeys.clear();
+    //final startIndex = (currentPage - 1) * itemsPerPage;
+    //final endIndex = min(startIndex + itemsPerPage, recordsList.length);
     if (recordsList.isNotEmpty) {
       nameKeys.addAll(recordsList[0].keys);
     }
@@ -52,25 +65,9 @@ class CTable extends StatelessWidget {
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              /*children: List.generate(lenHeader, (index) {
-                return Expanded(
-                  flex: 2,
-                  child: Text(
-                    //headers the tables
-                    //nameKeys[index],
-                    //here we are using the enum
-                    tableType.value[index],
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: CupertinoColors.black,
-                        fontFamily: 'Arial',
-                        fontWeight: FontWeight.bold),
-                  ),
-                );
-              }),*/
-              //here use the enum
               children: List.generate(tableType.valueMap.length, (index) {
                 print(tableType.valueMap.length);
+                print('widgettable.dart'+ recordsList.length.toString());
                 return Expanded(
                   flex: tableType.valueMap.values.toList()[index],
                   child: Text(
@@ -113,7 +110,7 @@ class CTable extends StatelessWidget {
               child: ListView(
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                for (var row = 0; row < 50; row++)
+                for (var row = 0; row < recordsList.length; row++)
                   //nameKeys.addAll(recordsList[i].toJson().keys.toList());
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -131,48 +128,79 @@ class CTable extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CupertinoButton(
-                                  padding: const EdgeInsets.all(0),
                                   minSize: 0,
-                                  onPressed: () {},
                                   borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                  color: Color.fromARGB(255, 215, 201, 201),
-                                  child: const Icon(CupertinoIcons.pencil,
-                                    color: Color.fromARGB(255,37,78,90), size: 20),
-                                ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      boxShadow: [ BoxShadow(
+                                          color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                                          spreadRadius: 1,
+                                          blurRadius: 1,
+                                          offset: const Offset(0, 1), // changes position of shadow
+                                        ),
+                                      ]
+                                    ),
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Icon(CupertinoIcons.pencil, size: 16, color: const Color.fromARGB(255, 7,50,100),),
+                                  ),
+                                  onPressed: () {},
+                                ),   
                                 CupertinoButton(
-                                  padding: const EdgeInsets.all(0),
                                   minSize: 0,
-                                  onPressed: () {},
                                   borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                  color: Color.fromARGB(255, 215, 201, 201),
-                                  child: const Icon(CupertinoIcons.delete,
-                                    color: Color.fromARGB(255, 126,16,8), size: 20),
-                                ),
+                                  padding: EdgeInsets.zero,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      boxShadow: [ BoxShadow(
+                                          color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                                          spreadRadius: 1,
+                                          blurRadius: 1,
+                                          offset: const Offset(0, 1), // changes position of shadow
+                                        ),
+                                      ]
+                                    ),
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Icon(CupertinoIcons.delete, size: 16, color: const Color.fromARGB(255, 126,16,8),),
+                                  ),
+                                  onPressed: () {
+                                    deleteCallback(recordsList[row]['id']);
+                                  },
+                                ),                             
                                 CupertinoButton(
-                                  padding: const EdgeInsets.all(0),
-                                  minSize: 0,
-                                  onPressed: () {},
+                                  padding: EdgeInsets.zero,
                                   borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                  color: Color.fromARGB(255, 215, 201, 201),
-                                  child: const Icon(CupertinoIcons.exclamationmark_circle,
-                                    color: Color.fromARGB(255,37,78,90), size: 20),
+                                  minSize: 0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      boxShadow: [ BoxShadow(
+                                          color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                                          spreadRadius: 1,
+                                          blurRadius: 1,
+                                          offset: const Offset(0, 1), // changes position of shadow
+                                        ),
+                                      ]
+                                    ),
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Icon(CupertinoIcons.exclamationmark, size: 16, color: const Color.fromARGB(255, 7,50,100),),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                    CupertinoPageRoute(builder: (context) => const ViewUser(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             )
-                                  /*child: CupertinoButton(
-                                    padding: const EdgeInsets.all(0),
-                                    minSize: 0,
-                                      onPressed: () {},
-                                      borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                      color: Color.fromARGB(255, 215, 201, 201),
-                                      child: const Icon(CupertinoIcons.delete,
-                                        color: Color.fromARGB(255, 126,16,8), size: 20),
-                                    ),*/
-                              
-                            
                             : 
                               Text(
-                                recordsList[0]
+                                recordsList[row]
                                     .values
                                     .toList()[column]
                                     .toString(),
@@ -191,30 +219,36 @@ class CTable extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                      padding: const EdgeInsets.all(0),
-                      width: 150,
-                      //color: CupertinoColors.systemPurple,
-                      child: Row(
-                        children: <Widget>[
-                          CupertinoButton(
-                            onPressed: () {},
-                            child: const Icon(CupertinoIcons.left_chevron,
-                                color: CupertinoColors.black, size: 30),
-                          ),
-                          const Text('01',
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: CupertinoColors.black,
-                                fontWeight: FontWeight.normal,
-                                backgroundColor: CupertinoColors.systemBlue,
-                              )),
-                          CupertinoButton(
-                            onPressed: () {},
-                            child: const Icon(CupertinoIcons.right_chevron,
-                                color: CupertinoColors.black, size: 30),
-                          ),
-                        ],
-                      )),
+                    padding: const EdgeInsets.all(0),
+                    width: 150,
+                    //color: CupertinoColors.systemPurple,
+                    child: Row(
+                      children: <Widget>[
+                        CupertinoButton(
+                          onPressed: () {
+                            previousPageCallback();
+                          },
+                          child: const Icon(CupertinoIcons.left_chevron,
+                              color: CupertinoColors.black, size: 30),
+                        ),
+                        const Text('01',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: CupertinoColors.black,
+                            fontWeight: FontWeight.normal,
+                            backgroundColor: CupertinoColors.systemBlue,
+                          )
+                        ),
+                        CupertinoButton(
+                          onPressed: () {
+                            nextPageCallback();
+                          },
+                        child: const Icon(CupertinoIcons.right_chevron,
+                              color: CupertinoColors.black, size: 30),
+                        ),
+                      ],
+                    )
+                  ),
                 )
               ],
             ),
@@ -261,24 +295,3 @@ enum TableType {
   const TableType({required this.valueMap});
   final Map<String, int> valueMap;
 }
-
-
-/*class ContactsColumns {
-  final int nro;
-  final String nombre;
-  final String cargo;
-  final String empresa;
-  final String telefono;
-  final String detalle;
-
-  ContactsColumns(this.nro, this.nombre, this.cargo, this.empresa, this.telefono, this.detalle);
-}
-
-final List<ContactsColumns> _contactsList = [
-  ContactsColumns(1, "Julian Vargas Espinoza", "Ejecutivo de ventas", "Nombre de empresa 01", "+51 999 888 777", "icon"),
-  ContactsColumns(2, "Adrian Lopez Benavidez", "Key Account Manager", "Nombre de empresa 01", "+51 999 888 777", "icon"),
-  ContactsColumns(3, "Gonzalo Vargas Espinoza", "Gerente Comercial", "Nombre de empresa 01", "+51 999 888 777", "icon"),
-  ContactsColumns(4, "Lucia Rosales Espinoza", "Gerente General", "Nombre de empresa 01", "+51 999 888 777", "icon"),
-  ContactsColumns(5, "Maria Vargas Sanchez", "Asistente Marketing", "Nombre de empresa 01", "+51 999 888 777", "icon"),
-  ContactsColumns(6, "Victor Vargas Ramirez", "Cargo X", "Nombre de empresa 01", "+51 999 888 777", "icon")
-];*/

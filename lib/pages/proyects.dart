@@ -51,7 +51,7 @@ class _ProyectsPage extends State < ProyectsPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Proyecto'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Proyecto', recordsList: projectsL, tableType: TableType.projects,),
+              //CTable(moduleNombre: 'Proyecto', recordsList: projectsL, tableType: TableType.projects,),
               const SizedBox(height: 25,),
               const CButtonSearch(moduleNombre: 'Proyecto')
             ],

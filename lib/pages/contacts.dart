@@ -49,7 +49,7 @@ class _ContactsPage extends State < ContactsPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Contacto'),
               const SizedBox(height: 25,),
-              CTable(moduleNombre: 'Contacto', recordsList: contactsL, tableType: TableType.contacts,)
+              //CTable(moduleNombre: 'Contacto', recordsList: contactsL, tableType: TableType.contacts,)
             ],
           ),
         ),

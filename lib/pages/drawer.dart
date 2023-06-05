@@ -1,4 +1,5 @@
 import 'package:drawer_views_project/pages/users/users.dart';
+import 'package:drawer_views_project/pages/users/viewuser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -115,7 +116,7 @@ class CupertinoDrawer extends StatelessWidget {
                     child: Icon(Icons.home, color: Color.fromARGB(255, 0,90,193),),
                   ),
                 ),
-                Text('Dashboard', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
+                Text('Principal', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
               ],
             ),
             onTap: () {
@@ -133,10 +134,52 @@ class CupertinoDrawer extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 15,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.monetization_on_rounded, color: Color.fromARGB(255, 0,90,193),),
+                    child: Icon(CupertinoIcons.person_2_alt, color: Color.fromARGB(255, 0,90,193),),
                   ),
                 ),
-                Text('Leads', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
+                Text('Usuarios', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
+              ],
+            ),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const UsersPage()));
+            },
+          ),
+          const SizedBox(
+              height: 10,
+            ),
+          ListTile(
+            title: const Column(
+              children: [
+                CircleAvatar(
+                  radius: 16,
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.white,
+                    child: Icon(CupertinoIcons.group, color: Color.fromARGB(255, 0,90,193),),
+                  ),
+                ),
+                Text('Contactos', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
+              ],
+            ),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewUser()));
+            },
+          ),
+          const SizedBox(
+              height: 10,
+            ),
+          ListTile(
+            title: const Column(
+              children: [
+                CircleAvatar(
+                  radius: 16,
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.white,
+                    child: Icon(CupertinoIcons.building_2_fill, color: Color.fromARGB(255, 0,90,193),),
+                  ),
+                ),
+                Text('Empresas', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
               ],
             ),
             onTap: () {
@@ -154,78 +197,10 @@ class CupertinoDrawer extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 15,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.list_alt_outlined, color: Color.fromARGB(255, 0,90,193),),
+                    child: Icon(CupertinoIcons.square_list_fill, color: Color.fromARGB(255, 0,90,193),),
                   ),
                 ),
-                Text('Listas', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
-              ],
-            ),
-            onTap: () {
-              showCupertinoModalPopup(
-                context: context,
-                builder: (BuildContext context) {
-                  return const CupertinoDrawer1();
-                },
-              );
-            },
-          ),
-          const SizedBox(
-              height: 10,
-            ),
-          ListTile(
-            title: const Column(
-              children: [
-                CircleAvatar(
-                  radius: 16,
-                  child: CircleAvatar(
-                    radius: 15,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.task, color: Color.fromARGB(255, 0,90,193),),
-                  ),
-                ),
-                Text('Tareas', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
-              ],
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          const SizedBox(
-              height: 10,
-            ),
-          ListTile(
-            title: const Column(
-              children: [
-                CircleAvatar(
-                  radius: 16,
-                  child: CircleAvatar(
-                    radius: 15,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.money, color: Color.fromARGB(255, 0,90,193),),
-                  ),
-                ),
-                Text('Cotizador', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
-              ],
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          const SizedBox(
-              height: 10,
-            ),
-          ListTile(
-            title: const Column(
-              children: [
-                CircleAvatar(
-                  radius: 16,
-                  child: CircleAvatar(
-                    radius: 15,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, color: Color.fromARGB(255, 0,90,193),),
-                  ),
-                ),
-                Text('Perfil', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
+                Text('Proyectos', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontSize: 12,),),  
               ],
             ),
             onTap: () {

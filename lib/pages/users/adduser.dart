@@ -1,5 +1,6 @@
 //import 'package:drawer_views_project/DataBase/crud.dart';
 import 'package:drawer_views_project/DataBase/db.dart';
+import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -25,6 +26,7 @@ class _AddUser extends State<AddUser> {
   // Create a key that uniquely identifies the Form widget
   // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +58,7 @@ class _AddUser extends State<AddUser> {
                   child: Row(
                     children: [
                       Expanded(
-                        //alignment: Alignment.centerLeft,
-                
+                        //alignment: Alignment.centerLeft,         
                         child: Form(
                           key: _formKey,
                           child: Column(
@@ -72,6 +73,12 @@ class _AddUser extends State<AddUser> {
                                 ),
                                 placeholder: 'Nombre',
                                 controller: nameAsesor,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Por favor ingrese su nombre';
+                                  }
+                                  return null;
+                                },
                               ),
                               CupertinoTextFormFieldRow(
                                 decoration: const BoxDecoration(
@@ -95,6 +102,7 @@ class _AddUser extends State<AddUser> {
                                   return null;
                                 },
                               ),
+
                               CupertinoTextFormFieldRow(
                                 decoration: const BoxDecoration(
                                   border: Border(
@@ -116,6 +124,12 @@ class _AddUser extends State<AddUser> {
                                 ),
                                 placeholder: 'Correo',
                                 controller: emailAsesor,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Por favor ingrese su correo';
+                                  }
+                                  return null;
+                                },
                               ),
                             ],
                           ),
@@ -124,54 +138,74 @@ class _AddUser extends State<AddUser> {
                       const SizedBox(width: 20),
                       Expanded(
                         //alignment: Alignment.centerRight,
-                        child: Column(
-                          children: [
-                            CupertinoTextFormFieldRow(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                      color: Color.fromARGB(102,102,102, 102),
-                                      width: 0.3),
+                        child: Form(
+                          key: _formKey2,
+                          child: Column(
+                            children: [
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
                                 ),
+                                placeholder: 'Cargo del Asesor',
+                                controller: roleAsesor,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Por favor ingrese su cargo';
+                                  }
+                                  return null;
+                                },
                               ),
-                              placeholder: 'Cargo del Asesor',
-                              controller: roleAsesor,
-                            ),
-                            CupertinoTextFormFieldRow(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                      color: Color.fromARGB(102,102,102, 102),
-                                      width: 0.3),
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
                                 ),
+                                placeholder: 'Contraseña',
+                                controller: passwordAsesor,
+                                obscureText: true,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Por favor ingrese su contraseña';
+                                  }
+                                  return null;
+                                },
                               ),
-                              placeholder: 'Contraseña',
-                              controller: passwordAsesor,
-                              obscureText: true,
-                            ),
-                            CupertinoTextFormFieldRow(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                      color: Color.fromARGB(102,102,102, 102),
-                                      width: 0.3),
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
                                 ),
+                                placeholder: 'Telefono',
+                                controller: phoneAsesor,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(9),
+                                  // Only numbers can be entered
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                               ),
-                              placeholder: 'Telefono',
-                              controller: phoneAsesor,
-                            ),
-                            CupertinoTextFormFieldRow(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                      color: Color.fromARGB(102,102,102, 102),
-                                      width: 0.3),
+                              CupertinoTextFormFieldRow(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Color.fromARGB(102,102,102, 102),
+                                        width: 0.3),
+                                  ),
                                 ),
-                              ),
-                              placeholder: 'Direccion',
-                              controller: addressAsesor,
-                            )
-                          ],
+                                placeholder: 'Direccion',
+                                controller: addressAsesor,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -183,6 +217,7 @@ class _AddUser extends State<AddUser> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CupertinoButton(
+                        padding: EdgeInsets.symmetric(horizontal: 26),
                         color: const Color.fromARGB(255, 255, 255, 255),
                         onPressed: onTapCancel,
                         child: const Text(
@@ -190,8 +225,9 @@ class _AddUser extends State<AddUser> {
                           style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255,0,90,193),),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 30),
                       CupertinoButton(
+                        padding: EdgeInsets.symmetric(horizontal: 26),
                         color: const Color.fromARGB(255,0,90,193),
                         onPressed: onTapCreate,
                         child: const Text(
@@ -277,7 +313,8 @@ class _AddUser extends State<AddUser> {
 
     // validar campos
     bool valid = _formKey.currentState!.validate();
-    if (!valid) {
+    bool valid2 = _formKey2.currentState!.validate();
+    if (!valid || !valid2) {
       return;
     }
     //--------
