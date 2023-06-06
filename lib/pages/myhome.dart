@@ -1,6 +1,6 @@
 import 'package:drawer_views_project/pages/companies/addcompany.dart';
 import 'package:drawer_views_project/pages/companies/companies.dart';
-import 'package:drawer_views_project/pages/contacts.dart';
+import 'package:drawer_views_project/pages/contacts/contacts.dart';
 import 'package:drawer_views_project/pages/drawer.dart';
 import 'package:drawer_views_project/pages/proyects.dart';
 import 'package:drawer_views_project/pages/users/users.dart';

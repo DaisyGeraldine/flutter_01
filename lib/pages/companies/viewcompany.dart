@@ -1,4 +1,5 @@
 
+import 'package:drawer_views_project/widgets/widgetaddcontact.dart';
 import 'package:flutter/cupertino.dart';
 
 class ViewCompany extends StatefulWidget {
@@ -10,6 +11,13 @@ class ViewCompany extends StatefulWidget {
 }
 
 class _ViewCompany extends State < ViewCompany >{
+  bool isFormVisible = false;
+
+  void toggleFormVisibility() {
+    setState(() {
+      isFormVisible = !isFormVisible;
+    });
+  }
   
   @override
   Widget build(BuildContext context){
@@ -27,9 +35,9 @@ class _ViewCompany extends State < ViewCompany >{
         child: Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
-            child: Column(
+            child: ListView(
               children: [
-                Container(
+                Container( //contenedor de la informacion de la empresa
                   padding: const EdgeInsets.only(left: 20,right: 20, top: 20, bottom: 35),
                   decoration: BoxDecoration(
                     //color: const Color.fromARGB(255, 0,90,193),
@@ -71,7 +79,7 @@ class _ViewCompany extends State < ViewCompany >{
                               child: Column(
                                 children: [
                                   CupertinoTextField(
-                                    prefix: const Text('Razón Social:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('Razón Social:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -93,7 +101,7 @@ class _ViewCompany extends State < ViewCompany >{
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoTextField(
-                                    prefix: const Text('RUC:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('RUC:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -115,7 +123,7 @@ class _ViewCompany extends State < ViewCompany >{
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoTextField(
-                                    prefix: const Text('Dirección Legal:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('Dirección Legal:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -137,7 +145,7 @@ class _ViewCompany extends State < ViewCompany >{
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoTextField(
-                                    prefix: const Text('Correo:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('Correo:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -183,7 +191,7 @@ class _ViewCompany extends State < ViewCompany >{
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   CupertinoTextField(
-                                    prefix: const Text('Página Web:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('Página Web:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -205,7 +213,7 @@ class _ViewCompany extends State < ViewCompany >{
                                   ),
                                   const SizedBox(height: 20,),
                                   CupertinoTextField(
-                                    prefix: const Text('Actividad \n Comercial:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('Actividad \nComercial:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -227,7 +235,7 @@ class _ViewCompany extends State < ViewCompany >{
                                   ),
                                   const SizedBox(height: 30,),
                                   CupertinoTextField(
-                                    prefix: const Text('Teléfono:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
+                                    prefix: const Text('Teléfono:', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
                                     //initialValue: userL[0].toJson()['Cargo'].toString(),
                                     decoration: const BoxDecoration(
                                       border: Border(
@@ -275,8 +283,11 @@ class _ViewCompany extends State < ViewCompany >{
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
-                Container(
+                const SizedBox(height: 20,),
+                const FormAddContact(), // formulario de agregar contacto
+                if (isFormVisible) const FormAddContact(),
+                Container( //Contenedor del boton para agregar contacto
+                  padding: const EdgeInsets.only(left: 20,right: 20, top: 20, bottom: 35),
                   decoration: BoxDecoration(
                     //color: const Color.fromARGB(255, 0,90,193),
                     boxShadow: [BoxShadow(
@@ -294,10 +305,28 @@ class _ViewCompany extends State < ViewCompany >{
                       style: BorderStyle.solid
                     ),),
                   ),
-                  
-                  child: Text('Contactos', style: const TextStyle(color: Color.fromARGB(255, 102, 32, 32), fontSize: 20, fontWeight: FontWeight.bold)),
-                
-                )
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 20),
+                    child: CupertinoButton(
+                      //minSize: 15,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.only(right: 10),
+                      child: const Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.add_circled_solid,
+                            color: Color.fromARGB(255, 52,199,89),
+                          ),
+                          Text('Contacto', style: TextStyle(color: Color.fromARGB(118, 60, 60, 67), fontSize: 17,)  ,),
+                        ],
+                      ),
+                      onPressed: () {
+                        toggleFormVisibility();
+                      },
+                    ),
+                  ),             
+                ),
+                const SizedBox(height: 30,),              
               ],
             ),
           ),
