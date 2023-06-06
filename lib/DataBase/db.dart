@@ -44,22 +44,24 @@ class DBase {
 
 /// Query the database for all users
 
-  Future<List<Users>> queryUsers() async {
+  Future<List<Users>> queryUserById(int idUser) async {
     final Database db = await openDB();
-    final List<Map<String, dynamic>> userMap = await db.query("user");
+    final List<Map<String, dynamic>> userMap = await db.query('user', where: 'id = ?', whereArgs: [idUser]);
 
     return List.generate(
-        userMap.length,
-        (i) => Users(
-            id: userMap[i]['id'],
-            name: userMap[i]['name'],
-            dni: userMap[i]['dni'],
-            tipo: userMap[i]['tipo'],
-            email: userMap[i]['email'],
-            password: userMap[i]['password'],
-            role: userMap[i]['role'],
-            phone: userMap[i]['phone'],
-            address: userMap[i]['address']));        
+      userMap.length,
+      (i) => Users(
+          id: userMap[i]['id'],
+          name: userMap[i]['name'],
+          dni: userMap[i]['dni'],
+          tipo: userMap[i]['tipo'],
+          email: userMap[i]['email'],
+          password: userMap[i]['password'],
+          role: userMap[i]['role'],
+          phone: userMap[i]['phone'],
+          address: userMap[i]['address']
+      )
+    );        
   }
 
 /// Query the database for all users with any fields especifics
@@ -138,6 +140,11 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
     return await db.delete('user', where: 'id = ?', whereArgs: [id]);
   }
 
+  //update
+  update(Map<String, dynamic> data) async {
+    final Database db = await openDB();
+    return await db.update('user', data, where: 'id = ?', whereArgs: [data['id']]);
+  }
 
   queryContacts() async {
     final Database db = await openDB();

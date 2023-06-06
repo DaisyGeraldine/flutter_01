@@ -162,7 +162,7 @@ class CupertinoDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewUser()));
+              Navigator.pop(context);
             },
           ),
           const SizedBox(

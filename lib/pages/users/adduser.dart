@@ -242,7 +242,8 @@ class _AddUser extends State<AddUser> {
               ],
             ),
           ),
-        ));
+        )
+      );
   }
 
   void onTapCancel() {

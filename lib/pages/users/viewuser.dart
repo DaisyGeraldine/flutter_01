@@ -1,9 +1,17 @@
-import 'dart:math';
-
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ViewUser extends StatefulWidget {
-  const ViewUser({Key? key}) : super(key: key);
+  final int  idUser;
+
+  const ViewUser({
+    Key? key, 
+    required this.idUser,
+  })
+  : super(key: key);
+    
+
 
   @override
   // ignore: library_private_types_in_public_api
@@ -11,7 +19,41 @@ class ViewUser extends StatefulWidget {
 }
 
 class _ViewUser extends State<ViewUser> {
+  DBase dbase = DBase();
+  List<Users> userL = [];
+  TextEditingController nameAsesor = TextEditingController();
+  TextEditingController dniAsesor = TextEditingController();
+  TextEditingController tipoAsesor = TextEditingController();
+  TextEditingController emailAsesor = TextEditingController();
+  TextEditingController passwordAsesor = TextEditingController();
+  TextEditingController roleAsesor = TextEditingController();
+  TextEditingController phoneAsesor = TextEditingController();
+  TextEditingController addressAsesor = TextEditingController();
 
+  @override
+  void initState() {
+    print('widget user: '+ widget.idUser.toString());
+    _loadUser();
+    super.initState();
+  }
+
+  _loadUser() async {
+    List<Users> auxUser = await dbase.queryUserById(widget.idUser);
+
+    setState(() {
+      userL = auxUser;
+      nameAsesor = TextEditingController(text: userL[0].toJson()['Nombre'].toString());
+      dniAsesor = TextEditingController(text: userL[0].toJson()['Dni'].toString());
+      tipoAsesor = TextEditingController(text: userL[0].toJson()['Tipo'].toString());
+      emailAsesor = TextEditingController(text: userL[0].toJson()['Correo'].toString());
+      passwordAsesor = TextEditingController(text: userL[0].toJson()['Contraseña'].toString());
+      roleAsesor = TextEditingController(text: userL[0].toJson()['Cargo'].toString());
+      phoneAsesor = TextEditingController(text: userL[0].toJson()['Telefono'].toString());
+      addressAsesor = TextEditingController(text: userL[0].toJson()['Direccion'].toString());
+      print(userL[0].toJson());
+      }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -19,7 +61,13 @@ class _ViewUser extends State<ViewUser> {
         middle: Text('Mi perfil', style: TextStyle(color: CupertinoColors.white)),
         backgroundColor: Color.fromARGB(255, 0, 90, 193), 
         ),
-      child: SafeArea(
+      child: 
+      userL.isEmpty 
+      ?
+      const CircularProgressIndicator()
+      :
+      SafeArea(
+
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -28,13 +76,13 @@ class _ViewUser extends State<ViewUser> {
               Container(
                 width: 200,
                 height: 200,           
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/icono_usuario.png'),
-                        fit: BoxFit.cover),
-                    color: const Color.fromARGB(255, 218, 218, 228),
-                  ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  image: const DecorationImage(
+                      image: AssetImage('assets/images/icono_usuario.png'),
+                      fit: BoxFit.cover),
+                  color: const Color.fromARGB(255, 218, 218, 228),
+                ),
               ),
               Container(
                 alignment: Alignment.topLeft,
@@ -55,9 +103,9 @@ class _ViewUser extends State<ViewUser> {
                 padding: const EdgeInsets.all(0),
                 child: Form(
                   autovalidateMode: AutovalidateMode.always,
-                  onChanged: () {
-                    Form.maybeOf(primaryFocus!.context!)?.save();
-                  },
+                  //onChanged: () {
+                   // Form.maybeOf(primaryFocus!.context!)?.save();
+                  //},
                   child: Column(                  
                       //backgroundColor: CupertinoColors.inactiveGray,
                       //header: const Text('Datos Generales', style: TextStyle(color: Color.fromARGB(255, 0,90,193), fontWeight: FontWeight.bold, fontSize: 22,)),  
@@ -67,7 +115,8 @@ class _ViewUser extends State<ViewUser> {
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('Nombre:      ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                //initialValue: userL[0].toJson()['Nombre'].toString(),
+                                //readOnly: true,      
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -75,6 +124,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: nameAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -85,13 +135,13 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("El Nombre");
                               },
                             ),
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('Cargo:           ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                //initialValue: userL[0].toJson()['Cargo'].toString(),
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -99,6 +149,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: roleAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -109,7 +160,7 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("El Cargo");
                               },
                             ),
                           ],
@@ -119,7 +170,7 @@ class _ViewUser extends State<ViewUser> {
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('DNI:             ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                //initialValue: userL[0].toJson()['Dni'].toString(),
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -127,6 +178,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: dniAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -137,13 +189,15 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("El Dni");
                               },
                             ),
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('Contraseña:  ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                //initialValue: userL[0].toJson()['Contraseña'].toString(),
+                                obscuringCharacter: '*',
+                                obscureText: true,
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -151,6 +205,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: passwordAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -161,7 +216,7 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("La contraseña");
                               },
                             ),
                           ],
@@ -171,7 +226,7 @@ class _ViewUser extends State<ViewUser> {
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('Teléfono:     ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                //initialValue: userL[0].toJson()['Telefono'].toString(),
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -179,6 +234,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: phoneAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -189,13 +245,13 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("El telefono");
                               },
                             ),
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('Correo:         ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                //initialValue: userL[0].toJson()['Correo'].toString(),
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -203,6 +259,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: emailAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -213,7 +270,7 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("El correo");
                               },
                             ),
                           ],
@@ -223,7 +280,7 @@ class _ViewUser extends State<ViewUser> {
                             Expanded(
                               child: CupertinoTextFormFieldRow(
                                 prefix: const Text('Dirección:    ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 16,)),
-                                placeholder: 'Enter text',
+                                ///initialValue: userL[0].toJson()['Direccion'].toString(),
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -231,6 +288,7 @@ class _ViewUser extends State<ViewUser> {
                                       width: 0.3),
                                   ),
                                 ),
+                                controller: addressAsesor,
                               ),
                             ),
                             CupertinoButton(
@@ -241,7 +299,7 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                // Respond to button press
+                                onTapUdate("La direccion");
                               },
                             ),
                             Expanded(child: Container()),
@@ -306,7 +364,7 @@ class _ViewUser extends State<ViewUser> {
                     Expanded(
                       child: CupertinoTextFormFieldRow(
                         prefix: const Text('Por \npresupuesto:         ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
-                        placeholder: 'Enter text',
+                        placeholder: '2\'000 PEN',
                         decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
@@ -319,7 +377,7 @@ class _ViewUser extends State<ViewUser> {
                     Expanded(
                       child: CupertinoTextFormFieldRow(
                         prefix: const Text('Por \nCantidad:            ', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold, fontSize: 17,)),
-                        placeholder: 'Enter text',
+                        placeholder: '150 Leads',
                         decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
@@ -338,5 +396,37 @@ class _ViewUser extends State<ViewUser> {
       ),   
     );
   }
-
+  onTapUdate(String campo) async {
+     dbase.update({
+      'id': widget.idUser,
+      'name': nameAsesor.text,
+      'dni': dniAsesor.text,
+      'tipo': tipoAsesor.text,
+      'email': emailAsesor.text,
+      'password': passwordAsesor.text,
+      'role': roleAsesor.text,
+      'phone': phoneAsesor.text,
+      'address': addressAsesor.text,
+    });
+    // Show a cupertino dialog to show the user was created
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('Usuario Creado'),
+          content: Text('$campo ha sido modificado'),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+

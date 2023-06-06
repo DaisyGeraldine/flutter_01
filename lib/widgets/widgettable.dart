@@ -191,7 +191,7 @@ class CTable extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) => const ViewUser(),
+                                    CupertinoPageRoute(builder: (context) => ViewUser(idUser: recordsList[row]['id'])
                                       ),
                                     );
                                   },
