@@ -1,7 +1,6 @@
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 class ViewUser extends StatefulWidget {
   final int  idUser;
 

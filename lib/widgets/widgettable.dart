@@ -104,10 +104,12 @@ class CTable extends StatelessWidget {
               color: const Color.fromARGB(255, 255, 255, 255),
               borderRadius: const BorderRadius.all(Radius.circular(2)),
               border: const Border.fromBorderSide(BorderSide(
-                    color: Color.fromARGB(255, 199,195,202),
-                    width: 1,
-                    style: BorderStyle.solid))),
-              child: ListView(
+                color: Color.fromARGB(255, 199,195,202),
+                width: 1,
+                style: BorderStyle.solid
+              ),),
+            ),
+            child: ListView(
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 for (var row = 0; row < recordsList.length; row++)
