@@ -37,8 +37,7 @@ class _CompaniesPage extends State < CompaniesPage >{
       if (maxPage >= currentPage && currentPage > 0) {
         companiesL = auxCompanies.sublist(startIndex, endIndex);
       }
-    }
-    );
+    });
   }
   
   @override
@@ -58,37 +57,64 @@ class _CompaniesPage extends State < CompaniesPage >{
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
-              const CSearchTextField(moduleNombre: 'Empresas'),
-              const SizedBox(height: 25,),
-              CTable(
-                moduleNombre: 'Empresas', 
-                recordsList: companiesL, 
-                tableType: TableType.companies,
-                nextPageCallback: () {
-                  setState(() {
-                    currentPage++;
-                    print('pag : ' + currentPage.toString());
-                    _loadCompanies();
-                  });
-                },
-                previousPageCallback: () {
-                  setState(() {
-                    currentPage--;
-                    print('pag : ' + currentPage.toString());
-                    _loadCompanies();
-                  });
-                },
-                deleteCallback: (id) {
-                  dbase.delete(id);
-                  _loadCompanies();
+              CSearchTextField(
+                moduleNombre: 'Empresas',
+                onChanged: (value) {
+                  onChangegSearch(value);
                 },
               ),
+              const SizedBox(
+                height: 25,
+              ),
+              Expanded(
+                child: CTable(
+                  moduleNombre: 'Empresas', 
+                  recordsList: companiesL, 
+                  tableType: TableType.companies,
+                  nextPageCallback: () {
+                    setState(() {
+                      currentPage++;
+                      print('pag : ' + currentPage.toString());
+                      _loadCompanies();
+                    });
+                  },
+                  previousPageCallback: () {
+                    setState(() {
+                      currentPage--;
+                      print('pag : ' + currentPage.toString());
+                      _loadCompanies();
+                    });
+                  },
+                  deleteCallback: (id) {
+                    dbase.delete(id);
+                    _loadCompanies();
+                  },
+                ),
+              ),
               const SizedBox(height: 25,),
-              const CButtonSearch(moduleNombre: 'Empresa')
+              const CButtonSearch(
+                moduleNombre: 'Empresa'
+              )
             ],
           ),
         ),
       ),
     );
   }
+
+    void onChangegSearch(String value) async {
+    print('companies.dart:' + value);
+
+    currentPage = 1;
+    List<Map<String, dynamic>> results = await dbase.queryUsersbyfilterName(value);
+    int startIndex = (currentPage - 1) * 6;
+    int endIndex = min(startIndex + 6, results.length);
+
+    setState(() {
+      //currentPage = 1;
+      companiesL = results.sublist(startIndex, endIndex);
+      //usersL = onNextPageCallback(results);
+    });
+  }
+
 }

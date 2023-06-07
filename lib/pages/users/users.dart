@@ -102,7 +102,8 @@ class _UsersPage extends State<UsersPage> {
                 height: 25,
               ),
               const CButtonSearch(
-                moduleNombre: 'Usuario')
+                moduleNombre: 'Usuario'
+              )
             ],
           ),
         ),

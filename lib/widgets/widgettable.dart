@@ -1,6 +1,5 @@
 import 'package:drawer_views_project/pages/users/viewuser.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class CTable extends StatelessWidget {
   final String moduleNombre;
@@ -37,10 +36,10 @@ class CTable extends StatelessWidget {
       nameKeys.addAll(recordsList[0].keys);
     }*/
     return 
-      recordsList.isEmpty 
-      ?
-      const CircularProgressIndicator(semanticsLabel: 'Cargando...',)
-      :
+      // recordsList.isEmpty 
+      // ?
+      // const CircularProgressIndicator(semanticsLabel: 'Cargando...',)
+      // :
       Column(
       children: [
         Container(
@@ -125,7 +124,7 @@ class CTable extends StatelessWidget {
                       children: [
                         for (var column = 0; column < (lenHeader + 1); column++)
                           Expanded(
-                            //flex: tableType.valueMap.values.toList()[column],
+                            flex: tableType.valueMap.values.toList()[column],
                             child: column == lenHeader
                             ?
                             //want to add a button with border circular
@@ -272,12 +271,14 @@ enum TableType {
     'Nombre': 2,
     'DNI' : 2,
     'Cargo' : 3,
+    'Detalle' : 2,
   }),
   companies(valueMap: {  
     'N°' : 1,
-    'Empresa' : 2,
-    'RUC' : 2,
-    'Ubicación' : 3,
+    'Empresa' : 3,
+    'RUC' : 3,
+    'Ubicación' : 5,
+    'Detalle' : 3,
   }),
   users(valueMap: {  
     'N°' : 1,
