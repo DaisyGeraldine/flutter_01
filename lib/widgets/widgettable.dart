@@ -1,8 +1,8 @@
 import 'package:drawer_views_project/pages/users/viewuser.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CTable extends StatelessWidget {
-  List<String> nameKeys = [];
   final String moduleNombre;
   final List<Map<String, dynamic>> recordsList;
   final TableType tableType;
@@ -31,13 +31,17 @@ class CTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //nameKeys = tableType.value;
-    nameKeys.clear();
     //final startIndex = (currentPage - 1) * itemsPerPage;
     //final endIndex = min(startIndex + itemsPerPage, recordsList.length);
-    if (recordsList.isNotEmpty) {
+    /*if (recordsList.isNotEmpty) {
       nameKeys.addAll(recordsList[0].keys);
-    }
-    return Column(
+    }*/
+    return 
+      recordsList.isEmpty 
+      ?
+      const CircularProgressIndicator(semanticsLabel: 'Cargando...',)
+      :
+      Column(
       children: [
         Container(
           //margin: const EdgeInsets.only(top: 10),
@@ -66,10 +70,10 @@ class CTable extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(tableType.valueMap.length, (index) {
-                print(tableType.valueMap.length);
-                print('widgettable.dart'+ recordsList.length.toString());
+                print('nro de campos:' + tableType.valueMap.length.toString());
+                print('widget table.dart :'+ recordsList.length.toString());
                 return Expanded(
-                  flex: tableType.valueMap.values.toList()[index],
+                  //flex: tableType.valueMap.values.toList()[index],
                   child: Text(
                     //headers the tables
                     //nameKeys[index],
@@ -115,13 +119,13 @@ class CTable extends StatelessWidget {
                 for (var row = 0; row < recordsList.length; row++)
                   //nameKeys.addAll(recordsList[i].toJson().keys.toList());
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         for (var column = 0; column < (lenHeader + 1); column++)
                           Expanded(
-                            flex: tableType.valueMap.values.toList()[column],
+                            //flex: tableType.valueMap.values.toList()[column],
                             child: column == lenHeader
                             ?
                             //want to add a button with border circular
@@ -272,9 +276,9 @@ enum TableType {
   companies(valueMap: {  
     'Nro' : 1,
     'Nombre' : 2,
-    'RUC' : 3,
-    'Telefono' : 3,
-    'Direccion' : 3,
+    'RUC' : 2,
+    'Telefono' : 2,
+    'Direccion' : 2,
   }),
   users(valueMap: {  
     'N°' : 1,

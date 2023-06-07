@@ -56,7 +56,7 @@ class _MyHomePage extends State<MyHomePage> {
             case 4:
               return const ProyectsPage();
             default:
-              return const AddCompany();
+              return const UsersPage();
           }
         },
       ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:drawer_views_project/widgets/widgetbuttonAdd.dart';
 import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
@@ -15,6 +17,7 @@ class _CompaniesPage extends State < CompaniesPage >{
 
   DBase dbase = DBase();
   List<Map<String, dynamic>> companiesL = [];
+  int currentPage = 1;
 
   @override
   void initState() {
@@ -24,10 +27,17 @@ class _CompaniesPage extends State < CompaniesPage >{
 
   _loadCompanies() async {
     List<Map<String, dynamic>> auxCompanies = await dbase.queryCompanies();
+    int startIndex = (currentPage - 1) * 6;
+    int endIndex = min(startIndex + 6, auxCompanies.length);
+    int maxPage = (auxCompanies.length~/6) + 1;
 
     setState(() {
-      companiesL = auxCompanies;
+      print('conteo company : ' + maxPage.toString());
+
+      if (maxPage >= currentPage && currentPage > 0) {
+        companiesL = auxCompanies.sublist(startIndex, endIndex);
       }
+    }
     );
   }
   
@@ -50,7 +60,29 @@ class _CompaniesPage extends State < CompaniesPage >{
             children: [
               const CSearchTextField(moduleNombre: 'Empresas'),
               const SizedBox(height: 25,),
-              //CTable(moduleNombre: 'Empresas', recordsList: companiesL, tableType: TableType.companies,),
+              CTable(
+                moduleNombre: 'Empresas', 
+                recordsList: companiesL, 
+                tableType: TableType.companies,
+                nextPageCallback: () {
+                  setState(() {
+                    currentPage++;
+                    print('pag : ' + currentPage.toString());
+                    _loadCompanies();
+                  });
+                },
+                previousPageCallback: () {
+                  setState(() {
+                    currentPage--;
+                    print('pag : ' + currentPage.toString());
+                    _loadCompanies();
+                  });
+                },
+                deleteCallback: (id) {
+                  dbase.delete(id);
+                  _loadCompanies();
+                },
+              ),
               const SizedBox(height: 25,),
               const CButtonSearch(moduleNombre: 'Empresa')
             ],

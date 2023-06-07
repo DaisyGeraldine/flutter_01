@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:drawer_views_project/DataBase/db.dart';
 class CSearchTextField extends StatelessWidget {
   const CSearchTextField({super.key, required this.moduleNombre, this.onChanged});
   final String moduleNombre;
@@ -7,7 +6,6 @@ class CSearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textController = TextEditingController();
     return Align(
       alignment: Alignment.topRight,
       child: Container(

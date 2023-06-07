@@ -25,18 +25,20 @@ class CButtonSearch extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          Navigator.push(
-              context,
-              moduleNombre == 'Usuario'
-                  ? CupertinoPageRoute(builder: (context) => const AddUser())
+
+          moduleNombre == 'Usuario'
+              ? Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => const AddUser()))
+              : moduleNombre == 'Proyecto'
+                  ? Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (context) => const AddProject()))
                   : moduleNombre == 'Proyecto'
-                      ? CupertinoPageRoute(
-                          builder: (context) => const AddProject())
-                      : CupertinoDialogRoute(
-                          context: context,
-                          //builder: (context) => const AddCompany(
-                          builder: (context) => const AddCompany(),
-                        ));
+                      ? Navigator.push(
+                        context, 
+                        CupertinoPageRoute(builder: (context) => const AddProject()))
+                        : onTapCreateCompany(context);           
         },
       ),
     );

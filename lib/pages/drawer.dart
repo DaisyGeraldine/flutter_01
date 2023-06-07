@@ -1,4 +1,4 @@
-import 'package:drawer_views_project/pages/companies/viewcompany.dart';
+import 'package:drawer_views_project/pages/companies/companies.dart';
 import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -183,7 +183,7 @@ class CupertinoDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewCompany()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const CompaniesPage()));
             },
           ),
           const SizedBox(

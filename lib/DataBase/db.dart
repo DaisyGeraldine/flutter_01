@@ -165,17 +165,8 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
   queryCompanies() async {
     final Database db = await openDB();
     final List<Map<String, dynamic>> companyMap = await db.query("company");
-
-    return List.generate(
-        companyMap.length,
-        (i) => Companies(
-              id: companyMap[i]['id'],
-              companyName: companyMap[i]['company_name'],
-              ruc: companyMap[i]['ruc'],
-              location: companyMap[i]['location'],
-              legalAddress: companyMap[i]['legal_address'],
-              email: companyMap[i]['email'],
-            ));
+    print('tabla companies: '+ companyMap.toString());
+    return companyMap;
   }
 
   queryProjects() async {
