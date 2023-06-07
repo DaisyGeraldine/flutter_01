@@ -1,7 +1,17 @@
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void onTapCreateCompany(BuildContext context) async {
+final nameCompany = TextEditingController();
+final rucCompany = TextEditingController();
+final addressCompany = TextEditingController();
+DBase dbase = DBase();
+
+void onTapAddCompany(BuildContext context) async {
+
+
+
   showDialog(
     context: context,
     builder: (context) {
@@ -37,6 +47,7 @@ void onTapCreateCompany(BuildContext context) async {
                           width: 0.3),
                     ),
                   ),
+                  controller: nameCompany,
                 ),
                 const SizedBox(height: 10.0),
                 CupertinoTextField(
@@ -57,6 +68,13 @@ void onTapCreateCompany(BuildContext context) async {
                           width: 0.3),
                     ),
                   ),
+                  //only input numbers are 11 digits
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(11),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  keyboardType: TextInputType.number,     
+                  controller: rucCompany,                           
                 ),
                 const SizedBox(height: 10.0),
                 CupertinoTextField(
@@ -77,6 +95,7 @@ void onTapCreateCompany(BuildContext context) async {
                           width: 0.3),
                     ),
                   ),
+                  controller: addressCompany,
                 ),
                 const SizedBox(height: 60.0),
                 Row(
@@ -93,7 +112,9 @@ void onTapCreateCompany(BuildContext context) async {
                     CupertinoButton(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       color: const Color.fromARGB(255, 0, 90, 193),
-                      onPressed: () {},
+                      onPressed: () {
+                        onTapCreateCompany(context);
+                      },
                       child: const Text('Crear', style: TextStyle(color: CupertinoColors.white, fontWeight: FontWeight.bold),),
                     ),
                   ],
@@ -105,5 +126,33 @@ void onTapCreateCompany(BuildContext context) async {
         ],
       );
     }
+  );
+}
+
+void onTapCreateCompany (BuildContext context){
+
+  BuildContext currentContext = context;
+  dbase.insertCompany({
+    'company_name': nameCompany.text,
+    'ruc' : rucCompany.text,
+    'legal_address' : addressCompany.text,
+  });
+  // Show a cupertino dialog to show the user was created
+  showCupertinoDialog(
+    context: currentContext,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        title: const Text('Empresa Creada'),
+        content: const Text('La empresa ha sido creado exitosamente'),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.pop(currentContext);
+            },
+          ),
+        ],
+      );
+    },
   );
 }

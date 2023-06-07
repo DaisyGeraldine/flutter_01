@@ -73,7 +73,7 @@ class CTable extends StatelessWidget {
                 print('nro de campos:' + tableType.valueMap.length.toString());
                 print('widget table.dart :'+ recordsList.length.toString());
                 return Expanded(
-                  //flex: tableType.valueMap.values.toList()[index],
+                  flex: tableType.valueMap.values.toList()[index],
                   child: Text(
                     //headers the tables
                     //nameKeys[index],
@@ -274,11 +274,10 @@ enum TableType {
     'Cargo' : 3,
   }),
   companies(valueMap: {  
-    'Nro' : 1,
-    'Nombre' : 2,
+    'N°' : 1,
+    'Empresa' : 2,
     'RUC' : 2,
-    'Telefono' : 2,
-    'Direccion' : 2,
+    'Ubicación' : 3,
   }),
   users(valueMap: {  
     'N°' : 1,

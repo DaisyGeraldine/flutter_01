@@ -26,7 +26,7 @@ class _CompaniesPage extends State < CompaniesPage >{
   }
 
   _loadCompanies() async {
-    List<Map<String, dynamic>> auxCompanies = await dbase.queryCompanies();
+    List<Map<String, dynamic>> auxCompanies = await dbase.queryCompaniesView();
     int startIndex = (currentPage - 1) * 6;
     int endIndex = min(startIndex + 6, auxCompanies.length);
     int maxPage = (auxCompanies.length~/6) + 1;

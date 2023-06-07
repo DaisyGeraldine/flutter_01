@@ -29,10 +29,9 @@ class DbTable{
     ,
     '''CREATE TABLE IF NOT EXISTS $dbTableCompanies(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        company_name TEXT,
-        ruc INTEGER,
-        location TEXT,
-        legal_address TEXT,
+        company_name TEXT NOT NULL,
+        ruc INTEGER NOT NULL,
+        legal_address TEXT NOT NULL,
         email TEXT,
         web_site TEXT,
         business_activity TEXT,

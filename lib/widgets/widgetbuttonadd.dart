@@ -38,7 +38,7 @@ class CButtonSearch extends StatelessWidget {
                       ? Navigator.push(
                         context, 
                         CupertinoPageRoute(builder: (context) => const AddProject()))
-                        : onTapCreateCompany(context);           
+                        : onTapAddCompany(context);           
         },
       ),
     );

@@ -91,8 +91,23 @@ Future<List<Map<String, dynamic>>> queryUsersView() async {
     };
   }).toList();
 
-  print('vista usuario: '+ query);
+  print('vista usuario: '+ result.toString());
   return updatedResult;
+}
+
+Future<List<Map<String, dynamic>>> queryCompaniesView() async {
+  final Database db = await openDB();
+
+  String query = '''
+    SELECT c.id, c.company_name, c.ruc, c.legal_address
+    FROM company c
+  ''';
+
+  final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+  print('vista company: '+ result.toString());
+
+  return result;
 }
 
 
@@ -132,6 +147,12 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
     final Database db = await openDB();
     print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
     return await db.insert('user', data);
+  }
+
+  insertCompany(Map<String, dynamic> data) async {
+    final Database db = await openDB();
+    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM company')}');
+    return await db.insert('company', data);
   }
 
   //delete
