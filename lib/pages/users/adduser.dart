@@ -252,66 +252,6 @@ class _AddUser extends State<AddUser> {
   }
 
   void onTapCreate() async {
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return SimpleDialog(
-    //         titlePadding: EdgeInsets.zero,
-    //         title: Container(
-    //           child: Text('Añadir  Empresa'),
-    //           alignment: Alignment.center,
-    //           color: Color(0xFFF9F9F9).withOpacity(0.94),
-    //           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-    //         ),
-    //         contentPadding: EdgeInsets.all(20.0),
-    //         children: [
-    //           SizedBox(
-    //             width: MediaQuery.of(context).size.width * 0.5,
-    //             child: Column(
-    //               children: [
-    //                 CupertinoTextField(
-    //                   placeholder: 'Razón Social',
-    //                 ),
-    //                 SizedBox(height: 10.0),
-    //                 CupertinoTextField(
-    //                   placeholder: 'RUC',
-    //                   suffix: GestureDetector(
-    //                     onTap: () {
-    //                       print('Se elimino el contenido del campo');
-    //                     },
-    //                     child: Icon(
-    //                       CupertinoIcons.delete,
-    //                       color: CupertinoColors.systemGrey,
-    //                     ),
-    //                   ),
-    //                 ),
-    //                 SizedBox(height: 10.0),
-    //                 CupertinoTextField(
-    //                   placeholder: 'Dirección',
-    //                 ),
-    //                 SizedBox(height: 30.0),
-    //                 Row(
-    //                   mainAxisAlignment: MainAxisAlignment.end,
-    //                   children: [
-    //                     CupertinoButton(
-    //                       onPressed: () {
-    //                         Navigator.pop(context);
-    //                       },
-    //                       child: Text('Cancelar'),
-    //                     ),
-    //                     SizedBox(width: 10.0),
-    //                     CupertinoButton.filled(
-    //                       onPressed: () {},
-    //                       child: Text('Crear'),
-    //                     ),
-    //                   ],
-    //                 )
-    //               ],
-    //             ),
-    //           )
-    //         ],
-    //       );
-    //     });
 
     // validar campos
     bool valid = _formKey.currentState!.validate();

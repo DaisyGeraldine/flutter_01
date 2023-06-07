@@ -209,6 +209,22 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
             ));
   }
 
+  existRuc(String value) async{
+    final Database db = await openDB();
+    final List<Map<String, dynamic>> companyMap = await db.query("company");
+    bool exist = false;
+    for (var i = 0; i < companyMap.length; i++) {
+      print(companyMap[i]['ruc']);
+      if (companyMap[i]['ruc'].toString() == value){
+        print(companyMap[i]['ruc']);
+        exist = true;
+      }
+    }
+    print(exist);
+
+    return exist;
+  }
+
 
 }
 
