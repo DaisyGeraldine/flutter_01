@@ -260,7 +260,7 @@ class _AddUser extends State<AddUser> {
       return;
     }
     //--------
-    dbase.insert({
+    dbase.insert('user',{
       'name': nameAsesor.text,
       'dni': dniAsesor.text,
       'tipo': tipoAsesor.text,

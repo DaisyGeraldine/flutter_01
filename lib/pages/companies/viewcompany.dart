@@ -1,9 +1,15 @@
 
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:drawer_views_project/widgets/widgetaddcontact.dart';
 import 'package:flutter/cupertino.dart';
 
 class ViewCompany extends StatefulWidget {
-  const ViewCompany({Key? key}) : super(key: key);
+  final int idCompany;
+
+  const ViewCompany({
+    Key? key,
+    required this.idCompany,
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -12,13 +18,38 @@ class ViewCompany extends StatefulWidget {
 
 class _ViewCompany extends State < ViewCompany >{
   bool isFormVisible = false;
+  DBase dbase = DBase();
+  List<Map<String, dynamic>> companyL = [];
+  TextEditingController nameCompany = TextEditingController();
+  TextEditingController rucCompany = TextEditingController();
+  TextEditingController addressCompany = TextEditingController();
 
   void toggleFormVisibility() {
     setState(() {
       isFormVisible = !isFormVisible;
     });
   }
+
+  @override
+  void initState() {
+    print('widget user: '+ widget.idCompany.toString());
+    _loadCompanyDetail();
+    super.initState();
+  }
   
+  _loadCompanyDetail() async {
+    List<Map<String, dynamic>> auxCompany = await dbase.queryCompanyDetailById(widget.idCompany);
+
+    setState(() {
+      companyL = auxCompany;
+      nameCompany = TextEditingController(text: companyL[0]['company_name'].toString());
+      rucCompany = TextEditingController(text: companyL[0]['ruc'].toString());
+      addressCompany = TextEditingController(text: companyL[0]['legal_address'].toString());
+
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context){
     return CupertinoPageScaffold(
@@ -88,6 +119,7 @@ class _ViewCompany extends State < ViewCompany >{
                                           width: 0.3),
                                       ),
                                     ),
+                                    controller: nameCompany,
                                     suffix: CupertinoButton(
                                       minSize: 15,
                                       padding: EdgeInsets.only(right: 10),
@@ -110,6 +142,7 @@ class _ViewCompany extends State < ViewCompany >{
                                           width: 0.3),
                                       ),
                                     ),
+                                    controller: rucCompany,
                                     suffix: CupertinoButton(
                                       minSize: 15,
                                       padding: EdgeInsets.only(right: 10),
@@ -132,6 +165,7 @@ class _ViewCompany extends State < ViewCompany >{
                                           width: 0.3),
                                       ),
                                     ),
+                                    controller: addressCompany,
                                     suffix: CupertinoButton(
                                       minSize: 15,
                                       padding: EdgeInsets.only(right: 10),

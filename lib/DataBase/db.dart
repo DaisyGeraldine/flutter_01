@@ -42,7 +42,7 @@ class DBase {
   }*/
 
 
-/// Query the database for all users
+  /// Query the database for all users
 
   Future<List<Users>> queryUserById(int idUser) async {
     final Database db = await openDB();
@@ -64,104 +64,124 @@ class DBase {
     );        
   }
 
-/// Query the database for all users with any fields especifics
-
-Future<List<Map<String, dynamic>>> queryUsersView() async {
-  final Database db = await openDB();
-
-  String query = '''
-    SELECT u.id, u.name, u.role
-    FROM user u
-  ''';
-
-  final List<Map<String, dynamic>> result = await db.rawQuery(query);
-  final Random random = Random();
-
-  List<Map<String, dynamic>> updatedResult = result.map((item) {
-    //todo: add random values the list users
-    int tareasPendientes = random.nextInt(25) + 1;
-    int leadsCreados = random.nextInt(15) + 1;
-    String ventasganadas = "${random.nextInt(5) + 1} / ${random.nextInt(5000)} PEN";
-
-    return {
-      ...item,
-      "tareaspendientes": tareasPendientes,
-      "leadscreados": leadsCreados,
-      "ventasganadas": ventasganadas,
-    };
-  }).toList();
-
-  print('vista usuario: '+ result.toString());
-  return updatedResult;
-}
-
-Future<List<Map<String, dynamic>>> queryCompaniesView() async {
-  final Database db = await openDB();
-
-  String query = '''
-    SELECT c.id, c.company_name, c.ruc, c.legal_address
-    FROM company c
-  ''';
-
-  final List<Map<String, dynamic>> result = await db.rawQuery(query);
-
-  print('vista company: '+ result.toString());
-
-  return result;
-}
-
-
-/// Query the database for all users with any fields especifics
-
-Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) async {
-  final Database db = await openDB();
-
-  String query = '''
-    SELECT u.id, u.name, u.role
-    FROM user u
-    WHERE u.name LIKE '%$searchValue%'
-  ''';
-
-  final List<Map<String, dynamic>> result = await db.rawQuery(query);
-  final Random random = Random();
-
-  List<Map<String, dynamic>> updatedResult = result.map((item) {
-    //todo: add random values the list users
-    int tareasPendientes = random.nextInt(25) + 1;
-    int leadsCreados = random.nextInt(15) + 1;
-    String ventasganadas = "${random.nextInt(5) + 1} / ${random.nextInt(5000)} PEN";
-
-    return {
-      ...item,
-      "tareaspendientes": tareasPendientes,
-      "leadscreados": leadsCreados,
-      "ventasganadas": ventasganadas,
-    };
-  }).toList();
-
-  print('vista usuario: '+ query + ' , filas: '+result.length.toString());
-  return updatedResult;
-}
-
-  insert(Map<String, dynamic> data) async {
+  Future<List<Map<String, dynamic>>> queryCompanyDetailById(int idCompany) async {
     final Database db = await openDB();
-    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM user')}');
-    return await db.insert('user', data);
+    final List<Map<String, dynamic>> companyMap = await db.query('company', where: 'id = ?', whereArgs: [idCompany]);
+
+    return companyMap  ;
   }
 
-  insertCompany(Map<String, dynamic> data) async {
+  /// Query the database for all users with any fields especifics
+
+  Future<List<Map<String, dynamic>>> queryUsersView() async {
     final Database db = await openDB();
-    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM company')}');
-    return await db.insert('company', data);
+
+    String query = '''
+      SELECT u.id, u.name, u.role
+      FROM user u
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+    final Random random = Random();
+
+    List<Map<String, dynamic>> updatedResult = result.map((item) {
+      //todo: add random values the list users
+      int tareasPendientes = random.nextInt(25) + 1;
+      int leadsCreados = random.nextInt(15) + 1;
+      String ventasganadas = "${random.nextInt(5) + 1} / ${random.nextInt(5000)} PEN";
+
+      return {
+        ...item,
+        "tareaspendientes": tareasPendientes,
+        "leadscreados": leadsCreados,
+        "ventasganadas": ventasganadas,
+      };
+    }).toList();
+
+    print('vista usuario: '+ result.toString());
+    return updatedResult;
   }
 
-  //delete
-  delete(int id) async {
+  Future<List<Map<String, dynamic>>> queryCompaniesView() async {
     final Database db = await openDB();
-    return await db.delete('user', where: 'id = ?', whereArgs: [id]);
+
+    String query = '''
+      SELECT c.id, c.company_name, c.ruc, c.legal_address
+      FROM company c
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+    print('vista company: '+ result.toString());
+
+    return result;
   }
 
-  //update
+
+  /// Query the database for all users with any fields especifics
+
+  Future<List<Map<String, dynamic>>> queryUsersbyName(String searchValue) async {
+    final Database db = await openDB();
+
+    String query = '''
+      SELECT u.id, u.name, u.role
+      FROM user u
+      WHERE u.name LIKE '%$searchValue%'
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+    final Random random = Random();
+
+    List<Map<String, dynamic>> updatedResult = result.map((item) {
+      //todo: add random values the list users
+      int tareasPendientes = random.nextInt(25) + 1;
+      int leadsCreados = random.nextInt(15) + 1;
+      String ventasganadas = "${random.nextInt(5) + 1} / ${random.nextInt(5000)} PEN";
+
+      return {
+        ...item,
+        "tareaspendientes": tareasPendientes,
+        "leadscreados": leadsCreados,
+        "ventasganadas": ventasganadas,
+      };
+    }).toList();
+
+    print('vista usuario: '+ query + ' , filas: '+result.length.toString());
+    return updatedResult;
+  }
+
+  /// Query the database for all companies with any fields especifics
+
+  Future<List<Map<String, dynamic>>> queryCompaniesbyName(String searchValue) async {
+    final Database db = await openDB();
+
+    String query = '''
+      SELECT c.id, c.company_name, c.ruc, c.legal_address
+      FROM company c
+      WHERE c.company_name LIKE '%$searchValue%'
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+    print('vista usuario: '+ query + ' , filas: '+result.length.toString());
+
+    return result;
+  }
+
+  //  insert row
+  insert(String table, Map<String, dynamic> data) async {
+    final Database db = await openDB();
+    print('Se acaba de agregar un registro, ${db.rawQuery('SELECT * FROM $table')}');
+    return await db.insert(table, data);
+  }
+
+  //delete row
+  delete(String table,int id) async {
+    final Database db = await openDB();
+    return await db.delete(table, where: 'id = ?', whereArgs: [id]);
+  }
+
+  //update row
   update(Map<String, dynamic> data) async {
     final Database db = await openDB();
     return await db.update('user', data, where: 'id = ?', whereArgs: [data['id']]);
@@ -221,10 +241,8 @@ Future<List<Map<String, dynamic>>> queryUsersbyfilterName(String searchValue) as
       }
     }
     print(exist);
-
     return exist;
   }
-
 
 }
 

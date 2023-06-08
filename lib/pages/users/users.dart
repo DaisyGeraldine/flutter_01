@@ -93,9 +93,10 @@ class _UsersPage extends State<UsersPage> {
                     });
                   },
                   deleteCallback: (id) {
-                    dbase.delete(id);
+                    dbase.delete('user', id);
                     _loadUsers();
                   },
+                  itemsPerPage: currentPage,
                 ),
               ),
               const SizedBox(
@@ -115,7 +116,7 @@ class _UsersPage extends State<UsersPage> {
     print('users.dart:' + value);
 
     currentPage = 1;
-    List<Map<String, dynamic>> results = await dbase.queryUsersbyfilterName(value);
+    List<Map<String, dynamic>> results = await dbase.queryUsersbyName(value);
     int startIndex = (currentPage - 1) * 6;
     int endIndex = min(startIndex + 6, results.length);
 

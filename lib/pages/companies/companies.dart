@@ -86,9 +86,10 @@ class _CompaniesPage extends State < CompaniesPage >{
                     });
                   },
                   deleteCallback: (id) {
-                    dbase.delete(id);
+                    dbase.delete('company',id);
                     _loadCompanies();
                   },
+                  itemsPerPage: currentPage,
                 ),
               ),
               const SizedBox(height: 25,),
@@ -106,7 +107,7 @@ class _CompaniesPage extends State < CompaniesPage >{
     print('companies.dart:' + value);
 
     currentPage = 1;
-    List<Map<String, dynamic>> results = await dbase.queryUsersbyfilterName(value);
+    List<Map<String, dynamic>> results = await dbase.queryCompaniesbyName(value);
     int startIndex = (currentPage - 1) * 6;
     int endIndex = min(startIndex + 6, results.length);
 

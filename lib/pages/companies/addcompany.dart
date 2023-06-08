@@ -170,43 +170,19 @@ onChangedExistRuc(String value,BuildContext context) async {
       );
     }
   }
-
-
 }
 
 void onTapCreateCompany (BuildContext context){
 
   BuildContext currentContext = context;
 
-
-  //validate if the ruc is 11 digits
-  if (rucCompany.text.length < 11) {
-    rucCompany.clear();
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CupertinoAlertDialog(
-          title: const Text('Error'),
-          content: const Text('El RUC debe tener 11 dígitos'),
-          actions: [
-            CupertinoDialogAction(
-              child: const Text('Aceptar'),
-              onPressed: () {
-                Navigator.pop(context);
-                return;
-              },
-            ),
-          ],
-        );
-      }
-    );
-  }
+  print('nro de digitos: ' + rucCompany.text.length.toString());
 
   //validate fields
   if (nameCompany.text.isEmpty || rucCompany.text.isEmpty || addressCompany.text.isEmpty) {
     showCupertinoDialog(
       context: currentContext,
-      builder: (context) {
+      builder: (currentContext) {
         return CupertinoAlertDialog(
           title: const Text('Campos Vacios'),
           content: const Text('Por favor, llene todos los campos'),
@@ -224,13 +200,37 @@ void onTapCreateCompany (BuildContext context){
     return;
   }
 
-  dbase.insertCompany({
+  //validate if the ruc is 11 digits
+  if (rucCompany.text.length < 11) {
+    //rucCompany.clear();
+    showDialog(
+      context: currentContext,
+      builder: (currentContext) {
+        return CupertinoAlertDialog(
+          title: const Text('Error'),
+          content: const Text('El RUC debe tener 11 dígitos'),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.pop(currentContext);
+              },
+            ),
+          ],
+        );
+      }
+    );
+    return;
+  }
+
+  dbase.insert('company',{
     'company_name': nameCompany.text,
     'ruc' : rucCompany.text,
     'legal_address' : addressCompany.text,
   });
   // Show a cupertino dialog to show the user was created
   showCupertinoDialog(
+    
     context: currentContext,
     builder: (context) {
       return CupertinoAlertDialog(

@@ -412,7 +412,7 @@ class _ViewUser extends State<ViewUser> {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: const Text('Usuario Creado'),
+          title: const Text('Usuario modificado'),
           content: Text('$campo ha sido modificado'),
           actions: [
             CupertinoDialogAction(

@@ -1,3 +1,4 @@
+import 'package:drawer_views_project/pages/companies/viewcompany.dart';
 import 'package:drawer_views_project/pages/users/viewuser.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,7 +10,7 @@ class CTable extends StatelessWidget {
   final Function nextPageCallback;
   final Function previousPageCallback;
   final Function deleteCallback;
-  //int itemsPerPage;
+  final int itemsPerPage;
   //int currentPage = 1;
   
   //int lenHeader = recordsList[0].toJson().length;
@@ -22,6 +23,7 @@ class CTable extends StatelessWidget {
     required this.nextPageCallback,
     required this.previousPageCallback,
     required this.deleteCallback,
+    this.itemsPerPage = 0,
     //this.itemsPerPage = 6, 
   }) : super(key: key) {
     lenHeader = recordsList.isNotEmpty ? recordsList[0].length : 0;
@@ -147,8 +149,8 @@ class CTable extends StatelessWidget {
                                         ),
                                       ]
                                     ),
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Icon(CupertinoIcons.pencil, size: 16, color: const Color.fromARGB(255, 7,50,100),),
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: const Icon(CupertinoIcons.pencil, size: 16, color: Color.fromARGB(255, 7,50,100),),
                                   ),
                                   onPressed: () {},
                                 ),   
@@ -159,7 +161,7 @@ class CTable extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      color: const Color.fromARGB(255, 255, 255, 255),
                                       boxShadow: [ BoxShadow(
                                           color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
                                           spreadRadius: 1,
@@ -168,8 +170,8 @@ class CTable extends StatelessWidget {
                                         ),
                                       ]
                                     ),
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Icon(CupertinoIcons.delete, size: 16, color: const Color.fromARGB(255, 126,16,8),),
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: const Icon(CupertinoIcons.delete, size: 16, color: Color.fromARGB(255, 126,16,8),),
                                   ),
                                   onPressed: () {
                                     deleteCallback(recordsList[row]['id']);
@@ -182,7 +184,7 @@ class CTable extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      color: const Color.fromARGB(255, 255, 255, 255),
                                       boxShadow: [ BoxShadow(
                                           color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
                                           spreadRadius: 1,
@@ -191,14 +193,13 @@ class CTable extends StatelessWidget {
                                         ),
                                       ]
                                     ),
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Icon(CupertinoIcons.exclamationmark, size: 16, color: const Color.fromARGB(255, 7,50,100),),
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: const Icon(CupertinoIcons.exclamationmark, size: 16, color: Color.fromARGB(255, 7,50,100),),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) => ViewUser(idUser: recordsList[row]['id'])
-                                      ),
-                                    );
+
+                                    onPressedRowDetail(moduleNombre, context, recordsList[row]['id']); 
+                                      
                                   },
                                 ),
                               ],
@@ -224,32 +225,51 @@ class CTable extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                    padding: const EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(2),
                     width: 150,
                     //color: CupertinoColors.systemPurple,
                     child: Row(
                       children: <Widget>[
                         CupertinoButton(
+                          padding: const EdgeInsets.all(0),
                           onPressed: () {
                             previousPageCallback();
                           },
                           child: const Icon(CupertinoIcons.left_chevron,
-                              color: CupertinoColors.black, size: 30),
+                              color: CupertinoColors.black, size: 25),
                         ),
-                        const Text('01',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: CupertinoColors.black,
-                            fontWeight: FontWeight.normal,
-                            backgroundColor: CupertinoColors.systemBlue,
-                          )
+                        Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(0),
+                          width: 30,
+                          height: 30,
+                          decoration:BoxDecoration(
+                          boxShadow: [BoxShadow(
+                            color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 2), // changes position of shadow
+                            ),
+                          ],
+                          color: const Color.fromARGB(255, 0, 90, 193).withOpacity(0.3),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                          border: const Border.fromBorderSide(BorderSide(
+                            color: Color.fromARGB(255, 199,195,202),
+                            width: 1,
+                            style: BorderStyle.solid
+                            ),),
+                          ),
+                          child: Text(itemsPerPage.toString(),
+                            style: const TextStyle(fontSize: 14,),
+                          ),
                         ),
                         CupertinoButton(
+                          padding: const EdgeInsets.all(0),
                           onPressed: () {
                             nextPageCallback();
                           },
                         child: const Icon(CupertinoIcons.right_chevron,
-                              color: CupertinoColors.black, size: 30),
+                              color: CupertinoColors.black, size: 25),
                         ),
                       ],
                     )
@@ -262,6 +282,16 @@ class CTable extends StatelessWidget {
       ],
     );
   }
+}
+
+onPressedRowDetail(String moduleNombre, BuildContext context, int id) {
+    if (moduleNombre == 'Usuarios') {
+    Navigator.push(context,CupertinoPageRoute(builder: (context) => ViewUser(idUser: id),),);
+  }
+  else if (moduleNombre == 'Empresas') {
+    Navigator.push(context,CupertinoPageRoute(builder: (context) => ViewCompany(idCompany: id),),);
+  }
+  print('pressed');
 }
 
 // Create enum for table types
