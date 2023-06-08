@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:drawer_views_project/DataBase/db.dart';
+import 'package:drawer_views_project/pages/users/adduser.dart';
 import 'package:drawer_views_project/widgets/widgetbuttonadd.dart';
 import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
 import 'package:drawer_views_project/widgets/widgettable.dart';
@@ -15,7 +16,7 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPage extends State<UsersPage> {
   DBase dbase = DBase();
-  List<Map<String, dynamic>> usersL = [];
+  List<Map<String, dynamic>> allUsers = [];
   //List<Map<String, dynamic>> newViewUsersL = [];
   int currentPage = 1;
 
@@ -27,18 +28,25 @@ class _UsersPage extends State<UsersPage> {
 
   _loadUsers() async {
     List<Map<String, dynamic>> auxUsers = await dbase.queryUsersView();
-
-    int startIndex = (currentPage - 1) * 6;
-    int endIndex = min(startIndex + 6, auxUsers.length);
-    int maxPage = (auxUsers.length~/6) + 1;
-
+    allUsers = auxUsers;
     setState(() {
-      print('conteo : ' + maxPage.toString());
+      print('conteo : ');
       //usersL = onNextPageCallback(auxUsers);
-      if (maxPage >= currentPage && currentPage > 0) {
-        usersL = auxUsers.sublist(startIndex, endIndex);
-      }
     });
+  }
+
+  List<Map<String, dynamic>> get usersL {
+    int startIndex = (currentPage - 1) * 6;
+    int endIndex = min(startIndex + 6, allUsers.length);
+    return allUsers.sublist(startIndex, endIndex);
+  }
+
+  int get elementCounter {
+    return allUsers.length;
+  }
+
+  int get maxPages {
+    return (elementCounter / 6).ceil();
   }
 
   @override
@@ -49,10 +57,8 @@ class _UsersPage extends State<UsersPage> {
             style: TextStyle(
                 color: CupertinoColors.white,
                 fontSize: 20,
-                fontWeight: FontWeight.bold
-            )
-        ),
-        backgroundColor: const Color.fromARGB(255, 0,90,193),
+                fontWeight: FontWeight.bold)),
+        backgroundColor: const Color.fromARGB(255, 0, 90, 193),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: () {},
@@ -65,7 +71,7 @@ class _UsersPage extends State<UsersPage> {
           child: Column(
             children: [
               CSearchTextField(
-                moduleNombre: 'Usuarios', 
+                moduleNombre: 'Usuarios',
                 onChanged: (value) {
                   onChangegSearch(value);
                 },
@@ -75,22 +81,14 @@ class _UsersPage extends State<UsersPage> {
               ),
               Expanded(
                 child: CTable(
-                  moduleNombre: 'Usuarios', 
-                  recordsList: usersL, 
+                  moduleNombre: 'Usuarios',
+                  recordsList: usersL,
                   tableType: TableType.users,
-                  nextPageCallback: () {
-                    setState(() {
-                      currentPage++;
-                      print('pag : ' + currentPage.toString());
-                      _loadUsers();
-                    });
-                  },
+                  nextPageCallback: onTapNextPage,
                   previousPageCallback: () {
-                    setState(() {
-                      currentPage--;
-                      print('pag : ' + currentPage.toString());
-                      _loadUsers();
-                    });
+                    currentPage--;
+                    currentPage = currentPage.clamp(1, maxPages);
+                    setState(() {});
                   },
                   deleteCallback: (id) {
                     dbase.delete('user', id);
@@ -102,9 +100,12 @@ class _UsersPage extends State<UsersPage> {
               const SizedBox(
                 height: 25,
               ),
-              const CButtonSearch(
-                moduleNombre: 'Usuario'
-              )
+              // const CButtonSearch(moduleNombre: 'Usuario'),
+              AddButton(
+                label: 'Usuario',
+                route: const AddUser(),
+                onSucess: onSucessNewUser,
+              ),
             ],
           ),
         ),
@@ -112,19 +113,19 @@ class _UsersPage extends State<UsersPage> {
     );
   }
 
+  void onTapNextPage() {
+    currentPage++;
+    currentPage = currentPage.clamp(1, maxPages);
+    setState(() {});
+  }
+
   void onChangegSearch(String value) async {
     print('users.dart:' + value);
 
     currentPage = 1;
     List<Map<String, dynamic>> results = await dbase.queryUsersbyName(value);
-    int startIndex = (currentPage - 1) * 6;
-    int endIndex = min(startIndex + 6, results.length);
-
-    setState(() {
-      //currentPage = 1;
-      usersL = results.sublist(startIndex, endIndex);
-      //usersL = onNextPageCallback(results);
-    });
+    allUsers = results;
+    setState(() {});
   }
 
   /*List<Map<String, dynamic>> onNextPageCallback(List<Map<String, dynamic>> newListFilter){
@@ -137,4 +138,8 @@ class _UsersPage extends State<UsersPage> {
     return newViewUsersL;
   }*/
 
+  void onSucessNewUser() {
+    print('Nuevo usuario creado');
+    _loadUsers();
+  }
 }

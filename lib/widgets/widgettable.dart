@@ -12,7 +12,7 @@ class CTable extends StatelessWidget {
   final Function deleteCallback;
   final int itemsPerPage;
   //int currentPage = 1;
-  
+
   //int lenHeader = recordsList[0].toJson().length;
 
   CTable({
@@ -24,7 +24,7 @@ class CTable extends StatelessWidget {
     required this.previousPageCallback,
     required this.deleteCallback,
     this.itemsPerPage = 0,
-    //this.itemsPerPage = 6, 
+    //this.itemsPerPage = 6,
   }) : super(key: key) {
     lenHeader = recordsList.isNotEmpty ? recordsList[0].length : 0;
   }
@@ -37,12 +37,12 @@ class CTable extends StatelessWidget {
     /*if (recordsList.isNotEmpty) {
       nameKeys.addAll(recordsList[0].keys);
     }*/
-    return 
-      // recordsList.isEmpty 
-      // ?
-      // const CircularProgressIndicator(semanticsLabel: 'Cargando...',)
-      // :
-      Column(
+    return
+        // recordsList.isEmpty
+        // ?
+        // const CircularProgressIndicator(semanticsLabel: 'Cargando...',)
+        // :
+        Column(
       children: [
         Container(
           //margin: const EdgeInsets.only(top: 10),
@@ -51,7 +51,8 @@ class CTable extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                color:
+                    const Color.fromARGB(255, 143, 143, 143).withOpacity(0.3),
                 spreadRadius: 1,
                 blurRadius: 1,
                 offset: const Offset(0, 1), // changes position of shadow
@@ -61,7 +62,8 @@ class CTable extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             border: Border.fromBorderSide(
               BorderSide(
-                color: const Color.fromARGB(255, 143,143,143).withOpacity(0.2),
+                color:
+                    const Color.fromARGB(255, 143, 143, 143).withOpacity(0.2),
                 width: 1,
                 style: BorderStyle.solid,
               ),
@@ -72,7 +74,7 @@ class CTable extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(tableType.valueMap.length, (index) {
                 print('nro de campos:' + tableType.valueMap.length.toString());
-                print('widget table.dart :'+ recordsList.length.toString());
+                print('widget table.dart :' + recordsList.length.toString());
                 return Expanded(
                   flex: tableType.valueMap.values.toList()[index],
                   child: Text(
@@ -100,7 +102,8 @@ class CTable extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
+                  color:
+                      const Color.fromARGB(255, 143, 143, 143).withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 1,
                   offset: const Offset(0, 1), // changes position of shadow
@@ -108,172 +111,241 @@ class CTable extends StatelessWidget {
               ],
               color: const Color.fromARGB(255, 255, 255, 255),
               borderRadius: const BorderRadius.all(Radius.circular(2)),
-              border: const Border.fromBorderSide(BorderSide(
-                color: Color.fromARGB(255, 199,195,202),
-                width: 1,
-                style: BorderStyle.solid
-              ),),
+              border: const Border.fromBorderSide(
+                BorderSide(
+                    color: Color.fromARGB(255, 199, 195, 202),
+                    width: 1,
+                    style: BorderStyle.solid),
+              ),
             ),
-            child: ListView(
+            child: Column(
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                for (var row = 0; row < recordsList.length; row++)
-                  //nameKeys.addAll(recordsList[i].toJson().keys.toList());
-                  Padding(
-                    padding: const EdgeInsets.all(0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        for (var column = 0; column < (lenHeader + 1); column++)
-                          Expanded(
-                            flex: tableType.valueMap.values.toList()[column],
-                            child: column == lenHeader
-                            ?
-                            //want to add a button with border circular
-                            
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CupertinoButton(
-                                  minSize: 0,
-                                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      boxShadow: [ BoxShadow(
-                                          color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
-                                          spreadRadius: 1,
-                                          blurRadius: 1,
-                                          offset: const Offset(0, 1), // changes position of shadow
-                                        ),
-                                      ]
-                                    ),
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: const Icon(CupertinoIcons.pencil, size: 16, color: Color.fromARGB(255, 7,50,100),),
-                                  ),
-                                  onPressed: () {},
-                                ),   
-                                CupertinoButton(
-                                  minSize: 0,
-                                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                  padding: EdgeInsets.zero,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: const Color.fromARGB(255, 255, 255, 255),
-                                      boxShadow: [ BoxShadow(
-                                          color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
-                                          spreadRadius: 1,
-                                          blurRadius: 1,
-                                          offset: const Offset(0, 1), // changes position of shadow
-                                        ),
-                                      ]
-                                    ),
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: const Icon(CupertinoIcons.delete, size: 16, color: Color.fromARGB(255, 126,16,8),),
-                                  ),
-                                  onPressed: () {
-                                    deleteCallback(recordsList[row]['id']);
-                                  },
-                                ),                             
-                                CupertinoButton(
-                                  padding: EdgeInsets.zero,
-                                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                                  minSize: 0,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: const Color.fromARGB(255, 255, 255, 255),
-                                      boxShadow: [ BoxShadow(
-                                          color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
-                                          spreadRadius: 1,
-                                          blurRadius: 1,
-                                          offset: const Offset(0, 1), // changes position of shadow
-                                        ),
-                                      ]
-                                    ),
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: const Icon(CupertinoIcons.exclamationmark, size: 16, color: Color.fromARGB(255, 7,50,100),),
-                                  ),
-                                  onPressed: () {
+                Expanded(
+                  child: ListView(
+                    children: [
+                      for (var row = 0; row < recordsList.length; row++)
+                        //nameKeys.addAll(recordsList[i].toJson().keys.toList());
+                        Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              for (var column = 0;
+                                  column < (lenHeader + 1);
+                                  column++)
+                                Expanded(
+                                  flex: tableType.valueMap.values
+                                      .toList()[column],
+                                  child: column == lenHeader
+                                      ?
+                                      //want to add a button with border circular
 
-                                    onPressedRowDetail(moduleNombre, context, recordsList[row]['id']); 
-                                      
-                                  },
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            CupertinoButton(
+                                              minSize: 0,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(100)),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                143,
+                                                                143,
+                                                                143)
+                                                            .withOpacity(0.3),
+                                                        spreadRadius: 1,
+                                                        blurRadius: 1,
+                                                        offset: const Offset(0,
+                                                            1), // changes position of shadow
+                                                      ),
+                                                    ]),
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: const Icon(
+                                                  CupertinoIcons.pencil,
+                                                  size: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 7, 50, 100),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                            CupertinoButton(
+                                              minSize: 0,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(100)),
+                                              padding: EdgeInsets.zero,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: const Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                143,
+                                                                143,
+                                                                143)
+                                                            .withOpacity(0.3),
+                                                        spreadRadius: 1,
+                                                        blurRadius: 1,
+                                                        offset: const Offset(0,
+                                                            1), // changes position of shadow
+                                                      ),
+                                                    ]),
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: const Icon(
+                                                  CupertinoIcons.delete,
+                                                  size: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 126, 16, 8),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                deleteCallback(
+                                                    recordsList[row]['id']);
+                                              },
+                                            ),
+                                            CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(100)),
+                                              minSize: 0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: const Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                143,
+                                                                143,
+                                                                143)
+                                                            .withOpacity(0.3),
+                                                        spreadRadius: 1,
+                                                        blurRadius: 1,
+                                                        offset: const Offset(0,
+                                                            1), // changes position of shadow
+                                                      ),
+                                                    ]),
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: const Icon(
+                                                  CupertinoIcons
+                                                      .exclamationmark,
+                                                  size: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 7, 50, 100),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                onPressedRowDetail(
+                                                    moduleNombre,
+                                                    context,
+                                                    recordsList[row]['id']);
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : Text(
+                                          recordsList[row]
+                                              .values
+                                              .toList()[column]
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: CupertinoColors.black,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
                                 ),
-                              ],
-                            )
-                            : 
-                              Text(
-                                recordsList[row]
-                                    .values
-                                    .toList()[column]
-                                    .toString(),
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: CupertinoColors.black,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              
-                              ),
+                            ],
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
                   ),
+                ),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                    padding: const EdgeInsets.all(2),
-                    width: 150,
-                    //color: CupertinoColors.systemPurple,
-                    child: Row(
-                      children: <Widget>[
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0),
-                          onPressed: () {
-                            previousPageCallback();
-                          },
-                          child: const Icon(CupertinoIcons.left_chevron,
-                              color: CupertinoColors.black, size: 25),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(0),
-                          width: 30,
-                          height: 30,
-                          decoration:BoxDecoration(
-                          boxShadow: [BoxShadow(
-                            color: const Color.fromARGB(255, 143,143,143).withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 2), // changes position of shadow
+                      padding: const EdgeInsets.all(2),
+                      width: 150,
+                      //color: CupertinoColors.systemPurple,
+                      child: Row(
+                        children: <Widget>[
+                          CupertinoButton(
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {
+                              previousPageCallback();
+                            },
+                            child: const Icon(CupertinoIcons.left_chevron,
+                                color: CupertinoColors.black, size: 25),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(0),
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 143, 143, 143)
+                                          .withOpacity(0.3),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(
+                                      0, 2), // changes position of shadow
+                                ),
+                              ],
+                              color: const Color.fromARGB(255, 0, 90, 193)
+                                  .withOpacity(0.3),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              border: const Border.fromBorderSide(
+                                BorderSide(
+                                    color: Color.fromARGB(255, 199, 195, 202),
+                                    width: 1,
+                                    style: BorderStyle.solid),
+                              ),
                             ),
-                          ],
-                          color: const Color.fromARGB(255, 0, 90, 193).withOpacity(0.3),
-                          borderRadius: const BorderRadius.all(Radius.circular(8)),
-                          border: const Border.fromBorderSide(BorderSide(
-                            color: Color.fromARGB(255, 199,195,202),
-                            width: 1,
-                            style: BorderStyle.solid
-                            ),),
+                            child: Text(
+                              itemsPerPage.toString(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
-                          child: Text(itemsPerPage.toString(),
-                            style: const TextStyle(fontSize: 14,),
+                          CupertinoButton(
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {
+                              nextPageCallback();
+                            },
+                            child: const Icon(CupertinoIcons.right_chevron,
+                                color: CupertinoColors.black, size: 25),
                           ),
-                        ),
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0),
-                          onPressed: () {
-                            nextPageCallback();
-                          },
-                        child: const Icon(CupertinoIcons.right_chevron,
-                              color: CupertinoColors.black, size: 25),
-                        ),
-                      ],
-                    )
-                  ),
+                        ],
+                      )),
                 )
               ],
             ),
@@ -285,11 +357,20 @@ class CTable extends StatelessWidget {
 }
 
 onPressedRowDetail(String moduleNombre, BuildContext context, int id) {
-    if (moduleNombre == 'Usuarios') {
-    Navigator.push(context,CupertinoPageRoute(builder: (context) => ViewUser(idUser: id),),);
-  }
-  else if (moduleNombre == 'Empresas') {
-    Navigator.push(context,CupertinoPageRoute(builder: (context) => ViewCompany(idCompany: id),),);
+  if (moduleNombre == 'Usuarios') {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => ViewUser(idUser: id),
+      ),
+    );
+  } else if (moduleNombre == 'Empresas') {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => ViewCompany(idCompany: id),
+      ),
+    );
   }
   print('pressed');
 }
@@ -297,35 +378,35 @@ onPressedRowDetail(String moduleNombre, BuildContext context, int id) {
 // Create enum for table types
 enum TableType {
   contacts(valueMap: {
-    'Nro' : 1,
+    'Nro': 1,
     'Nombre': 2,
-    'DNI' : 2,
-    'Cargo' : 3,
-    'Detalle' : 2,
+    'DNI': 2,
+    'Cargo': 3,
+    'Detalle': 2,
   }),
-  companies(valueMap: {  
-    'N°' : 1,
-    'Empresa' : 3,
-    'RUC' : 3,
-    'Ubicación' : 5,
-    'Detalle' : 3,
+  companies(valueMap: {
+    'N°': 1,
+    'Empresa': 3,
+    'RUC': 3,
+    'Ubicación': 5,
+    'Detalle': 3,
   }),
-  users(valueMap: {  
-    'N°' : 1,
+  users(valueMap: {
+    'N°': 1,
     'Asesor': 3,
-    'Cargo' : 3,
-    'Tareas pendientes' : 1,
-    'Leads  creados' : 1,
-    'Ventas Ganadas' : 1,
-    'Detalle' : 2,
+    'Cargo': 3,
+    'Tareas pendientes': 1,
+    'Leads  creados': 1,
+    'Ventas Ganadas': 1,
+    'Detalle': 2,
   }),
   projects(valueMap: {
     'N°': 1,
-    'Proyecto' : 2,
-    '%Avanzado' : 2,
-    'Presupuesto' : 3,
-    'Fecha de Cierre' : 3,
-    'Detalle' : 3
+    'Proyecto': 2,
+    '%Avanzado': 2,
+    'Presupuesto': 3,
+    'Fecha de Cierre': 3,
+    'Detalle': 3
   });
 
   const TableType({required this.valueMap});
