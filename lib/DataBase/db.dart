@@ -66,10 +66,22 @@ class DBase {
 
   Future<List<Map<String, dynamic>>> queryCompanyDetailById(int idCompany) async {
     final Database db = await openDB();
-    final List<Map<String, dynamic>> companyMap = await db.query('company', where: 'id = ?', whereArgs: [idCompany]);
+    String query = '''
+      SELECT c.id, c.company_name, c.ruc, c.legal_address, c.email, c.web_site, c.business_activity, c.phone,
+      co.id as id_contact, co.name as name_contact, co.role as role_contact, co.phone as phone_contact
+      FROM company c
+      LEFT JOIN contact co ON co.company_id = c.id
+      WHERE c.id = $idCompany
+    ''';
+
+
+    final List<Map<String, dynamic>> companyMap = await db.rawQuery(query);
+    print(companyMap);
 
     return companyMap  ;
   }
+
+  // ----------------------------------------------------------------
 
   /// Query the database for all users with any fields especifics
 
@@ -182,9 +194,9 @@ class DBase {
   }
 
   //update row
-  update(Map<String, dynamic> data) async {
+  update(String table, Map<String, dynamic> data) async {
     final Database db = await openDB();
-    return await db.update('user', data, where: 'id = ?', whereArgs: [data['id']]);
+    return await db.update(table, data, where: 'id = ?', whereArgs: [data['id']]);
   }
 
   queryContacts() async {

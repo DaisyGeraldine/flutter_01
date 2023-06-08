@@ -8,11 +8,11 @@ class DbTable{
   static const tables = [ 
     '''CREATE TABLE IF NOT EXISTS $dbTableUsers(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        dni TEXT,
+        name TEXT NOT NULL,
+        dni TEXT NOT NULL,
         tipo TEXT,
         email TEXT,
-        password TEXT,
+        password TEXT NOT NULL,
         role TEXT,
         phone TEXT,
         address TEXT
@@ -20,11 +20,11 @@ class DbTable{
     ,
     '''CREATE TABLE IF NOT EXISTS $dbTableContacts(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        role TEXT,
+        name TEXT NOT NULL,
+        role TEXT NOT NULL,
         phone TEXT,
-        company_id INTEGER,
-        FOREIGN KEY (company_id) REFERENCES Companies(id)
+        company_id INTEGER NOT NULL,
+        FOREIGN KEY (company_id) REFERENCES company(id)
     )'''
     ,
     '''CREATE TABLE IF NOT EXISTS $dbTableCompanies(
@@ -32,24 +32,24 @@ class DbTable{
         company_name TEXT NOT NULL,
         ruc INTEGER NOT NULL,
         legal_address TEXT NOT NULL,
-        email TEXT,
-        web_site TEXT,
-        business_activity TEXT,
-        phone INTEGER
+        email TEXT DEFAULT '',
+        web_site TEXT DEFAULT '',
+        business_activity TEXT DEFAULT '',
+        phone INTEGER DEFAULT ''
     )'''
     ,
     '''CREATE TABLE IF NOT EXISTS $dbTableProjects(
         id_project INTEGER PRIMARY KEY AUTOINCREMENT,
-        name_project TEXT,
-        company_id INTEGER,
-        contact_id INTEGER,
+        name_project TEXT NOT NULL,
+        company_id INTEGER NOT NULL,
+        contact_id INTEGER NOT NULL,
         start_date DATE,
         end_date DATE,
         project_manager TEXT, 
         project_budget DOUBLE,
         project_value DOUBLE,
-        FOREIGN KEY (company_id) REFERENCES Companies(id),
-        FOREIGN KEY (contact_id) REFERENCES Contacts(id)
+        FOREIGN KEY (company_id) REFERENCES company(id),
+        FOREIGN KEY (contact_id) REFERENCES contact(id)
     )'''
 
     

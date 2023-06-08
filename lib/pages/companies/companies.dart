@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:drawer_views_project/DataBase/db.dart';
+import 'package:drawer_views_project/pages/companies/addcompany.dart';
 import 'package:drawer_views_project/widgets/widgetbuttonAdd.dart';
 import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
 import 'package:drawer_views_project/widgets/widgettable.dart';
@@ -16,7 +16,7 @@ class CompaniesPage extends StatefulWidget {
 class _CompaniesPage extends State < CompaniesPage >{
 
   DBase dbase = DBase();
-  List<Map<String, dynamic>> companiesL = [];
+  List<Map<String, dynamic>> allCompanies = [];
   int currentPage = 1;
 
   @override
@@ -27,24 +27,34 @@ class _CompaniesPage extends State < CompaniesPage >{
 
   _loadCompanies() async {
     List<Map<String, dynamic>> auxCompanies = await dbase.queryCompaniesView();
+    allCompanies = auxCompanies;
+
+    setState(() {});
+  }
+
+  List<Map<String, dynamic>> get companiesL {
     int startIndex = (currentPage - 1) * 6;
-    int endIndex = min(startIndex + 6, auxCompanies.length);
-    int maxPage = (auxCompanies.length~/6) + 1;
+    int endIndex = min(startIndex + 6, allCompanies.length);
+    return allCompanies.sublist(startIndex, endIndex);
+  }
 
-    setState(() {
-      print('conteo company : ' + maxPage.toString());
+  int get elementCounter {
+    return allCompanies.length;
+  }
 
-      if (maxPage >= currentPage && currentPage > 0) {
-        companiesL = auxCompanies.sublist(startIndex, endIndex);
-      }
-    });
+  int get maxPages {
+    return (elementCounter / 6).ceil();
   }
   
   @override
   Widget build(BuildContext context){
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const Text('Empresas', style: TextStyle(color: CupertinoColors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+        middle: const Text('Empresas', 
+          style: TextStyle(
+            color: CupertinoColors.white, 
+            fontSize: 20, 
+            fontWeight: FontWeight.bold)),
         backgroundColor: const Color.fromARGB(174, 7, 18, 230),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
@@ -71,19 +81,11 @@ class _CompaniesPage extends State < CompaniesPage >{
                   moduleNombre: 'Empresas', 
                   recordsList: companiesL, 
                   tableType: TableType.companies,
-                  nextPageCallback: () {
-                    setState(() {
-                      currentPage++;
-                      print('pag : ' + currentPage.toString());
-                      _loadCompanies();
-                    });
-                  },
+                  nextPageCallback: onTapNextPage,
                   previousPageCallback: () {
-                    setState(() {
-                      currentPage--;
-                      print('pag : ' + currentPage.toString());
-                      _loadCompanies();
-                    });
+                    currentPage--;
+                    currentPage = currentPage.clamp(1, maxPages);
+                    setState(() {});
                   },
                   deleteCallback: (id) {
                     dbase.delete('company',id);
@@ -93,9 +95,11 @@ class _CompaniesPage extends State < CompaniesPage >{
                 ),
               ),
               const SizedBox(height: 25,),
-              const CButtonSearch(
-                moduleNombre: 'Empresa'
-              )
+              AddButton(
+                label: 'Empresa',
+                route: const AddCompany(),
+                onSucess: onSucessNewCompany,
+              ),
             ],
           ),
         ),
@@ -103,19 +107,24 @@ class _CompaniesPage extends State < CompaniesPage >{
     );
   }
 
-    void onChangegSearch(String value) async {
+  void onTapNextPage() {
+    currentPage++;
+    currentPage = currentPage.clamp(1, maxPages);
+    setState(() {});
+  }
+
+  void onChangegSearch(String value) async {
     print('companies.dart:' + value);
 
     currentPage = 1;
     List<Map<String, dynamic>> results = await dbase.queryCompaniesbyName(value);
-    int startIndex = (currentPage - 1) * 6;
-    int endIndex = min(startIndex + 6, results.length);
+    allCompanies = results;
+    setState(() {});
+  }
 
-    setState(() {
-      //currentPage = 1;
-      companiesL = results.sublist(startIndex, endIndex);
-      //usersL = onNextPageCallback(results);
-    });
+  void onSucessNewCompany() {
+    print('Nueva empresa creada');
+    _loadCompanies();
   }
 
 }

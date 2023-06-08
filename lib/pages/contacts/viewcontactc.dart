@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class FormAddContact extends StatelessWidget {
-  const FormAddContact({super.key,});
+class FormViewContact extends StatelessWidget {
+  const FormViewContact({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +234,7 @@ class FormAddContact extends StatelessWidget {
                           ),
                           suffix: CupertinoButton(
                             minSize: 15,
-                            padding: EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 10),
                             child: const Icon(
                               CupertinoIcons.pencil,
                               color: CupertinoColors.systemGrey,
@@ -242,9 +242,28 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
-
                         ),
                         const SizedBox(height: 150,),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: CupertinoButton(
+                            //alignment: Alignment.topRight,
+                            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                            color: const Color.fromARGB(255, 0, 90, 193),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(CupertinoIcons.add, color: CupertinoColors.white),
+                                SizedBox(width: 8),
+                                Text('Guardar',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, color: CupertinoColors.white, fontSize: 17,),),
+                              ],
+                            ),
+                            onPressed: () {
+                            },
+                          ),
+                        ),
                       ],
                     )
                   ),

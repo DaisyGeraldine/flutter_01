@@ -2,9 +2,10 @@ import 'package:drawer_views_project/pages/companies/addcompany.dart';
 import 'package:drawer_views_project/pages/addproject.dart';
 import 'package:drawer_views_project/pages/users/adduser.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class CButtonSearch extends StatelessWidget {
-  const CButtonSearch({super.key, required this.moduleNombre});
+class CButtonAdd extends StatelessWidget {
+  const CButtonAdd({super.key, required this.moduleNombre});
   final String moduleNombre;
 
   @override
@@ -38,7 +39,10 @@ class CButtonSearch extends StatelessWidget {
                           context,
                           CupertinoPageRoute(
                               builder: (context) => const AddProject()))
-                      : onTapAddCompany(context);
+                      : Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => const AddProject()));
         },
       ),
     );
@@ -73,11 +77,27 @@ class AddButton extends StatelessWidget {
           ],
         ),
         onPressed: () async {
-          bool? sucess = await Navigator.push(
+          if (label == 'Empresa')
+          {
+            bool? sucess = await showDialog(
+              context: context, 
+              builder: (context){
+                return const AddCompany();
+              }) as bool?;
+
+              if (sucess == true) {
+                onSucess?.call();
+              }
+          }
+          else
+          {
+            bool? sucess = await Navigator.push(
                   context, CupertinoPageRoute(builder: (context) => route))
               as bool?;
-          if (sucess == true) {
-            onSucess?.call();
+          
+              if (sucess == true) {
+                onSucess?.call();
+              }
           }
         },
       ),

@@ -1,7 +1,9 @@
 
 import 'package:drawer_views_project/DataBase/db.dart';
-import 'package:drawer_views_project/widgets/widgetaddcontact.dart';
+import 'package:drawer_views_project/pages/contacts/addcontact.dart';
+import 'package:drawer_views_project/pages/contacts/viewcontactc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ViewCompany extends StatefulWidget {
   final int idCompany;
@@ -23,6 +25,10 @@ class _ViewCompany extends State < ViewCompany >{
   TextEditingController nameCompany = TextEditingController();
   TextEditingController rucCompany = TextEditingController();
   TextEditingController addressCompany = TextEditingController();
+  TextEditingController emailCompany = TextEditingController();
+  TextEditingController webPageCompany = TextEditingController();
+  TextEditingController activityCompany = TextEditingController();
+  TextEditingController phoneCompany = TextEditingController();
 
   void toggleFormVisibility() {
     setState(() {
@@ -40,12 +46,17 @@ class _ViewCompany extends State < ViewCompany >{
   _loadCompanyDetail() async {
     List<Map<String, dynamic>> auxCompany = await dbase.queryCompanyDetailById(widget.idCompany);
 
-    setState(() {
       companyL = auxCompany;
+      print(companyL[0]['id_company']);
       nameCompany = TextEditingController(text: companyL[0]['company_name'].toString());
       rucCompany = TextEditingController(text: companyL[0]['ruc'].toString());
       addressCompany = TextEditingController(text: companyL[0]['legal_address'].toString());
+      emailCompany = TextEditingController(text: companyL[0]['email'].toString());
+      webPageCompany = TextEditingController(text: companyL[0]['web_site'].toString());
+      activityCompany = TextEditingController(text: companyL[0]['business_activity'].toString());
+      phoneCompany = TextEditingController(text: companyL[0]['phone'].toString());
 
+    setState(() {
       }
     );
   }
@@ -60,16 +71,20 @@ class _ViewCompany extends State < ViewCompany >{
           padding: EdgeInsets.zero,
           onPressed: (){},
           child: const Icon(CupertinoIcons.person),
+          ),
         ),
-      ),
-      child: SafeArea(
-        child: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
-            child: ListView(
-              children: [
-                Container( //contenedor de la informacion de la empresa
-                  padding: const EdgeInsets.only(left: 20,right: 20, top: 20, bottom: 35),
+      child: 
+      companyL.isEmpty 
+      ?
+      const CircularProgressIndicator()
+      :
+      SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
+          child: ListView(
+            children: [
+              Container( //contenedor de la informacion de la empresa
+                 padding: const EdgeInsets.only(left: 20,right: 20, top: 20, bottom: 35),
                   decoration: BoxDecoration(
                     //color: const Color.fromARGB(255, 0,90,193),
                     boxShadow: [BoxShadow(
@@ -87,7 +102,7 @@ class _ViewCompany extends State < ViewCompany >{
                       style: BorderStyle.solid
                     ),),
                   ),
-                  
+                
                   child: Column(
                     children: [
                       Container(
@@ -122,12 +137,13 @@ class _ViewCompany extends State < ViewCompany >{
                                     controller: nameCompany,
                                     suffix: CupertinoButton(
                                       minSize: 15,
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: const Icon(
                                         CupertinoIcons.pencil,
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("La Razon Social");
                                       },
                                     ),
                                   ),
@@ -145,12 +161,13 @@ class _ViewCompany extends State < ViewCompany >{
                                     controller: rucCompany,
                                     suffix: CupertinoButton(
                                       minSize: 15,
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: const Icon(
                                         CupertinoIcons.pencil,
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("El RUC");
                                       },
                                     ),
                                   ),
@@ -168,12 +185,13 @@ class _ViewCompany extends State < ViewCompany >{
                                     controller: addressCompany,
                                     suffix: CupertinoButton(
                                       minSize: 15,
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: const Icon(
                                         CupertinoIcons.pencil,
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("La Dirección Legal");
                                       },
                                     ),
                                   ),
@@ -196,8 +214,10 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("El Correo");
                                       },
                                     ),
+                                    controller: emailCompany,
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoButton(
@@ -219,7 +239,7 @@ class _ViewCompany extends State < ViewCompany >{
                                 ],
                               )
                             ),
-                            SizedBox(width: 40,),
+                            const SizedBox(width: 40,),
                             Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -236,14 +256,16 @@ class _ViewCompany extends State < ViewCompany >{
                                     ),
                                     suffix: CupertinoButton(
                                       minSize: 15,
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: const Icon(
                                         CupertinoIcons.pencil,
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("La Página Web");
                                       },
                                     ),
+                                    controller: webPageCompany,
                                   ),
                                   const SizedBox(height: 20,),
                                   CupertinoTextField(
@@ -258,14 +280,16 @@ class _ViewCompany extends State < ViewCompany >{
                                     ),
                                     suffix: CupertinoButton(
                                       minSize: 15,
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: const Icon(
                                         CupertinoIcons.pencil,
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("La Actividad Comercial");
                                       },
                                     ),
+                                    controller: activityCompany,
                                   ),
                                   const SizedBox(height: 30,),
                                   CupertinoTextField(
@@ -280,14 +304,16 @@ class _ViewCompany extends State < ViewCompany >{
                                     ),
                                     suffix: CupertinoButton(
                                       minSize: 15,
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: const Icon(
                                         CupertinoIcons.pencil,
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
+                                        onTapUdate("El Teléfono");
                                       },
                                     ),
+                                    controller: phoneCompany,
                                   ),
                                   const SizedBox(height: 10,),
                                   const SizedBox(height: 10,),
@@ -307,18 +333,20 @@ class _ViewCompany extends State < ViewCompany >{
                                     onPressed: () {
                                     },
                                   ),
+                                  
                                 ],
                               )
                             ),
                           ],
                         ),
                       ),
-                      
+                    
                     ],
                   ),
                 ),
                 const SizedBox(height: 20,),
-                const FormAddContact(), // formulario de agregar contacto
+                if (companyL[0]['id_contact'] != null) const FormViewContact(),/// formulario de agregar contacto
+
                 if (isFormVisible) const FormAddContact(),
                 Container( //Contenedor del boton para agregar contacto
                   padding: const EdgeInsets.only(left: 20,right: 20, top: 20, bottom: 35),
@@ -359,13 +387,44 @@ class _ViewCompany extends State < ViewCompany >{
                       },
                     ),
                   ),             
-                ),
-                const SizedBox(height: 30,),              
-              ],
+               ),
+               //const SizedBox(height: 30,),              
+             ],
+           ),
+         ),
+       ),
+    );
+  }
+
+  onTapUdate(String campo) async {
+     dbase.update('company',{
+      'id': widget.idCompany,
+      'company_name': nameCompany.text,
+      'ruc': rucCompany.text,
+      'legal_address': addressCompany.text,
+      'email': emailCompany.text,
+      'web_site': webPageCompany.text,
+      'business_activity': activityCompany.text,
+      'phone': phoneCompany.text,
+    });
+    // Show a cupertino dialog to show the user was created
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('Empresa modificada'),
+          content: Text('$campo ha sido modificado'),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
             ),
-          ),
-        ),
-      ),
+          ],
+        );
+      },
     );
   }
 }

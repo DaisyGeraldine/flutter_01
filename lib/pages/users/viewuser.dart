@@ -302,7 +302,7 @@ class _ViewUser extends State<ViewUser> {
                               },
                             ),
                             Expanded(child: Container()),
-                            //corregir
+                            //corregir boton esta en blanco y no se ve ,para poder asemejar al maquetado
                             CupertinoButton(
                               minSize: 15,
                               padding: EdgeInsets.zero,
@@ -396,7 +396,7 @@ class _ViewUser extends State<ViewUser> {
     );
   }
   onTapUdate(String campo) async {
-     dbase.update({
+     dbase.update('user',{
       'id': widget.idUser,
       'name': nameAsesor.text,
       'dni': dniAsesor.text,

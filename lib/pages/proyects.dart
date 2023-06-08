@@ -53,7 +53,7 @@ class _ProyectsPage extends State < ProyectsPage >{
               const SizedBox(height: 25,),
               //CTable(moduleNombre: 'Proyecto', recordsList: projectsL, tableType: TableType.projects,),
               const SizedBox(height: 25,),
-              const CButtonSearch(moduleNombre: 'Proyecto')
+              const CButtonAdd(moduleNombre: 'Proyecto')
             ],
           ),
         ),
