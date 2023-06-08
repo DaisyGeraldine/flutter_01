@@ -425,11 +425,12 @@ onPressedRowDetail(String moduleNombre, BuildContext context, int id) {
 // Create enum for table types
 enum TableType {
   contacts(valueMap: {
-    'Nro': 1,
-    'Nombre': 2,
-    'DNI': 2,
-    'Cargo': 3,
-    'Detalle': 2,
+    'N°': 1,
+    'Nombre y apellido': 3,
+    'Cargo': 2,
+    'Empresa': 2,
+    'Telefono': 2,
+    'Detalle' :2,
   }),
   companies(valueMap: {
     'N°': 1,

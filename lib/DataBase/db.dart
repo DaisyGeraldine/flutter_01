@@ -129,6 +129,20 @@ class DBase {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> queryContactsView() async {
+    final Database db = await openDB();
+
+    String query = '''
+      SELECT co.id, co.name || ' ' || co.lastname AS nombreapellido, co.role, c.company_name, co.phone
+      FROM contact co inner join company c on co.company_id = c.id
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+    print('vista contact: '+ result.toString());
+
+    return result;
+  }
 
   /// Query the database for all users with any fields especifics
 
@@ -176,6 +190,22 @@ class DBase {
     final List<Map<String, dynamic>> result = await db.rawQuery(query);
 
     print('vista usuario: '+ query + ' , filas: '+result.length.toString());
+
+    return result;
+  }
+
+    Future<List<Map<String, dynamic>>> queryContactsbyName(String searchValue) async {
+    final Database db = await openDB();
+
+    String query = '''
+      SELECT co.id, co.name, co.role, co.lastname, co.phone
+      FROM contact co
+      WHERE co.name LIKE '%$searchValue%'
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+    print('vista contact: '+ result.toString());
 
     return result;
   }

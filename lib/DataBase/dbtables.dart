@@ -21,8 +21,12 @@ class DbTable{
     '''CREATE TABLE IF NOT EXISTS $dbTableContacts(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
+        lastname TEXT NOT NULL,
+        email TEXT NOT NULL,
         role TEXT NOT NULL,
         phone TEXT,
+        hobbies TEXT,
+        birthday DATE,
         company_id INTEGER NOT NULL,
         FOREIGN KEY (company_id) REFERENCES company(id)
     )'''

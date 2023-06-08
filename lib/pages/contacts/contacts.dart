@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:drawer_views_project/widgets/widgetsearchtextfield.dart';
 import 'package:drawer_views_project/widgets/widgettable.dart';
@@ -13,7 +14,8 @@ class ContactsPage extends StatefulWidget {
 class _ContactsPage extends State < ContactsPage >{
 
   DBase dbase = DBase();
-  List<Map<String, dynamic>> contactsL = [];
+  List<Map<String, dynamic>> allContacts = [];
+  int currentPage = 1;
 
   @override
   void initState() {
@@ -22,19 +24,34 @@ class _ContactsPage extends State < ContactsPage >{
   }
 
   _loadContacts() async {
-    List<Map<String, dynamic>> auxContacts = await dbase.queryContacts();
+    List<Map<String, dynamic>> auxContacts = await dbase.queryContactsView();
+    allContacts = auxContacts;
+    setState(() {});
+  }
 
-    setState(() {
-      contactsL = auxContacts;
-      }
-    );
+  List<Map<String, dynamic>> get contactsL {
+    int startIndex = (currentPage - 1) * 6;
+    int endIndex = min(startIndex + 6, allContacts.length);
+    return allContacts.sublist(startIndex, endIndex);
+  }
+
+  int get elementCounter {
+    return allContacts.length;
+  }
+
+  int get maxPages {
+    return (elementCounter / 6).ceil();
   }
   
   @override
   Widget build(BuildContext context){
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const Text('Contactos', style: TextStyle(color: CupertinoColors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+        middle: const Text('Contactos', 
+          style: TextStyle(
+            color: CupertinoColors.white, 
+            fontSize: 20, 
+            fontWeight: FontWeight.bold)),
         backgroundColor: const Color.fromARGB(174, 7, 18, 230),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
@@ -47,13 +64,59 @@ class _ContactsPage extends State < ContactsPage >{
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
-              const CSearchTextField(moduleNombre: 'Contacto'),
+              CSearchTextField(
+                moduleNombre: 'Contactos',
+                onChanged: (value) {
+                  onChangegSearch(value);
+                },
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Expanded(
+                child: CTable(
+                  moduleNombre: 'Contactos', 
+                  recordsList: contactsL, 
+                  tableType: TableType.contacts, 
+                  nextPageCallback: onTapNextPage,
+                  previousPageCallback: () {
+                    currentPage--;
+                    currentPage = currentPage.clamp(1, maxPages);
+                    setState(() {});
+                  },
+                  deleteCallback: (id) {
+                    dbase.delete('contact',id);
+                    _loadContacts();
+                  },
+                  itemsPerPage: currentPage,
+                ),
+              ),
               const SizedBox(height: 25,),
-              //CTable(moduleNombre: 'Contacto', recordsList: contactsL, tableType: TableType.contacts,)
             ],
           ),
         ),
       ),
     );
   }
+
+  void onTapNextPage() {
+    currentPage++;
+    currentPage = currentPage.clamp(1, maxPages);
+    setState(() {});
+  }
+
+  void onChangegSearch(String value) async {
+    print('contacts.dart:' + value);
+
+    currentPage = 1;
+    List<Map<String, dynamic>> results = await dbase.queryContactsbyName(value);
+    allContacts = results;
+    setState(() {});
+  }
+
+  void onSucessNewContact() {
+    print('Nuevo contacto creado');
+    _loadContacts();
+  }
+
 }

@@ -1,7 +1,20 @@
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
 
+///////////Campos de Contacto////////////////////////
+final nameContact = TextEditingController();
+final lastNameContact = TextEditingController();
+final emailContact = TextEditingController();
+final positionContact = TextEditingController();
+final phoneContact = TextEditingController();
+final hobbiesContact = TextEditingController();
+final birthayContact = TextEditingController();
+DBase dbase = DBase();
+
 class FormAddContact extends StatelessWidget {
-  const FormAddContact({super.key,});
+  // ignore: non_constant_identifier_names
+  const FormAddContact({super.key, required this.idCompany});
+  final int idCompany;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +81,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: nameContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -90,6 +104,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: lastNameContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -112,6 +127,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: emailContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoButton(
@@ -151,6 +167,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: phoneContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoButton(
@@ -173,7 +190,7 @@ class FormAddContact extends StatelessWidget {
                       ],
                     )
                   ),
-                  SizedBox(width: 40,),
+                  const SizedBox(width: 40,),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -198,6 +215,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: positionContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -220,6 +238,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: hobbiesContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -242,6 +261,7 @@ class FormAddContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: birthayContact,
                         ),
                         const SizedBox(height: 150,),
                         Align(
@@ -261,6 +281,7 @@ class FormAddContact extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
+                              onTapCreateContact(context, idCompany);
                             },
                           ),
                         ),
@@ -275,4 +296,87 @@ class FormAddContact extends StatelessWidget {
       ),
     );
   }
+}
+
+void onTapCreateContact (BuildContext context, int idCompany){
+
+  BuildContext currentContext = context;
+
+  //validate fields
+  /*if (nameCompany.text.isEmpty || rucCompany.text.isEmpty || addressCompany.text.isEmpty) {
+    showCupertinoDialog(
+      context: currentContext,
+      builder: (currentContext) {
+        return CupertinoAlertDialog(
+          title: const Text('Campos Vacios'),
+          content: const Text('Por favor, llene todos los campos'),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(currentContext);       
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return;
+  }*/
+
+  //validate if the ruc is 11 digits
+  /*if (rucCompany.text.length < 11) {
+    //rucCompany.clear();
+    showDialog(
+      context: currentContext,
+      builder: (currentContext) {
+        return CupertinoAlertDialog(
+          title: const Text('Error'),
+          content: const Text('El RUC debe tener 11 dígitos'),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.pop(currentContext);
+              },
+            ),
+          ],
+        );
+      }
+    );
+    return;
+  }*/
+
+  dbase.insert('contact',{
+    'name': nameContact.text,
+    'lastname' : lastNameContact.text,
+    'email': emailContact.text,
+    'role': positionContact.text,
+    'phone': phoneContact.text,
+    'hobbies': hobbiesContact.text,
+    'birthday': birthayContact.text,
+    'company_id': idCompany,
+  });
+  // Show a cupertino dialog to show the user was created
+  showCupertinoDialog(
+    
+    context: currentContext,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        title: const Text('Contacto Creado'),
+        content: const Text('El contacto ha sido creado exitosamente'),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              nameContact.clear();
+
+              Navigator.pop(currentContext);
+              Navigator.pop(currentContext);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -1,9 +1,8 @@
 import 'package:drawer_views_project/pages/companies/companies.dart';
+import 'package:drawer_views_project/pages/contacts/contacts.dart';
 import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'companies/viewcompany.dart';
 
 class CupertinoHomePage extends StatelessWidget {
   const CupertinoHomePage({super.key});
@@ -164,7 +163,7 @@ class CupertinoDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewCompany(),),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactsPage()));
             },
           ),
           const SizedBox(
@@ -254,7 +253,7 @@ class CupertinoDrawer1 extends StatelessWidget {
           ListTile(
             title: const Text('Contactos', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactsPage()));
             },
           ),
           const Divider(),

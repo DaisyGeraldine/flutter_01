@@ -22,6 +22,7 @@ class _ViewCompany extends State < ViewCompany >{
   bool isFormVisible = false;
   DBase dbase = DBase();
   List<Map<String, dynamic>> companyL = [];
+  ////////////Campos de Empresa/////////////////////////
   TextEditingController nameCompany = TextEditingController();
   TextEditingController rucCompany = TextEditingController();
   TextEditingController addressCompany = TextEditingController();
@@ -29,6 +30,15 @@ class _ViewCompany extends State < ViewCompany >{
   TextEditingController webPageCompany = TextEditingController();
   TextEditingController activityCompany = TextEditingController();
   TextEditingController phoneCompany = TextEditingController();
+
+  ///////////Campos de Contacto////////////////////////
+  TextEditingController nameContact = TextEditingController();
+  TextEditingController lastNameContact = TextEditingController();
+  TextEditingController emailContact = TextEditingController();
+  TextEditingController positionContact = TextEditingController();
+  TextEditingController phoneContact = TextEditingController();
+
+
 
   void toggleFormVisibility() {
     setState(() {
@@ -345,9 +355,10 @@ class _ViewCompany extends State < ViewCompany >{
                   ),
                 ),
                 const SizedBox(height: 20,),
+                /////////////////////////Contactos////////////////////////////////
                 if (companyL[0]['id_contact'] != null) const FormViewContact(),/// formulario de agregar contacto
 
-                if (isFormVisible) const FormAddContact(),
+                if (isFormVisible) FormAddContact(idCompany: widget.idCompany,),
                 Container( //Contenedor del boton para agregar contacto
                   padding: const EdgeInsets.only(left: 20,right: 20, top: 20, bottom: 35),
                   decoration: BoxDecoration(
