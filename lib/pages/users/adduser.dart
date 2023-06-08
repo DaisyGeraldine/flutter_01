@@ -1,10 +1,7 @@
 //import 'package:drawer_views_project/DataBase/crud.dart';
 import 'package:drawer_views_project/DataBase/db.dart';
-import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 class AddUser extends StatefulWidget {
   const AddUser({Key? key}) : super(key: key);
 
@@ -84,6 +81,10 @@ class _AddUser extends State<AddUser> {
                                       }
                                       return null;
                                     },
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[a-zA-Z]')),
+                                    ],
                                   ),
                                   CupertinoTextFormFieldRow(
                                     decoration: const BoxDecoration(
@@ -106,6 +107,9 @@ class _AddUser extends State<AddUser> {
                                         return 'Por favor ingrese su DNI';
                                       }
                                       return null;
+                                    },
+                                    onChanged: (value) {
+                                      onChangedExistDni(value);
                                     },
                                   ),
                                   CupertinoTextFormFieldRow(
@@ -261,6 +265,36 @@ class _AddUser extends State<AddUser> {
         ));
   }
 
+  void onChangedExistDni(String value) async {
+
+    if (value.length == 8) {
+      print('DNI: $value'); 
+      bool exist = await dbase.existDni(value);
+      if (exist) {
+        print('DNI exist');
+        dniAsesor.clear();
+        // ignore: use_build_context_synchronously
+        showCupertinoDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: const Text('Error'),
+              content: const Text('El DNI ingresado ya existe'),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text('Aceptar'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          }
+        );
+      }
+    }
+  }
+
   void onTapCancel() {
     Navigator.pop(context);
   }
@@ -272,6 +306,29 @@ class _AddUser extends State<AddUser> {
     if (!valid || !valid2) {
       return;
     }
+
+    if (dniAsesor.text.length < 8) {
+
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Error'),
+            content: const Text('El DNI debe tener 8 dígitos'),
+            actions: [
+              CupertinoDialogAction(
+                child: const Text('Aceptar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+      );
+      return;
+    }
+
     //--------
     dbase.insert('user', {
       'name': nameAsesor.text,

@@ -143,18 +143,19 @@ class CTable extends StatelessWidget {
 
                                       Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                              MainAxisAlignment.start,
                                           children: [
                                             CupertinoButton(
                                               minSize: 0,
+                                              padding: const EdgeInsets.only(
+                                                  left: 5, right: 5, top: 10, bottom: 10),
                                               borderRadius:
                                                   const BorderRadius.all(
                                                       Radius.circular(100)),
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: Color.fromARGB(
-                                                        255, 255, 255, 255),
+                                                    color: const Color.fromARGB(255, 255, 255, 255),
                                                     boxShadow: [
                                                       BoxShadow(
                                                         color: const Color
@@ -183,10 +184,11 @@ class CTable extends StatelessWidget {
                                             ),
                                             CupertinoButton(
                                               minSize: 0,
+                                              padding: const EdgeInsets.only(
+                                                  left: 5, right: 5, top: 10, bottom: 10),
                                               borderRadius:
                                                   const BorderRadius.all(
                                                       Radius.circular(100)),
-                                              padding: EdgeInsets.zero,
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
@@ -217,12 +219,12 @@ class CTable extends StatelessWidget {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                deleteCallback(
-                                                    recordsList[row]['id']);
+                                                onPressedDelete(context, deleteCallback, recordsList[row]['id']);
                                               },
                                             ),
                                             CupertinoButton(
-                                              padding: EdgeInsets.zero,
+                                              padding: const EdgeInsets.only(
+                                                  left: 5, right: 5, top: 10, bottom: 10),
                                               borderRadius:
                                                   const BorderRadius.all(
                                                       Radius.circular(100)),
@@ -266,17 +268,28 @@ class CTable extends StatelessWidget {
                                             ),
                                           ],
                                         )
-                                      : Text(
-                                          recordsList[row]
-                                              .values
-                                              .toList()[column]
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: CupertinoColors.black,
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                      : 
+                                      column == 0
+                                        ? Text(
+                                            (row + 1).toString(),
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              color: CupertinoColors.black,
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        : Text(
+                                            recordsList[row]
+                                                .values
+                                                .toList()[column]
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              color: CupertinoColors.black,
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         ),
                                 ),
                             ],
@@ -356,6 +369,40 @@ class CTable extends StatelessWidget {
   }
 }
 
+onPressedDelete(BuildContext context, Function deleteCallback, int id) {
+  BuildContext currentContext = context;
+  //here show messagge with alert dialog cupertino
+  showCupertinoDialog(
+    context: currentContext,
+    builder: (currentContext) =>
+        CupertinoAlertDialog(
+      title: const Text(
+          'Eliminar registro'),
+      content: const Text(
+          '¿Está seguro de eliminar este registro?'),
+      actions: [
+        CupertinoDialogAction(
+          child: const Text(
+              'Cancelar'),
+          onPressed: () {
+            Navigator.pop(
+                currentContext);
+          },
+        ),
+        CupertinoDialogAction(
+          child: const Text(
+              'Eliminar'),
+          onPressed: () {
+            deleteCallback(id);
+            Navigator.pop(
+                      context);
+          },
+        ),
+      ],
+    ),
+  );
+}
+
 onPressedRowDetail(String moduleNombre, BuildContext context, int id) {
   if (moduleNombre == 'Usuarios') {
     Navigator.push(
@@ -386,10 +433,10 @@ enum TableType {
   }),
   companies(valueMap: {
     'N°': 1,
-    'Empresa': 3,
-    'RUC': 3,
-    'Ubicación': 5,
-    'Detalle': 3,
+    'Empresa': 4,
+    'RUC': 4,
+    'Ubicación': 6,
+    'Detalle': 2,
   }),
   users(valueMap: {
     'N°': 1,

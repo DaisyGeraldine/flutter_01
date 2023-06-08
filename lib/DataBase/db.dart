@@ -244,6 +244,21 @@ class DBase {
     return exist;
   }
 
+    existDni(String value) async{
+    final Database db = await openDB();
+    final List<Map<String, dynamic>> userMap = await db.query("user");
+    bool exist = false;
+    for (var i = 0; i < userMap.length; i++) {
+      print(userMap[i]['dni']);
+      if (userMap[i]['dni'].toString() == value){
+        print(userMap[i]['dni']);
+        exist = true;
+      }
+    }
+    print(exist);
+    return exist;
+  }
+
 }
 
 class Users {
