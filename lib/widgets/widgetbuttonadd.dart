@@ -1,5 +1,5 @@
 import 'package:drawer_views_project/pages/companies/addcompany.dart';
-import 'package:drawer_views_project/pages/addproject.dart';
+import 'package:drawer_views_project/pages/projects/addproject.dart';
 import 'package:drawer_views_project/pages/users/adduser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

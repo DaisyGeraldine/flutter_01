@@ -31,13 +31,6 @@ class _ViewCompany extends State < ViewCompany >{
   TextEditingController activityCompany = TextEditingController();
   TextEditingController phoneCompany = TextEditingController();
 
-  ///////////Campos de Contacto////////////////////////
-  TextEditingController nameContact = TextEditingController();
-  TextEditingController lastNameContact = TextEditingController();
-  TextEditingController emailContact = TextEditingController();
-  TextEditingController positionContact = TextEditingController();
-  TextEditingController phoneContact = TextEditingController();
-
 
 
   void toggleFormVisibility() {
@@ -356,7 +349,7 @@ class _ViewCompany extends State < ViewCompany >{
                 ),
                 const SizedBox(height: 20,),
                 /////////////////////////Contactos////////////////////////////////
-                if (companyL[0]['id_contact'] != null) const FormViewContact(),/// formulario de agregar contacto
+                if (companyL[0]['id_contact'] != null) const FormViewContact(idContact: 1),
 
                 if (isFormVisible) FormAddContact(idCompany: widget.idCompany,),
                 Container( //Contenedor del boton para agregar contacto

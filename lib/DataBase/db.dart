@@ -81,6 +81,21 @@ class DBase {
     return companyMap  ;
   }
 
+  Future<List<Map<String, dynamic>>> queryContactById(int idContact) async {
+    final Database db = await openDB();
+    String query = '''
+      SELECT co.id, co.name, co.lastname, co.email, co.role, co.phone, co.hobbies, co.birthday
+      FROM contact co
+      WHERE co.id = $idContact
+    ''';
+
+
+    final List<Map<String, dynamic>> contactMap = await db.rawQuery(query);
+    print(contactMap);
+
+    return contactMap  ;
+  }
+
   // ----------------------------------------------------------------
 
   /// Query the database for all users with any fields especifics
@@ -144,6 +159,21 @@ class DBase {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> queryProjectsView() async {
+    final Database db = await openDB();
+
+    String query = '''
+      SELECT p.id_project, p.name_project, p.project_manager, p.project_budget, p.project_value
+      FROM project p
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+    print('vista project: '+ result.toString());
+
+    return result;
+  }
+
   /// Query the database for all users with any fields especifics
 
   Future<List<Map<String, dynamic>>> queryUsersbyName(String searchValue) async {
@@ -194,7 +224,7 @@ class DBase {
     return result;
   }
 
-    Future<List<Map<String, dynamic>>> queryContactsbyName(String searchValue) async {
+  Future<List<Map<String, dynamic>>> queryContactsbyName(String searchValue) async {
     final Database db = await openDB();
 
     String query = '''
@@ -206,6 +236,22 @@ class DBase {
     final List<Map<String, dynamic>> result = await db.rawQuery(query);
 
     print('vista contact: '+ result.toString());
+
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> queryProjectsbyName(String searchValue) async {
+    final Database db = await openDB();
+
+    String query = '''
+      SELECT p.id_project, p.name_project, p.project_manager, p.project_budget, p.project_value
+      FROM project p
+      WHERE p.name_project LIKE '%$searchValue%'
+    ''';
+
+    final List<Map<String, dynamic>> result = await db.rawQuery(query);
+
+    print('vista project: '+ result.toString());
 
     return result;
   }

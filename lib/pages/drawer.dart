@@ -1,5 +1,6 @@
 import 'package:drawer_views_project/pages/companies/companies.dart';
 import 'package:drawer_views_project/pages/contacts/contacts.dart';
+import 'package:drawer_views_project/pages/projects/proyects.dart';
 import 'package:drawer_views_project/pages/users/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -205,7 +206,7 @@ class CupertinoDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              Navigator.pop(context);
+             Navigator.push(context, MaterialPageRoute(builder: (context) => const ProjectsPage()));
             },
           ),
           const SizedBox(

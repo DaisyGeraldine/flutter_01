@@ -1,7 +1,55 @@
+import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
 
-class FormViewContact extends StatelessWidget {
-  const FormViewContact({super.key,});
+class FormViewContact extends StatefulWidget {
+  final int  idContact;
+
+  const FormViewContact({
+    Key? key, 
+    required this.idContact,
+  })
+  : super(key: key);
+    
+
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _FormViewContact createState() => _FormViewContact();
+}
+class _FormViewContact extends State<FormViewContact> {
+  DBase dbase = DBase();
+  List<Map<String, dynamic>> contactL = [];
+  TextEditingController nameContact = TextEditingController();
+  TextEditingController lastNameContact = TextEditingController();
+  TextEditingController emailContact = TextEditingController();
+  TextEditingController phoneContact = TextEditingController();
+  TextEditingController roleContact = TextEditingController();
+  TextEditingController hobbieContact = TextEditingController();
+  TextEditingController birthdayContact = TextEditingController();
+  
+  @override
+  void initState() {
+    print('widget user: '+ widget.idContact.toString());
+    _loadUser();
+    super.initState();
+  }
+
+  _loadUser() async {
+    List<Map<String, dynamic>> auxContact = await dbase.queryContactById(widget.idContact);
+
+    setState(() {
+      contactL = auxContact;
+      nameContact = TextEditingController(text: contactL[0]['name'].toString());
+      lastNameContact = TextEditingController(text: contactL[0]['lastname'].toString());
+      emailContact = TextEditingController(text: contactL[0]['email'].toString());
+      phoneContact = TextEditingController(text: contactL[0]['role'].toString());
+      roleContact = TextEditingController(text: contactL[0]['phone'].toString());
+      hobbieContact = TextEditingController(text: contactL[0]['hobbies'].toString());
+      birthdayContact = TextEditingController(text: contactL[0]['birthday'].toString());
+  
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +116,7 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: nameContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -90,6 +139,7 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: lastNameContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -112,6 +162,7 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: emailContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoButton(
@@ -151,6 +202,7 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: phoneContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoButton(
@@ -198,6 +250,7 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: roleContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -220,6 +273,7 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: hobbieContact,
                         ),
                         const SizedBox(height: 10,),
                         CupertinoTextField(
@@ -242,28 +296,10 @@ class FormViewContact extends StatelessWidget {
                             onPressed: () {
                             },
                           ),
+                          controller: birthdayContact,
                         ),
                         const SizedBox(height: 150,),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: CupertinoButton(
-                            //alignment: Alignment.topRight,
-                            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                            color: const Color.fromARGB(255, 0, 90, 193),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(CupertinoIcons.add, color: CupertinoColors.white),
-                                SizedBox(width: 8),
-                                Text('Guardar',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold, color: CupertinoColors.white, fontSize: 17,),),
-                              ],
-                            ),
-                            onPressed: () {
-                            },
-                          ),
-                        ),
+                        
                       ],
                     )
                   ),
