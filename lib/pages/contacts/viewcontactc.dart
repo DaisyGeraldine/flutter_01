@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 
 class FormViewContact extends StatefulWidget {
   final int  idContact;
+  final int  count;
 
   const FormViewContact({
     Key? key, 
     required this.idContact,
+    required this.count,
   })
   : super(key: key);
     
@@ -42,8 +44,8 @@ class _FormViewContact extends State<FormViewContact> {
       nameContact = TextEditingController(text: contactL[0]['name'].toString());
       lastNameContact = TextEditingController(text: contactL[0]['lastname'].toString());
       emailContact = TextEditingController(text: contactL[0]['email'].toString());
-      phoneContact = TextEditingController(text: contactL[0]['role'].toString());
-      roleContact = TextEditingController(text: contactL[0]['phone'].toString());
+      phoneContact = TextEditingController(text: contactL[0]['phone'].toString());
+      roleContact = TextEditingController(text: contactL[0]['role'].toString());
       hobbieContact = TextEditingController(text: contactL[0]['hobbies'].toString());
       birthdayContact = TextEditingController(text: contactL[0]['birthday'].toString());
   
@@ -80,9 +82,9 @@ class _FormViewContact extends State<FormViewContact> {
             Container(
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(left: 15,right: 15, top: 0, bottom: 20),
-              child: const Text(
-                'Contactos (1)',
-                style: TextStyle(
+              child: Text(
+                'Contacto ( ${widget.count.toString()} )',
+                style: const TextStyle(
                   color: Color.fromARGB(255, 0,90,193),
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -225,7 +227,7 @@ class _FormViewContact extends State<FormViewContact> {
                       ],
                     )
                   ),
-                  SizedBox(width: 40,),
+                  const SizedBox(width: 40,),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -242,7 +244,7 @@ class _FormViewContact extends State<FormViewContact> {
                           ),
                           suffix: CupertinoButton(
                             minSize: 15,
-                            padding: EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 10),
                             child: const Icon(
                               CupertinoIcons.pencil,
                               color: CupertinoColors.systemGrey,
@@ -265,7 +267,7 @@ class _FormViewContact extends State<FormViewContact> {
                           ),
                           suffix: CupertinoButton(
                             minSize: 15,
-                            padding: EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 10),
                             child: const Icon(
                               CupertinoIcons.pencil,
                               color: CupertinoColors.systemGrey,

@@ -269,6 +269,16 @@ class DBase {
     return await db.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
+  deleteCompany(String table,int id) async {
+    final Database db = await openDB();
+    
+    // Eliminar los registros asociados en la tabla "contact"
+    await db.delete('contact', where: 'company_id = ?', whereArgs: [id]);
+    
+    // Eliminar el registro de la tabla "company"
+    return await db.delete(table, where: 'id = ?', whereArgs: [id]);
+  }
+
   //update row
   update(String table, Map<String, dynamic> data) async {
     final Database db = await openDB();

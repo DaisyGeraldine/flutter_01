@@ -88,7 +88,7 @@ class _CompaniesPage extends State < CompaniesPage >{
                     setState(() {});
                   },
                   deleteCallback: (id) {
-                    dbase.delete('company',id);
+                    dbase.deleteCompany('company',id);
                     _loadCompanies();
                   },
                   itemsPerPage: currentPage,

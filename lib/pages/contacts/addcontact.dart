@@ -46,7 +46,7 @@ class FormAddContact extends StatelessWidget {
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(left: 15,right: 15, top: 0, bottom: 20),
               child: const Text(
-                'Contactos (1)',
+                'Contacto',
                 style: TextStyle(
                   color: Color.fromARGB(255, 0,90,193),
                   fontWeight: FontWeight.bold,
@@ -370,6 +370,12 @@ void onTapCreateContact (BuildContext context, int idCompany){
             child: const Text('OK'),
             onPressed: () {
               nameContact.clear();
+              lastNameContact.clear();
+              emailContact.clear();
+              positionContact.clear();
+              phoneContact.clear();
+              hobbiesContact.clear();
+              birthayContact.clear();
 
               Navigator.pop(currentContext);
               Navigator.pop(currentContext);

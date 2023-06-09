@@ -4,6 +4,7 @@ import 'package:drawer_views_project/pages/contacts/addcontact.dart';
 import 'package:drawer_views_project/pages/contacts/viewcontactc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ViewCompany extends StatefulWidget {
   final int idCompany;
@@ -20,6 +21,14 @@ class ViewCompany extends StatefulWidget {
 
 class _ViewCompany extends State < ViewCompany >{
   bool isFormVisible = false;
+
+  bool isEditablename = true;
+  bool isEditableRuc = true;
+  bool isEditableAddress = true;
+  bool isEditableEmail = true;
+  bool isEditableWebPage = true;
+  bool isEditableActivity = true;
+  bool isEditablePhone = true;
   DBase dbase = DBase();
   List<Map<String, dynamic>> companyL = [];
   ////////////Campos de Empresa/////////////////////////
@@ -30,6 +39,8 @@ class _ViewCompany extends State < ViewCompany >{
   TextEditingController webPageCompany = TextEditingController();
   TextEditingController activityCompany = TextEditingController();
   TextEditingController phoneCompany = TextEditingController();
+  
+  int lenCompany = 0;
 
 
 
@@ -50,6 +61,9 @@ class _ViewCompany extends State < ViewCompany >{
     List<Map<String, dynamic>> auxCompany = await dbase.queryCompanyDetailById(widget.idCompany);
 
       companyL = auxCompany;
+      lenCompany = companyL.length;
+
+
       print(companyL[0]['id_company']);
       nameCompany = TextEditingController(text: companyL[0]['company_name'].toString());
       rucCompany = TextEditingController(text: companyL[0]['ruc'].toString());
@@ -146,9 +160,24 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("La Razon Social");
+                                        setState(() {
+                                          isEditablename = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
                                     ),
+                                    readOnly: isEditablename,
+                                    style: TextStyle(
+                                      color: isEditablename ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
+                                    ),
+                                    onSubmitted:(value) => {
+                                      setState(() {
+                                        isEditablename = true;
+                                      }),
+                                      FocusScope.of(context).requestFocus(),
+                                      onTapUdate("La Razon Social")
+                                    },
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoTextField(
@@ -170,9 +199,25 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("El RUC");
+                                        setState(() {
+                                          isEditableRuc = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
+                                    ),                                      
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(11),
+                                    ],
+                                    readOnly: isEditableRuc,
+                                    style: TextStyle(
+                                      color: isEditableRuc ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
                                     ),
+                                    onSubmitted:(value) => {
+                                      isEditableRuc = true,
+                                      onTapUdate("El RUC")
+                                    },
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoTextField(
@@ -194,9 +239,21 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("La Dirección Legal");
+                                          setState(() {
+                                          isEditableAddress = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
                                     ),
+                                    readOnly: isEditableAddress,
+                                    style: TextStyle(
+                                      color: isEditableAddress ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
+                                    ),
+                                    onSubmitted:(value) => {
+                                      isEditableAddress = true,
+                                      onTapUdate("La Dirección Legal")
+                                    },
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoTextField(
@@ -217,10 +274,22 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("El Correo");
+                                        setState(() {
+                                        isEditableEmail = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
                                     ),
                                     controller: emailCompany,
+                                    readOnly: isEditableEmail,
+                                    style: TextStyle(
+                                      color: isEditableEmail ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
+                                    ),
+                                    onSubmitted:(value) => {
+                                      isEditableEmail = true,
+                                      onTapUdate("El Correo")
+                                    },
                                   ),
                                   const SizedBox(height: 10,),
                                   CupertinoButton(
@@ -265,10 +334,22 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("La Página Web");
+                                        setState(() {
+                                        isEditableWebPage = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
                                     ),
                                     controller: webPageCompany,
+                                    readOnly: isEditableWebPage,
+                                    style: TextStyle(
+                                      color: isEditableWebPage ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
+                                    ),
+                                    onSubmitted:(value) => {
+                                      isEditableWebPage = true,
+                                      onTapUdate("La Página Web")
+                                    },
                                   ),
                                   const SizedBox(height: 20,),
                                   CupertinoTextField(
@@ -289,10 +370,22 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("La Actividad Comercial");
+                                        setState(() {
+                                        isEditableActivity = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
                                     ),
                                     controller: activityCompany,
+                                    readOnly: isEditableActivity,
+                                    style: TextStyle(
+                                      color: isEditableActivity ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
+                                    ),
+                                    onSubmitted:(value) => {
+                                      isEditableActivity = true,
+                                      onTapUdate("La Actividad Comercial")
+                                    },
                                   ),
                                   const SizedBox(height: 30,),
                                   CupertinoTextField(
@@ -313,10 +406,26 @@ class _ViewCompany extends State < ViewCompany >{
                                         color: CupertinoColors.systemGrey,
                                       ),
                                       onPressed: () {
-                                        onTapUdate("El Teléfono");
+                                        setState(() {
+                                        isEditablePhone = false;
+                                        });
+                                        FocusScope.of(context).requestFocus();
                                       },
                                     ),
                                     controller: phoneCompany,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(9),
+                                    ],
+                                    readOnly: isEditablePhone,
+                                    style: TextStyle(
+                                      color: isEditablePhone ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                      fontSize: 17,
+                                    ),
+                                    onSubmitted:(value) => {
+                                      isEditablePhone = true,
+                                      onTapUdate("El Teléfono")
+                                    },
                                   ),
                                   const SizedBox(height: 10,),
                                   const SizedBox(height: 10,),
@@ -348,8 +457,10 @@ class _ViewCompany extends State < ViewCompany >{
                   ),
                 ),
                 const SizedBox(height: 20,),
-                /////////////////////////Contactos////////////////////////////////
-                if (companyL[0]['id_contact'] != null) const FormViewContact(idContact: 1),
+                ////////////////////////////////////////////////////
+                if (companyL[0]['id_contact'] != null) 
+                  for (int i = 0; i < lenCompany; i++)
+                    FormViewContact(idContact: companyL[i]['id_contact'], count: i + 1),
 
                 if (isFormVisible) FormAddContact(idCompany: widget.idCompany,),
                 Container( //Contenedor del boton para agregar contacto
@@ -401,7 +512,52 @@ class _ViewCompany extends State < ViewCompany >{
   }
 
   onTapUdate(String campo) async {
-     dbase.update('company',{
+
+    if (nameCompany.text.isEmpty || rucCompany.text.isEmpty || addressCompany.text.isEmpty) {
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Campos Obligatorios'),
+            content: const Text('Por favor, llene los campos obligatorios\n Razon social\nRuc\nDireccion Legal'),
+            actions: [
+              CupertinoDialogAction(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context);       
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    //validate if the ruc is 11 digits
+    if (rucCompany.text.length < 11) {
+      //rucCompany.clear();
+      showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Error'),
+            content: const Text('El RUC debe tener 11 dígitos'),
+            actions: [
+              CupertinoDialogAction(
+                child: const Text('Aceptar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+      );
+      return;
+    }
+
+    dbase.update('company',{
       'id': widget.idCompany,
       'company_name': nameCompany.text,
       'ruc': rucCompany.text,

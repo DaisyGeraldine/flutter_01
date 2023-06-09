@@ -2,7 +2,7 @@ import 'package:drawer_views_project/pages/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:drawer_views_project/pages/myhome.dart';
+//import 'package:drawer_views_project/pages/myhome.dart';
 
 void main() {
   sqfliteFfiInit();
