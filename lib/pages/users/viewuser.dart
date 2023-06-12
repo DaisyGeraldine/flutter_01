@@ -1,6 +1,7 @@
 import 'package:drawer_views_project/DataBase/db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 class ViewUser extends StatefulWidget {
   final int  idUser;
 
@@ -18,6 +19,14 @@ class ViewUser extends StatefulWidget {
 }
 
 class _ViewUser extends State<ViewUser> {
+  bool isEditableName = true;
+  bool isEditableDni = true;
+  bool isEditableTipo = true;
+  bool isEditableEmail = true;
+  bool isEditablePassword = true;
+  bool isEditableRole = true;
+  bool isEditablePhone = true;
+  bool isEditableAddress = true;
   DBase dbase = DBase();
   List<Users> userL = [];
   TextEditingController nameAsesor = TextEditingController();
@@ -55,6 +64,7 @@ class _ViewUser extends State<ViewUser> {
   }
   @override
   Widget build(BuildContext context) {
+    bool resultado;
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Mi perfil', style: TextStyle(color: CupertinoColors.white)),
@@ -124,6 +134,18 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: nameAsesor,
+                                readOnly: isEditableName,
+                                style: TextStyle(
+                                  color: isEditableName ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) => {
+                                  setState(() {
+                                    isEditableName = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  onTapUdate("El Nombre")
+                                },
                               ),
                             ),
                             CupertinoButton(
@@ -134,7 +156,11 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("El Nombre");
+                                setState(() {
+                                  isEditableName = false;
+                                });
+                                FocusScope.of(context).requestFocus();
+                                //onTapUdate("El Nombre");
                               },
                             ),
                             Expanded(
@@ -149,6 +175,18 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: roleAsesor,
+                                readOnly: isEditableRole,
+                                style: TextStyle(
+                                  color: isEditableRole ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) => {
+                                  setState(() {
+                                    isEditableRole = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  onTapUdate("El Cargo")
+                                },
                               ),
                             ),
                             CupertinoButton(
@@ -159,7 +197,10 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("El Cargo");
+                                setState(() {
+                                  isEditableRole = false;
+                                });
+                                FocusScope.of(context).requestFocus();
                               },
                             ),
                           ],
@@ -178,6 +219,29 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: dniAsesor,
+                                readOnly: isEditableDni,
+                                style: TextStyle(
+                                  color: isEditableDni ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) async => {
+                                  setState(() {
+                                    isEditableDni = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  // ignore: unrelated_type_equality_checks
+                                  print('objeto' + onTapValidateDni("El Dni").toString()),
+                                  resultado = await onTapValidateDni('campo'),
+                                  print('resultado: ' + resultado.toString()),
+                                  if (resultado == false)
+                                  {
+                                    print("El Dni es correcto"),
+                                    onTapUdate("El Dni")
+                                  }
+                                },
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                  LengthLimitingTextInputFormatter(8),]
                               ),
                             ),
                             CupertinoButton(
@@ -188,7 +252,10 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("El Dni");
+                                setState(() {
+                                  isEditableDni = false;
+                                });
+                                FocusScope.of(context).requestFocus();
                               },
                             ),
                             Expanded(
@@ -205,6 +272,18 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: passwordAsesor,
+                                readOnly: isEditablePassword,
+                                style: TextStyle(
+                                  color: isEditablePassword ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) => {
+                                  setState(() {
+                                    isEditablePassword = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  onTapUdate("La contraseña")
+                                },
                               ),
                             ),
                             CupertinoButton(
@@ -215,7 +294,10 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("La contraseña");
+                                setState(() {
+                                  isEditablePassword = false;
+                                });
+                                FocusScope.of(context).requestFocus();
                               },
                             ),
                           ],
@@ -234,6 +316,18 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: phoneAsesor,
+                                readOnly: isEditablePhone,
+                                style: TextStyle(
+                                  color: isEditablePhone ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) => {
+                                  setState(() {
+                                    isEditablePhone = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  onTapUdate("El telefono")
+                                },
                               ),
                             ),
                             CupertinoButton(
@@ -244,7 +338,10 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("El telefono");
+                                setState(() {
+                                  isEditablePhone = false;
+                                });
+                                FocusScope.of(context).requestFocus();
                               },
                             ),
                             Expanded(
@@ -259,6 +356,18 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: emailAsesor,
+                                readOnly: isEditableEmail,
+                                style: TextStyle(
+                                  color: isEditableEmail ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) => {
+                                  setState(() {
+                                    isEditableEmail = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  onTapUdate("El correo")
+                                },
                               ),
                             ),
                             CupertinoButton(
@@ -269,7 +378,10 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("El correo");
+                                setState(() {
+                                  isEditableEmail = false;
+                                });
+                                FocusScope.of(context).requestFocus();
                               },
                             ),
                           ],
@@ -288,6 +400,18 @@ class _ViewUser extends State<ViewUser> {
                                   ),
                                 ),
                                 controller: addressAsesor,
+                                readOnly: isEditableAddress,
+                                style: TextStyle(
+                                  color: isEditableAddress ? CupertinoColors.systemGrey : CupertinoColors.black,
+                                  fontSize: 17,
+                                ),
+                                onFieldSubmitted:(value) => {
+                                  setState(() {
+                                    isEditableAddress = true;
+                                  }),
+                                  FocusScope.of(context).requestFocus(),
+                                  onTapUdate("La direccion")
+                                },
                               ),
                             ),
                             CupertinoButton(
@@ -298,7 +422,10 @@ class _ViewUser extends State<ViewUser> {
                                 color: CupertinoColors.systemGrey,
                               ),
                               onPressed: () {
-                                onTapUdate("La direccion");
+                                setState(() {
+                                  isEditableAddress = false;
+                                });
+                                FocusScope.of(context).requestFocus();
                               },
                             ),
                             Expanded(child: Container()),
@@ -395,7 +522,70 @@ class _ViewUser extends State<ViewUser> {
       ),   
     );
   }
+
+  Future<bool> onTapValidateDni(String campo) async {
+    if (dniAsesor.text.length == 8) {
+      print('DNI: $dniAsesor.texto'); 
+      bool exist = await dbase.existDni(dniAsesor.text);
+      if (exist) {
+        print('DNI exist');
+        //dniAsesor.clear();
+        isEditableDni = false;
+        // ignore: use_build_context_synchronously
+        FocusScope.of(context).requestFocus();
+        // ignore: use_build_context_synchronously
+        showCupertinoDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: const Text('Error'),
+              content: const Text('El DNI ingresado ya existe'),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text('Aceptar'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          }
+        );
+        return true;
+      }
+      return false;
+    }
+
+    if (dniAsesor.text.length < 8) {
+
+      isEditableDni = false;
+      FocusScope.of(context).requestFocus();
+      // ignore: use_build_context_synchronously
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Error'),
+            content: const Text('El DNI debe tener 8 dígitos'),
+            actions: [
+              CupertinoDialogAction(
+                child: const Text('Aceptar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+      );
+      return true;
+    }   
+    return false;
+  }
+
   onTapUdate(String campo) async {
+
      dbase.update('user',{
       'id': widget.idUser,
       'name': nameAsesor.text,
@@ -408,6 +598,7 @@ class _ViewUser extends State<ViewUser> {
       'address': addressAsesor.text,
     });
     // Show a cupertino dialog to show the user was created
+    // ignore: use_build_context_synchronously
     showCupertinoDialog(
       context: context,
       builder: (context) {

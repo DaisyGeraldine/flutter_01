@@ -10,6 +10,7 @@ final phoneContact = TextEditingController();
 final hobbiesContact = TextEditingController();
 final birthayContact = TextEditingController();
 DBase dbase = DBase();
+//create a key that uniquely identifies the form widget
 
 class FormAddContact extends StatelessWidget {
   // ignore: non_constant_identifier_names
@@ -79,6 +80,7 @@ class FormAddContact extends StatelessWidget {
                               color: CupertinoColors.systemGrey,
                             ),
                             onPressed: () {
+                              
                             },
                           ),
                           controller: nameContact,
@@ -303,18 +305,18 @@ void onTapCreateContact (BuildContext context, int idCompany){
   BuildContext currentContext = context;
 
   //validate fields
-  /*if (nameCompany.text.isEmpty || rucCompany.text.isEmpty || addressCompany.text.isEmpty) {
+  if (nameContact.text.isEmpty || lastNameContact.text.isEmpty || emailContact.text.isEmpty || positionContact.text.isEmpty || phoneContact.text.isEmpty) {
     showCupertinoDialog(
       context: currentContext,
-      builder: (currentContext) {
+      builder: (context) {
         return CupertinoAlertDialog(
-          title: const Text('Campos Vacios'),
-          content: const Text('Por favor, llene todos los campos'),
+          title: const Text('Error'),
+          content: const Text('Por favor llene todos los campos necesarios'),
           actions: [
             CupertinoDialogAction(
               child: const Text('OK'),
               onPressed: () {
-                Navigator.pop(currentContext);       
+                Navigator.pop(context);
               },
             ),
           ],
@@ -322,30 +324,7 @@ void onTapCreateContact (BuildContext context, int idCompany){
       },
     );
     return;
-  }*/
-
-  //validate if the ruc is 11 digits
-  /*if (rucCompany.text.length < 11) {
-    //rucCompany.clear();
-    showDialog(
-      context: currentContext,
-      builder: (currentContext) {
-        return CupertinoAlertDialog(
-          title: const Text('Error'),
-          content: const Text('El RUC debe tener 11 dígitos'),
-          actions: [
-            CupertinoDialogAction(
-              child: const Text('Aceptar'),
-              onPressed: () {
-                Navigator.pop(currentContext);
-              },
-            ),
-          ],
-        );
-      }
-    );
-    return;
-  }*/
+  }
 
   dbase.insert('contact',{
     'name': nameContact.text,
